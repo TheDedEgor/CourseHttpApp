@@ -9,6 +9,11 @@
     text-decoration: none;
     color: black;
     font-size: 26px;
+    text-transform: uppercase;
+}
+.header-logo a b{
+    font-size: 40px;
+    font-family: "Times New Roman";
 }
 .header-link{
     text-decoration: none;

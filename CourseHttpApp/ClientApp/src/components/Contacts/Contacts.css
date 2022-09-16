@@ -1,0 +1,15 @@
+﻿.contacts{
+    margin-top: 10px;
+    padding: 10px;
+    text-align: center;
+}
+.contacts p{
+    font-size: 24px;
+    font-weight: 400;
+}
+.contacts li{
+    font-size: 20px;
+}
+.social-links{
+    margin-left: 10px;
+}
