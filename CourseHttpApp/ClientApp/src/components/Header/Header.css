@@ -1,0 +1,26 @@
+﻿.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding:20px;
+    border-bottom: 1px solid black;
+}
+.header-logo a{
+    text-decoration: none;
+    color: black;
+    font-size: 26px;
+    text-transform: uppercase;
+}
+.header-logo a b{
+    font-size: 40px;
+    font-family: "Times New Roman";
+}
+.header-link{
+    text-decoration: none;
+    color: black;
+    margin-left: 40px;
+    transition: all 0.2s ease-in;
+}
+.header-link:hover{
+    color:blue;
+}

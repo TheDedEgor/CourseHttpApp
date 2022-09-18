@@ -1,0 +1,12 @@
+﻿.course-block{
+    display: flex;
+}
+.course{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+.main-block{
+    border-left: 1px solid black;
+}
