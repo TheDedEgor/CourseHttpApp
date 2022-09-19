@@ -7,6 +7,14 @@
     align-items: center;
     padding: 20px;
 }
+.course-links{
+    display: flex;
+    flex-direction: column;
+}
 .main-block{
     border-left: 1px solid black;
+    width:800px;
+}
+.depend-links{
+    margin-left: 20px;
 }
