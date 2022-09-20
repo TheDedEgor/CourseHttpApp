@@ -1,4 +1,4 @@
-﻿namespace CourseHttpApp.Models;
+﻿namespace CourseHttpApp.Models.Tables;
 
 public class User
 {

@@ -3,9 +3,9 @@ using System.Text;
 
 namespace CourseHttpApp.Models.Common;
 
-internal class Crypt
+public static class Crypt
 {
-    internal static string GetHashPassword(string password)
+    public static string GetHashPassword(string password)
     {
         using var crypt = SHA256.Create();
         var hash = crypt.ComputeHash(Encoding.UTF8.GetBytes(password));

@@ -1,4 +1,6 @@
-﻿using CourseHttpApp.Models;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using CourseHttpApp.Models;
 using CourseHttpApp.Models.Common;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,12 +25,15 @@ public class AuthController : ControllerBase
         var password = form["password"];
         var hash = Crypt.GetHashPassword(password);
         using var db = new ApplicationContext();
-        var result = db.Users.FirstOrDefault(item => item.login == login && item.password == hash);
-        if (result == null)
+        var user = db.Users.FirstOrDefault(item => item.login == login && item.password == hash);
+        if (user == null)
+            return Results.NotFound("User not found");
+            
+        var token = Token.CreateToken(login);
+        
+        return Results.Json(new
         {
-            return Results.NotFound();
-        }
-
-        return Results.Ok();
+            access_token = token
+        });
     }
 }

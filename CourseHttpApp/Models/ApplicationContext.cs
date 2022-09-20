@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CourseHttpApp.Models.Tables;
+using Microsoft.EntityFrameworkCore;
 
 namespace CourseHttpApp.Models;
 

@@ -1,5 +1,6 @@
 ﻿using CourseHttpApp.Models;
 using CourseHttpApp.Models.Common;
+using CourseHttpApp.Models.Tables;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CourseHttpApp.Controllers;
@@ -24,12 +25,10 @@ public class RegController : ControllerBase
             var login = form["login"];
             var password = form["password"];
             var hash = Crypt.GetHashPassword(password);
-            var result = db.Users.FirstOrDefault(item => item.login == login && item.password == hash);
-            if (result != null)
-            {
+            var user = db.Users.FirstOrDefault(item => item.login == login);
+            if (user != null)
                 return Results.Conflict();
-            }
-
+            
             db.Users.Add(new User()
             {
                 id = 0,

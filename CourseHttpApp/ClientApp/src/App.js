@@ -101,6 +101,24 @@ const App = () =>{
         }
     ]
 
+    async function handleFormSubmit(event) {
+        event.preventDefault()
+
+        const data = serializeForm(event.target)
+        const response = await sendData(data)
+    }
+
+    function serializeForm(formNode) {
+        return new FormData(formNode)
+    }
+
+    async function sendData(data) {
+        return await fetch('/api/auth', {
+            method: 'POST',
+            body: data,
+        })
+    }
+
     return(
         <div className="App">
             <div className="container">
@@ -110,7 +128,7 @@ const App = () =>{
                     <Route path="/traning" element={<Traning/>}/>
                     <Route path="/contacts" element={<Contacts/>}/>
                 </Routes>
-                <form method="POST">
+                <form onSubmit={handleFormSubmit}>
                     <input name="login"/>
                     <input name="password"/>
                     <input type="submit" value="Отправить"/>
