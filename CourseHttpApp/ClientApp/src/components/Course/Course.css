@@ -18,3 +18,6 @@
 .depend-links{
     margin-left: 20px;
 }
+.depend-not-link{
+    display: none;
+}
