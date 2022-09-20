@@ -19,12 +19,12 @@ public class RegController : ControllerBase
     [HttpPost]
     public IResult Post()
     {
+        var form = HttpContext.Request.Form;
+        var login = form["login"];
+        var password = form["password"];
+        var hash = Crypt.GetHashPassword(password);
         using (var db = new ApplicationContext())
         {
-            var form = HttpContext.Request.Form;
-            var login = form["login"];
-            var password = form["password"];
-            var hash = Crypt.GetHashPassword(password);
             var user = db.Users.FirstOrDefault(item => item.login == login);
             if (user != null)
                 return Results.Conflict();
@@ -37,7 +37,12 @@ public class RegController : ControllerBase
             });
             db.SaveChanges();
         }
-
-        return Results.Created("fg", "g");
+        var token = Token.CreateToken(login);
+        
+        return Results.Json(new
+        {
+            access_token = token
+        });
+        
     }
 }
