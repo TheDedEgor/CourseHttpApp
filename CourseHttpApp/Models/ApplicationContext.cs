@@ -4,17 +4,12 @@ namespace CourseHttpApp.Models;
 
 public class ApplicationContext : DbContext
 {
-    private string _connectionString;
-    
     public DbSet<User> Users { get; set; }
-
-    public ApplicationContext(string connectionString)
-    {
-        _connectionString = connectionString;
-    }
-
+    
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseMySQL(_connectionString);
+        var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+        var connectionString = config.GetConnectionString("SyncDb");
+        optionsBuilder.UseMySQL(connectionString);
     }
 }
