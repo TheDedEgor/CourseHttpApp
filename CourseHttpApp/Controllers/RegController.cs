@@ -1,6 +1,6 @@
-﻿using System.Net;
-using CourseHttpApp.Models;
+﻿using CourseHttpApp.Models;
 using CourseHttpApp.Models.Common;
+using CourseHttpApp.Models.Tables;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CourseHttpApp.Controllers;
@@ -9,25 +9,26 @@ namespace CourseHttpApp.Controllers;
 [Route("api/[controller]")]
 public class RegController : ControllerBase
 {
-    private readonly IConfiguration _configuration;
-    
-    public RegController(IConfiguration configuration)
+    private readonly ILogger _logger;
+
+    public RegController(ILogger<RegController> logger)
     {
-        _configuration = configuration;
+        _logger = logger;
     }
 
     [HttpPost]
-    public HttpResponseMessage Post(string login, string password)
+    public IResult Post()
     {
-        using (var db = new ApplicationContext(_configuration.GetConnectionString("SyncDb")))
+        var form = HttpContext.Request.Form;
+        var login = form["login"];
+        var password = form["password"];
+        var hash = Crypt.GetHashPassword(password);
+        using (var db = new ApplicationContext())
         {
-            var hash = Crypt.GetHashPassword(password);
-            var result = db.Users.FirstOrDefault(item => item.login == login && item.password == hash);
-            if (result != null)
-            {
-                return new HttpResponseMessage(HttpStatusCode.Conflict);
-            }
-
+            var user = db.Users.FirstOrDefault(item => item.login == login);
+            if (user != null)
+                return Results.Conflict();
+            
             db.Users.Add(new User()
             {
                 id = 0,
@@ -36,6 +37,12 @@ public class RegController : ControllerBase
             });
             db.SaveChanges();
         }
-        return new HttpResponseMessage(HttpStatusCode.Created);
+        var token = Token.CreateToken(login);
+        
+        return Results.Json(new
+        {
+            access_token = token
+        });
+        
     }
 }

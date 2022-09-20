@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using CourseHttpApp.Models;
 using CourseHttpApp.Models.Common;
 using Microsoft.AspNetCore.Mvc;
@@ -9,24 +10,30 @@ namespace CourseHttpApp.Controllers;
 [Route("api/[controller]")]
 public class AuthController : ControllerBase
 {
-    private readonly IConfiguration _configuration;
+    private readonly ILogger _logger;
 
-    public AuthController(IConfiguration configuration)
+    public AuthController(ILogger<AuthController> logger)
     {
-        _configuration = configuration;
+        _logger = logger;
     }
 
     [HttpPost]
-    public HttpResponseMessage Post(string login, string password)
+    public IResult Post()
     {
+        var form = HttpContext.Request.Form;
+        var login = form["login"];
+        var password = form["password"];
         var hash = Crypt.GetHashPassword(password);
-        using var db = new ApplicationContext(_configuration.GetConnectionString("SyncDb"));
-        var result = db.Users.FirstOrDefault(item => item.login == login && item.password == hash);
-        if (result == null)
+        using var db = new ApplicationContext();
+        var user = db.Users.FirstOrDefault(item => item.login == login && item.password == hash);
+        if (user == null)
+            return Results.NotFound("User not found");
+            
+        var token = Token.CreateToken(login);
+        
+        return Results.Json(new
         {
-            return new HttpResponseMessage(HttpStatusCode.NotFound);
-        }
-
-        return new HttpResponseMessage(HttpStatusCode.OK);
+            access_token = token
+        });
     }
 }
