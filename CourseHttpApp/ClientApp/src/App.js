@@ -1,11 +1,12 @@
 import React from 'react';
 import './App.css';
 import Header from "./components/Header/Header";
-import {Route, Routes} from "react-router-dom";
+import {Route, Routes,Router} from "react-router-dom";
 import Course from "./components/Course/Course";
 import Traning from "./components/Traning/Traning";
 import Contacts from "./components/Contacts/Contacts";
-import Footer from "./components/Footer/Footer";
+import Profile from "./components/Profile/Profile";
+import Auth from "./components/Auth/Auth";
 
 const App = () =>{
     const courses = [
@@ -42,13 +43,13 @@ const App = () =>{
                     dep:[
                         {
                             id:1,
-                            name:'sdf',
-                            descrip:'sdfsdfsdf'
+                            name:'Теория',
+                            descrip:'теория'
                         },
                         {
                             id:2,
-                            name:"df",
-                            descrip: "sdfsdff"
+                            name:"Практика",
+                            descrip: "практика"
                         }
                     ],
                     desc:"Сердцевиной веб-общения является запрос, который отправляется через Единый указатель ресурсов (URL). Я уверен, что вы уже знаете, что такое URL адрес, однако для полноты картины, решил всё-таки сказать пару слов. Структура URL очень проста и состоит из следующих компонентов:Протокол может быть как http для обычных соединений, так и https для более безопасного обмена данными. Порт по умолчанию - 80. Далее следует путь к ресурсу на сервере и цепочка параметров.",
@@ -60,13 +61,13 @@ const App = () =>{
                     dep:[
                         {
                             id:1,
-                            name:'a',
-                            descrip:'aaaaa'
+                            name:'Теория',
+                            descrip:'теория'
                         },
                         {
                             id:2,
-                            name:"b",
-                            descrip: "bbbbb"
+                            name:"Практика",
+                            descrip: "практика"
                         }
                     ],
                     desc:"С помощью URL, мы определяем точное название хоста, с которым хотим общаться, однако какое действие нам нужно совершить, можно сообщить только с помощью HTTP метода. Конечно же существует несколько видов действий, которые мы можем совершить. В HTTP реализованы самые нужные, подходящие под нужды большинства приложений.\n" +
@@ -98,13 +99,13 @@ const App = () =>{
                     dep:[
                         {
                             id:1,
-                            name:'a',
-                            descrip:'aaaaa'
+                            name:'Теория',
+                            descrip:'теория'
                         },
                         {
                             id:2,
-                            name:"b",
-                            descrip: "bbbbb"
+                            name:"Практика",
+                            descrip: "практика"
                         }
                     ],
                     desc:"В ответ на запрос от клиента, сервер отправляет ответ, который содержит, в том числе, и код состояния. Данный код несёт в себе особый смысл для того, чтобы клиент мог отчётливей понять, как интерпретировать ответ:\n" +
@@ -151,13 +152,13 @@ const App = () =>{
                     dep:[
                         {
                             id:1,
-                            name:'a',
-                            descrip:'aaaaa'
+                            name:'Теория',
+                            descrip:'теория'
                         },
                         {
                             id:2,
-                            name:"b",
-                            descrip: "bbbbb"
+                            name:"Практика",
+                            descrip: "практика"
                         }
                     ],
                     desc:"На следующем изображении вы можете увидеть схематично оформленный процесс отправки запроса клиентом, обработка и отправка ответа сервером." +
@@ -173,24 +174,18 @@ const App = () =>{
             ]
         }
     ]
-
     return(
         <div className="App">
             <div className="container">
-                <Header/>
-                <Routes>
-                    <Route path="/" element={<Course courses={courses}/>}/>
-                    <Route path="/:id" element={<Course courses={courses}/>}/>
-                    <Route path="/traning" element={<Traning/>}/>
-                    <Route path="/contacts" element={<Contacts/>}/>
-                </Routes>
-                {/*<form method="POST">
-                    <input name="login"/>
-                    <input name="password"/>
-                    <input type="submit" value="Отправить"/>
-                </form>*/}
+                    <Header/>
+                    <Routes>
+                        <Route path="/" element={<Course courses={courses}/>}/>
+                        <Route path="/:id" element={<Course courses={courses}/>}/>
+                        <Route path="/traning" element={<Traning/>}/>
+                        <Route path="/contacts" element={<Contacts/>}/>
+                        <Route path="/profile" element={<Auth/>}/>
+                    </Routes>
             </div>
-            {/*<Footer/>*/}
         </div>
     )
 }
