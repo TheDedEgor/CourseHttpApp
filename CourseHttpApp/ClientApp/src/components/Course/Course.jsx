@@ -19,13 +19,19 @@ const Course = ({courses}) =>{
                         <div className="course-links">
                             {course.dependises.map((depend,index) =>(
                                 <div key={depend.id}>
-                                    <Link key={depend.id} to={`/${depend.id}`} onClick={() => setIsVisible(!isVisible)}>{depend.name}</Link>
-                                    <div>
-                                        {depend.dep.map((p,index) => (
-                                            <div key={p.id} className={isVisible ? "depend-links" : "depend-not-link"}>
+                                    <Link key={depend.id} to={`/${depend.name}/${depend.id}`}>{depend.name}</Link>
+                                    <div className="depend-links">
+                                        {/*{depend.dep.map((p,index) => (
+                                            <div key={p.id}  className={isVisible ? "depend-links" : "depend-not-link"}> 
                                                 <p>{p.name}</p>
                                             </div>
-                                        ))}
+                                            <div>
+                                                <span>Теория</span>
+                                                <span>Практика</span>
+                                            </div>
+                                        ))}*/}
+                                        <a href="#">Теория</a>
+                                        <a href="#">Практика</a>
                                     </div>
                                 </div>
                             ))}

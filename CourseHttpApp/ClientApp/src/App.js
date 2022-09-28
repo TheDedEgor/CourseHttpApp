@@ -148,7 +148,7 @@ const App = () =>{
                 },
                 {
                     id:5,
-                    name:"Форматы сообщений запроса/ответа",
+                    name:"Форматы сообщений запроса или ответа",
                     dep:[
                         {
                             id:1,
@@ -180,7 +180,7 @@ const App = () =>{
                     <Header/>
                     <Routes>
                         <Route path="/" element={<Course courses={courses}/>}/>
-                        <Route path="/:id" element={<Course courses={courses}/>}/>
+                        <Route path="/:name/:id" element={<Course courses={courses}/>}/>
                         <Route path="/traning" element={<Traning/>}/>
                         <Route path="/contacts" element={<Contacts/>}/>
                         <Route path="/profile" element={<Auth/>}/>
