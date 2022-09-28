@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import Header from "./components/Header/Header";
-import {Route, Routes,Router} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import Course from "./components/Course/Course";
 import Traning from "./components/Traning/Traning";
 import Contacts from "./components/Contacts/Contacts";
-import Profile from "./components/Profile/Profile";
+import Footer from "./components/Footer/Footer";
 import Auth from "./components/Auth/Auth";
 
 const App = () =>{
@@ -17,18 +17,6 @@ const App = () =>{
                 {
                     id:1,
                     name:"Основы HTTP",
-                    dep:[
-                        {
-                            id:1,
-                            name:'Теория',
-                            descrip:'теория'
-                        },
-                        {
-                            id:2,
-                            name:"Практика",
-                            descrip: "практика"
-                        }
-                    ],
                     desc:"HTTP обеспечивает общение между множеством хостов и клиентов, а также поддерживает целый ряд сетевых настроек.\n" +
                         "\n" +
                         "В основном, для общения используется TCP/IP, но это не единственный возможный вариант. По умолчанию, TCP/IP использует порт 80, но можно заюзать и другие."+
@@ -40,36 +28,12 @@ const App = () =>{
                 {
                     id:2,
                     name:"URL",
-                    dep:[
-                        {
-                            id:1,
-                            name:'Теория',
-                            descrip:'теория'
-                        },
-                        {
-                            id:2,
-                            name:"Практика",
-                            descrip: "практика"
-                        }
-                    ],
                     desc:"Сердцевиной веб-общения является запрос, который отправляется через Единый указатель ресурсов (URL). Я уверен, что вы уже знаете, что такое URL адрес, однако для полноты картины, решил всё-таки сказать пару слов. Структура URL очень проста и состоит из следующих компонентов:Протокол может быть как http для обычных соединений, так и https для более безопасного обмена данными. Порт по умолчанию - 80. Далее следует путь к ресурсу на сервере и цепочка параметров.",
-                    image:"https://ruseller.com/lessons/les1726/images/http1-url-structure.png"
+                    image:"https://ruseller.com/lessons/les1726/images/http1-request-response.png"
                 },
                 {
                     id:3,
                     name:"Методы",
-                    dep:[
-                        {
-                            id:1,
-                            name:'Теория',
-                            descrip:'теория'
-                        },
-                        {
-                            id:2,
-                            name:"Практика",
-                            descrip: "практика"
-                        }
-                    ],
                     desc:"С помощью URL, мы определяем точное название хоста, с которым хотим общаться, однако какое действие нам нужно совершить, можно сообщить только с помощью HTTP метода. Конечно же существует несколько видов действий, которые мы можем совершить. В HTTP реализованы самые нужные, подходящие под нужды большинства приложений.\n" +
                         "\n" +
                         "Существующие методы:\n" +
@@ -96,18 +60,6 @@ const App = () =>{
                 {
                     id:4,
                     name:"Коды состояния",
-                    dep:[
-                        {
-                            id:1,
-                            name:'Теория',
-                            descrip:'теория'
-                        },
-                        {
-                            id:2,
-                            name:"Практика",
-                            descrip: "практика"
-                        }
-                    ],
                     desc:"В ответ на запрос от клиента, сервер отправляет ответ, который содержит, в том числе, и код состояния. Данный код несёт в себе особый смысл для того, чтобы клиент мог отчётливей понять, как интерпретировать ответ:\n" +
                         "\n" +
                         "1xx: Информационные сообщения\n" +
@@ -146,46 +98,23 @@ const App = () =>{
                         "503 Service Unavailable: это может случиться, если на сервере произошла ошибка или он перегружен. Обычно в этом случае, сервер не отвечает, а время, данное на ответ, истекает.",
                     image: null
                 },
-                {
-                    id:5,
-                    name:"Форматы сообщений запроса или ответа",
-                    dep:[
-                        {
-                            id:1,
-                            name:'Теория',
-                            descrip:'теория'
-                        },
-                        {
-                            id:2,
-                            name:"Практика",
-                            descrip: "практика"
-                        }
-                    ],
-                    desc:"На следующем изображении вы можете увидеть схематично оформленный процесс отправки запроса клиентом, обработка и отправка ответа сервером." +
-                        "Между заголовком и телом сообщения должна обязательно присутствовать пустая строка. Заголовков может быть несколько:\n" +
-                        "\n" +
-                        "Общие заголовки\n" +
-                        "Заголовки запроса\n" +
-                        "Заголовки ответа\n" +
-                        "Заголовки сущностей\n" +
-                        "Тело ответа может содержать полную информацию или её часть, если активирована соответствующая возможность (Transfer-Encoding: chunked). HTTP/1.1 также поддерживает заголовок Transfer-Encoding.",
-                    image:"https://ruseller.com/lessons/les1726/images/http1-req-res-details.png"
-                },
             ]
         }
     ]
+    const [isRegister,setIsRegister] = useState(false)
     return(
         <div className="App">
             <div className="container">
-                    <Header/>
-                    <Routes>
-                        <Route path="/" element={<Course courses={courses}/>}/>
-                        <Route path="/:name/:id" element={<Course courses={courses}/>}/>
-                        <Route path="/traning" element={<Traning/>}/>
-                        <Route path="/contacts" element={<Contacts/>}/>
-                        <Route path="/profile" element={<Auth/>}/>
-                    </Routes>
+                <Header isRegister={isRegister} setIsRegister={setIsRegister}/>
+                <Routes>
+                    <Route path="/" element={<Course courses={courses} isRegister={isRegister}/>}/>
+                    <Route path="/:id" element={<Course courses={courses} isRegister={isRegister}/>}/>
+                    <Route path="/traning" element={<Traning isRegister={isRegister}/>}/>
+                    <Route path="/contacts" element={<Contacts/>}/>
+                    <Route path="/profile" element={<Auth setIsRegister={setIsRegister}/>}/>
+                </Routes>
             </div>
+            {/*<Footer/>*/}
         </div>
     )
 }
