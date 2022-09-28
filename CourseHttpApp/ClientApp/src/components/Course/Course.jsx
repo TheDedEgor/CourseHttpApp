@@ -1,7 +1,7 @@
 ﻿import React, {useEffect, useState} from "react";
 import "./Course.css"
 import {Link, Route, Routes, useParams} from 'react-router-dom'
-const Course = ({courses}) =>{
+const Course = ({courses,isRegister}) =>{
     const {id} = useParams()
     const [isVisible,setIsVisible] = useState(false)
     let post = courses[0].dependises[id -1]
@@ -11,6 +11,10 @@ const Course = ({courses}) =>{
     }
     return(
         <div className="course-block">
+            {isRegister ? 
+            <div>Вам доступен курс</div>:
+                <div>Вам не доступен курс, войдите в свой <Link to="/profile">аккаунт</Link></div>
+            }
             {/*{courses.map((course) =>(
                 <div className="course" key={course.id}>
                     <div className="course-title">

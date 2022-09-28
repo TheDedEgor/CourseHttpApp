@@ -1,15 +1,17 @@
 ﻿import React from "react";
+import {useNavigate} from "react-router-dom";
 import "./Auth.css"
 
-const  Auth = () =>{
-    
+const  Auth = ({setIsRegister}) =>{
+    let navigate = useNavigate()
     async function handleFormSubmit(event) {
         event.preventDefault();
         const data = serializeForm(event.target);
         const response = await sendData(data);
         const user = await response.json()
         sessionStorage.setItem("access_token", user.value.access_token)
-        console.log(user)
+        navigate('/')
+        setIsRegister(true)
     }
     function serializeForm(formNode) {
         return new FormData(formNode)
@@ -22,13 +24,11 @@ const  Auth = () =>{
         })
     }
     return(
-        <div>
-            <form onSubmit={handleFormSubmit}>
+            <form onSubmit={handleFormSubmit} className="form">
                 <input name="login"/>
                 <input name="password"/>
                 <input type="submit" value="Отправить"/>
             </form>
-        </div>
     )
 }
 export default Auth;

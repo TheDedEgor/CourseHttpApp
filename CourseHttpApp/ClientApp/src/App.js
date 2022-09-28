@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import Header from "./components/Header/Header";
 import {Route, Routes} from "react-router-dom";
@@ -101,17 +101,17 @@ const App = () =>{
             ]
         }
     ]
-    
+    const [isRegister,setIsRegister] = useState(false)
     return(
         <div className="App">
             <div className="container">
-                <Header/>
+                <Header isRegister={isRegister} setIsRegister={setIsRegister}/>
                 <Routes>
-                    <Route path="/" element={<Course courses={courses}/>}/>
-                    <Route path="/:id" element={<Course courses={courses}/>}/>
-                    <Route path="/traning" element={<Traning/>}/>
+                    <Route path="/" element={<Course courses={courses} isRegister={isRegister}/>}/>
+                    <Route path="/:id" element={<Course courses={courses} isRegister={isRegister}/>}/>
+                    <Route path="/traning" element={<Traning isRegister={isRegister}/>}/>
                     <Route path="/contacts" element={<Contacts/>}/>
-                    <Route path="/profile" element={<Auth/>}/>
+                    <Route path="/profile" element={<Auth setIsRegister={setIsRegister}/>}/>
                 </Routes>
             </div>
             {/*<Footer/>*/}
