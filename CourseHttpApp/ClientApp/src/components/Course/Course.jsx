@@ -11,34 +11,35 @@ const Course = ({courses}) =>{
     }
     return(
         <div className="course-block">
-                {courses.map((course) =>(
-                    <div className="course" key={course.id}>
-                        <div className="course-title">
-                            <h2>{course.name}</h2>
-                        </div>
-                        <div className="course-links">
-                            {course.dependises.map((depend,index) =>(
-                                <div key={depend.id}>
-                                    <Link key={depend.id} to={`/${depend.id}`} onClick={() => setIsVisible(!isVisible)}>{depend.name}</Link>
-                                    <div>
-                                        {depend.dep.map((p,index) => (
-                                            <div key={p.id} className={isVisible ? "depend-links" : "depend-not-link"}>
-                                                <p>{p.name}</p>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
+            {/*{courses.map((course) =>(
+                <div className="course" key={course.id}>
+                    <div className="course-title">
+                        <h2>{course.name}</h2>
                     </div>
-                ))}
+                    <div className="course-links">
+                        {course.dependises.map((depend,index) =>(
+                            <div key={depend.id}>
+                                <Link key={depend.id} to={`/${depend.id}`} onClick={() => setIsVisible(!isVisible)}>{depend.name}</Link>
+                                <div>
+                                    {depend.dep.map((p,index) => (
+                                        <div key={p.id} className={isVisible ? "depend-links" : "depend-not-link"}>
+                                            <p>{p.name}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            ))}
             <div className="main-block">
                 {post && <div>
                     <h1>{post.name}</h1>
                     <span>{post.desc}</span>
                     {post.image === null ? <></> :<img src={post.image} alt="post-img"/>}
                 </div>}
-            </div>
+            </div>*/}
+            cousre
         </div>
     )
 }

@@ -7,7 +7,9 @@ const  Auth = () =>{
         event.preventDefault();
         const data = serializeForm(event.target);
         const response = await sendData(data);
-        console.log(response)
+        const user = await response.json()
+        sessionStorage.setItem("access_token", user.value.access_token)
+        console.log(user)
     }
     function serializeForm(formNode) {
         return new FormData(formNode)
