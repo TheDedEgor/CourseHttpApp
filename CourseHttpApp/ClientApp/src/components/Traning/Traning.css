@@ -1,0 +1,9 @@
+.error_traning{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.auth_link{
+    color: black;
+}
