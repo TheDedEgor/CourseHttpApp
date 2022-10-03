@@ -25,15 +25,15 @@ public class RegController : ControllerBase
         var hash = Crypt.GetHashPassword(password);
         using (var db = new ApplicationContext())
         {
-            var user = db.Users.FirstOrDefault(item => item.login == login);
+            var user = db.Users.FirstOrDefault(item => item.Login == login);
             if (user != null)
                 return Results.Conflict();
             
             db.Users.Add(new User()
             {
-                id = 0,
-                login = login,
-                password = hash
+                Id = 0,
+                Login = login,
+                Password = hash
             });
             db.SaveChanges();
         }
