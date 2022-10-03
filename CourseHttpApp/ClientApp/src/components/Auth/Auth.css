@@ -1,6 +1,38 @@
-.form{
+.form_content{
     display: flex;
+    align-items: center;
     flex-direction: column;
+    padding: 10px;
+    margin-right: auto;
+    margin-left: auto;
+    width: 500px;
+}
+/*
+.form{
+    padding: 20px;
+    border: 1px solid black;
+    display: flex;
     justify-content: center;
-    width: 400px;
+}*/
+.auth_input{
+    text-align: center;
+    height: 50px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: none;
+}
+.submit{
+    background-color: cornflowerblue;
+    transition: all 0.2s ease-in;
+}
+.submit:hover{
+    box-shadow: 2px 2px 2px rgba(23,45,98,0.3);
+}
+.bottom_link{
+    margin-top: 10px;
+    color: gray;
+    margin-left: 50px;
+}
+.bottom_links{
+    display: flex;
 }

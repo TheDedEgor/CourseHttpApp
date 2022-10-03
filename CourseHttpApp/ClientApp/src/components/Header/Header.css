@@ -24,3 +24,7 @@
 .header-link:hover{
     color:blue;
 }
+.header-link_auth{
+    background-color:olivedrab;
+    padding: 10px 20px;
+}

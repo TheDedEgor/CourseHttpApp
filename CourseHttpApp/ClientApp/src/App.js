@@ -5,8 +5,11 @@ import {Route, Routes} from "react-router-dom";
 import Course from "./components/Course/Course";
 import Traning from "./components/Traning/Traning";
 import Contacts from "./components/Contacts/Contacts";
-import Footer from "./components/Footer/Footer";
 import Auth from "./components/Auth/Auth";
+import Register from "./components/Register/Register";
+import Profile from "./components/Profile/Profile";
+import ForgotPass from "./components/ForgotPass/ForgotPass";
+import NewPass from "./components/NewPass/NewPass";
 
 const App = () =>{
     const courses = [
@@ -101,20 +104,24 @@ const App = () =>{
             ]
         }
     ]
-    const [isRegister,setIsRegister] = useState(false)
     return(
         <div className="App">
             <div className="container">
-                <Header isRegister={isRegister} setIsRegister={setIsRegister}/>
+                <Header />
+                <>
                 <Routes>
-                    <Route path="/" element={<Course courses={courses} isRegister={isRegister}/>}/>
-                    <Route path="/:id" element={<Course courses={courses} isRegister={isRegister}/>}/>
-                    <Route path="/traning" element={<Traning isRegister={isRegister}/>}/>
+                    <Route path="/" element={<Course courses={courses}/>}/>
+                    <Route path="/:course/:id" element={<Course courses={courses}/>}/>
+                    <Route path="/traning" element={<Traning/>}/>
                     <Route path="/contacts" element={<Contacts/>}/>
-                    <Route path="/profile" element={<Auth setIsRegister={setIsRegister}/>}/>
+                    <Route path="/auth" element={<Auth />}/>
+                    <Route path="/reg" element={<Register/>}/>
+                    <Route path="/profile" element={<Profile/>}/>
+                    <Route path="/forgotPass" element={<ForgotPass/>}/>
+                    <Route path="/newPass" element={<NewPass/>}/>
                 </Routes>
+                </>    
             </div>
-            {/*<Footer/>*/}
         </div>
     )
 }
