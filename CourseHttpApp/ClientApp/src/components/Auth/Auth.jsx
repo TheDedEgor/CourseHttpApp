@@ -1,7 +1,6 @@
 ﻿import React, {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import "./Auth.css"
-import {Form} from "reactstrap";
 
 const  Auth = () =>{
     const [email,setEmail] = useState('')
@@ -20,6 +19,7 @@ const  Auth = () =>{
             setFormValid(true)
         }
     },[emailError,passwordError])
+    
     let navigate = useNavigate()
     async function handleFormSubmit(event) {
         event.preventDefault();
@@ -28,6 +28,7 @@ const  Auth = () =>{
         const user = await response.json()
         if(user.statusCode === 404){
             setValidUser('Не верный логин или пароль!')
+            setFormValid(false)
             setEmail('')
             setPassword('')
         }
@@ -36,7 +37,6 @@ const  Auth = () =>{
             sessionStorage.setItem("access_token", user.value.access_token)
             navigate('/')
         }
-        console.log(user.statusCode)
     }
     function serializeForm(formNode) {
         return new FormData(formNode)
@@ -81,6 +81,7 @@ const  Auth = () =>{
             setPasswordError('')
         }
     }
+    
     return(
         <div className="form_content">
             <h3>Вход</h3>

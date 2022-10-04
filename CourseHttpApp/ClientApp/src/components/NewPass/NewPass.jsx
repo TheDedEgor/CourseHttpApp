@@ -3,7 +3,7 @@ import "./NewPass.css"
 
 const NewPass = () =>{
     return(
-        <form>
+        <form className="form">
             <input name="password" placeholder="Введите новый пароль"/>
             <input type="submit" value="Поменять пароль"/>
         </form>
