@@ -1,29 +1,28 @@
-﻿import React from "react";
+﻿import React, {useState} from "react";
 import "./ForgotPass.css"
+import {handleFormSubmit} from "../../Utils";
 
 const ForgotPass = () =>{
-    async function handleFormSubmit(event) {
-        event.preventDefault();
-        const data = serializeForm(event.target);
-        const response = await sendData(data);
-        const user = await response.json()
-    }
-    function serializeForm(formNode) {
-        return new FormData(formNode)
-    }
-
-    async function sendData(data) {
-        return await fetch('/api/Pass/', {
-            method: 'POST',
-            body: data,
-        })
+    const [validEmail,setValidEmail] = useState('')
+    async function handleSubmit(event){
+        const response = await handleFormSubmit(event,"/api/Pass");
+        debugger;
+        const data = await response.json();
+        if(data.statusCode === 404){
+            setValidEmail("Введён не верный email, попробуйте еще раз!")
+            
+        }
+        else{
+            setValidEmail("Письмо отправлено, в течение 1-3 минут сообщение придет на вашу почту. Проверьте папку \"Спам\".")
+        }
     }
     return(
         <>
             <h3>Восстановление пароля</h3>
-            <form onSubmit={handleFormSubmit} className="form_forgot" >
+            <form onSubmit={handleSubmit} className="form_forgot" >
                 <input name="login" placeholder="Введите email"/>
                 <input type="submit" value="Отправить"/>
+                {validEmail}
             </form> 
         </>
     )

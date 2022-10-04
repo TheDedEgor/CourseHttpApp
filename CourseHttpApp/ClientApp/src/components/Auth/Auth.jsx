@@ -1,5 +1,6 @@
 ﻿import React, {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
+import {handleFormSubmit} from "../../Utils";
 import "./Auth.css"
 
 const  Auth = () =>{
@@ -21,10 +22,8 @@ const  Auth = () =>{
     },[emailError,passwordError])
     
     let navigate = useNavigate()
-    async function handleFormSubmit(event) {
-        event.preventDefault();
-        const data = serializeForm(event.target);
-        const response = await sendData(data);
+    async function handleSubmit(event){
+        const response = await handleFormSubmit(event,"/api/Auth")
         const user = await response.json()
         if(user.statusCode === 404){
             setValidUser('Не верный логин или пароль!')
@@ -38,16 +37,7 @@ const  Auth = () =>{
             navigate('/')
         }
     }
-    function serializeForm(formNode) {
-        return new FormData(formNode)
-    }
-
-    async function sendData(data) {
-        return await fetch('/api/Auth/', {
-            method: 'POST',
-            body: data,
-        })
-    }
+    
     
     const blurHandler = (e) =>{
         switch (e.target.name){
@@ -85,7 +75,7 @@ const  Auth = () =>{
     return(
         <div className="form_content">
             <h3>Вход</h3>
-            <form onSubmit={handleFormSubmit} className="form">
+            <form onSubmit={handleSubmit} className="form">
                 {(emailDirty && emailError) && <div style={{color:'red'}}>{emailError}</div>}
                 <input onChange={e => emailHandler(e)} value={email} onBlur={(e) => blurHandler(e)} name="login" placeholder="Email" className="auth_input"/>
                 {(passwordDirty && passwordError) && <div style={{color:'red'}}>{passwordError}</div>}
