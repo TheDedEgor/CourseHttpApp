@@ -1,20 +1,15 @@
-﻿using System.Net;
-using System.Net.Mail;
-
-namespace CourseHttpApp.Models.Common;
+﻿namespace CourseHttpApp.Models.Common;
 
 public static class Email
 {
     public static void SendEmail(string email, string url)
     {
-        var from = new MailAddress("httpcourse@yandex.ru", "Http-курс");
-        var to = new MailAddress(email);
-        var message = new MailMessage(from, to);
-        message.Subject = "Восстановление пароля";
-        message.Body = $"На ваш адрес был выполнен запрос на изменение пароля!\n\nДля изменения перейдите по этой ссылке: {url}\n\nЕсли это были не вы срочно измените пароль!";
-        var smtp = new SmtpClient("smtp.yandex.ru", 587);
-        smtp.Credentials = new NetworkCredential("httpcourse@yandex.ru", "Zx24680!");
-        smtp.EnableSsl = true;
-        smtp.Send(message);
+        HttpClient client = new();
+        client.DefaultRequestHeaders.Add("User-Agent", "HttpCourse");
+        var builder = new UriBuilder("https://api.unisender.com/ru/api/sendEmail");
+        var body = $"<h1>Был выполнен запрос за изменение вашего пароля</h1><h2>Для изменения перейдите по ссылке: <a href={url}>{url}</a></h2><p>Если это были не вы, срочно поменяйте пароль!</p>";
+        builder.Query =
+            $"format=json&api_key=6irwuofxekoyrmyzfbpe48p9te7wjitgt97hzgaa&email={email}&sender_name=Http+Course&sender_email=httpcourse.2022@gmail.com&subject=Восстановление+пароля&body={body}&list_id=1";
+        var result = client.GetAsync(builder.ToString());
     }
 }
