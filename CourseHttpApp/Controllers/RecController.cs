@@ -23,7 +23,7 @@ public class RecController : ControllerBase
         var new_password = form["new_password"];
         using (var db = new ApplicationContext())
         {
-            var user = db.Users.FirstOrDefault(item => item.Change_key == key);
+            var user = db.users.FirstOrDefault(item => item.Change_key == key);
             if (user == null)
                 return Results.NotFound("Key not found");
             var hash = Crypt.GetHashPassword(new_password);

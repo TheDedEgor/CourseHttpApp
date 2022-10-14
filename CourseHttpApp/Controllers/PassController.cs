@@ -23,7 +23,7 @@ public class PassController : ControllerBase
         var url = "";
         using (var db = new ApplicationContext())
         {
-            var user = db.Users.FirstOrDefault(item => item.Login == login);
+            var user = db.users.FirstOrDefault(item => item.Login == login);
             if (user == null)
                 return Results.NotFound("Email not found");
             var change_key = Crypt.GetChangeKey(login);

@@ -23,7 +23,7 @@ public class AuthController : ControllerBase
         var password = form["password"];
         var hash = Crypt.GetHashPassword(password);
         using var db = new ApplicationContext();
-        var user = db.Users.FirstOrDefault(item => item.Login == login && item.Password == hash);
+        var user = db.users.FirstOrDefault(item => item.Login == login && item.Password == hash);
         if (user == null)
             return Results.NotFound("User not found");
             

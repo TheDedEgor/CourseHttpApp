@@ -22,14 +22,14 @@ public class CourseController : ControllerBase
         var result = new List<object>();
         using (var db = new ApplicationContext())
         {
-            foreach (var theme in db.Themes.ToList())
+            foreach (var theme in db.themes.ToList())
             {
                 var practice = new List<object>();
                 var theory = new List<object>();
-                foreach (var item in db.Practice.Where(x => x.Theme_id == theme.Id).ToList())
+                foreach (var item in db.practice.Where(x => x.Theme_id == theme.Id).ToList())
                 {
                     var response_options = new List<object>();
-                    foreach (var res in db.Response_options
+                    foreach (var res in db.response_options
                                  .Where(x => x.Theme_id == item.Id && x.Practice_id == item.Id).ToList()) 
                     {
                         response_options.Add(new
@@ -47,7 +47,7 @@ public class CourseController : ControllerBase
                         correct_id = item.Correct_id
                     });
                 }
-                foreach (var item in db.Theory.Where(x => x.Theme_id == theme.Id).ToList())
+                foreach (var item in db.theory.Where(x => x.Theme_id == theme.Id).ToList())
                 {
                     theory.Add(new
                     {
