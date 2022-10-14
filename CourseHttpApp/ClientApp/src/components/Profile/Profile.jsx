@@ -3,20 +3,34 @@ import {useNavigate} from "react-router-dom";
 import "./Profile.css"
 const Profile = () =>{
     let navigate = useNavigate()
-    const token = sessionStorage.getItem("access_token")
+    const token = localStorage.getItem("access_token")
     const handleLogOut = () =>{
-        sessionStorage.removeItem("access_token")
-        navigate('/')
+        localStorage.removeItem("access_token")
+        navigate('/auth')
     }
     return(
-        <div>{token ? 
-            <div>
-                <p>Имя</p>
-                <div>
-                    <h3>Прогресс курса</h3>
-                    <p></p>
-                </div>
-                <div onClick={() => handleLogOut()}>Выйти</div>
+        <div>
+            {token 
+                ? <div className="profile">
+                    <h1>Личный кабинет</h1>
+                    <div className="profile-data">
+                        <h3 className="profile-title">Персональные данные</h3>
+                        <div className="profile-data-input">
+                            <p>Имя</p>
+                            <input/>
+                            <p>Фамилия</p>
+                            <input/>
+                            <p>Email</p>
+                            <input/>
+                        </div>
+                    </div>
+                    <div className="theme-block">
+                        <p>Выберите тему</p>
+                    </div>
+                    <div className="btn-block">
+                        <p className="save-change-btn">Сохранить изменения</p>
+                        <p className="loginout-btn" onClick={() => handleLogOut()}>Выйти</p>
+                    </div>
             </div> : 
             <p>Bad</p>
         }</div>

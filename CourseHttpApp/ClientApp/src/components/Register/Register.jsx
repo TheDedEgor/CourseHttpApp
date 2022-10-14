@@ -8,7 +8,7 @@ const  Register = () =>{
     async function handleSubmit(event){
         const response = await handleFormSubmit(event,"/api/Reg")
         const user = await response.json()
-        sessionStorage.setItem("access_token", user.value.access_token)
+        localStorage.setItem("access_token", user.value.access_token)
         navigate('/')
     }
     

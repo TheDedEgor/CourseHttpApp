@@ -4,10 +4,7 @@ import "./Header.css"
 import {Link} from "react-router-dom";
 const Header = () =>{
     let navigate = useNavigate()
-    let  token = sessionStorage.getItem("access_token")
-    /*const handleLogOut = () =>{
-        sessionStorage.removeItem("access_token")
-    }*/
+    let  token = localStorage.getItem("access_token")
     return(
         <div className="header">
             <div className="header-logo">

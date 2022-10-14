@@ -33,7 +33,7 @@ const  Auth = () =>{
         }
         else{
             setValidUser('')
-            sessionStorage.setItem("access_token", user.value.access_token)
+            localStorage.setItem("access_token", user.value.access_token)
             navigate('/')
         }
     }

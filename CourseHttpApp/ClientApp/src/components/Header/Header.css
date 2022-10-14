@@ -13,7 +13,7 @@
 }
 .header-logo a b{
     font-size: 40px;
-    font-family: "Times New Roman";
+    /*font-family: "Times New Roman";*/
 }
 .header-link{
     text-decoration: none;
@@ -27,4 +27,7 @@
 .header-link_auth{
     background-color:olivedrab;
     padding: 10px 20px;
+}
+.active{
+    color:red;
 }

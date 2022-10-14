@@ -15,8 +15,23 @@
     border-left: 1px solid black;
     width:800px;
 }
+.main-link{
+    text-decoration: none;
+    color:black;
+    font-weight: 700;
+    font-size: 20px;
+}
 .depend-links{
+    display: flex;
+    flex-direction: column;
     margin-left: 20px;
+}
+.depend-links a{
+    text-decoration: none;
+    color:black;
+}
+.depend-links a:hover{
+    font-weight: 500;
 }
 .depend-not-link{
     display: none;

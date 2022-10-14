@@ -13,7 +13,7 @@ public static class Token
             issuer: AuthOptions.ISSUER,
             audience: AuthOptions.AUDIENCE,
             claims: claims,
-            expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(2)), // время действия 2 минуты
+            expires: DateTime.UtcNow.Add(TimeSpan.FromDays(14)), // время действия 2 недели
             signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
         
         return new JwtSecurityTokenHandler().WriteToken(jwt);

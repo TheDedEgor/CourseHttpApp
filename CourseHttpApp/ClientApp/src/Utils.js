@@ -8,8 +8,12 @@ function serializeForm(formNode) {
 }
 
 async function sendData(data,url) {
+    const token = sessionStorage.getItem("access_token")
     return await fetch(url, {
         method: 'POST',
         body: data,
+        headers:{
+            "Authorization": "Bearer " + token
+        }
     })
 }
