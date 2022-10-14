@@ -1,5 +1,4 @@
 ﻿using CourseHttpApp.Models;
-using CourseHttpApp.Models.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,13 +28,23 @@ public class CourseController : ControllerBase
                 var theory = new List<object>();
                 foreach (var item in db.Practice.Where(x => x.Theme_id == theme.Id).ToList())
                 {
+                    var response_options = new List<object>();
+                    foreach (var res in db.Response_options
+                                 .Where(x => x.Theme_id == item.Id && x.Practice_id == item.Id).ToList()) 
+                    {
+                        response_options.Add(new
+                        {
+                            id = res.Id,
+                            title = res.Title
+                        });
+                    }
                     practice.Add(new
                     {
                         id = item.Id,
                         description = item.Description,
                         image_url = item.Image_url,
-                        response_options = item.Response_options,
-                        correct = item.Correct
+                        response_options = response_options,
+                        correct_id = item.Correct_id
                     });
                 }
                 foreach (var item in db.Theory.Where(x => x.Theme_id == theme.Id).ToList())

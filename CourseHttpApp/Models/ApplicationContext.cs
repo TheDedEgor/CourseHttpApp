@@ -10,6 +10,7 @@ public class ApplicationContext : DbContext
     public DbSet<Theory> Theory { get; set; }
     public DbSet<Theme> Themes { get; set; }
     public DbSet<Practice> Practice { get; set; }
+    public DbSet<Response_option> Response_options { get; set; }
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
