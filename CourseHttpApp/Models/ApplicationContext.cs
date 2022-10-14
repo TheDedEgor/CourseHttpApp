@@ -6,6 +6,10 @@ namespace CourseHttpApp.Models;
 public class ApplicationContext : DbContext
 {
     public DbSet<User> Users { get; set; }
+    public DbSet<User_info> Users_info { get; set; }
+    public DbSet<Theory> Theory { get; set; }
+    public DbSet<Theme> Themes { get; set; }
+    public DbSet<Practice> Practice { get; set; }
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
