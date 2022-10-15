@@ -1,38 +1,109 @@
-.form_content{
+.form_content {
     display: flex;
     align-items: center;
     flex-direction: column;
     padding: 10px;
     margin-right: auto;
+    gap: 10px;
     margin-left: auto;
     width: 500px;
+    height: 350px;
+    background-color: white;
+    border-radius: 10px;
 }
-/*
-.form{
-    padding: 20px;
-    border: 1px solid black;
+
+.title_header {
+    margin-right: 38%;
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.form {
     display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    gap: 15px;
+}
+
+.icon_close {
+    width: 24px;
+    height: 24px;
+    color: red;
+}
+
+.icon_close:hover {
+    cursor: pointer;
+    background-color: #B9B5B5;
+    border-radius: 50%;
+}
+
+.header_auth {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+}
+.container_form{
+    width: 100%;
+}
+.container_form_btn{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
     justify-content: center;
-}*/
-.auth_input{
+}
+
+.auth_input {
+    width: 100%;
     text-align: center;
     height: 50px;
-    margin-top: 10px;
+    font-size: 20px;
     border-radius: 10px;
-    border: none;
+    border: 1px solid black;
 }
-.submit{
+
+.auth_input:focus {
+    outline: none;
+    border: 2px solid #8888D0;
+}
+
+.submit {
+    color: white;
+    width: 50%;
+    height: 50px;
+    border-radius: 10px;
     background-color: cornflowerblue;
     transition: all 0.2s ease-in;
 }
-.submit:hover{
-    box-shadow: 2px 2px 2px rgba(23,45,98,0.3);
+
+.submit:hover {
+    cursor: pointer;
+    box-shadow: 3px 3px 3px rgba(23, 45, 98, 0.3);
 }
-.bottom_link{
-    margin-top: 10px;
+.submit:disabled {
+    cursor:not-allowed ;
+}
+
+.bottom_link {
     color: gray;
-    margin-left: 50px;
 }
-.bottom_links{
+
+.bottom_links {
+    width: 100%;
     display: flex;
+    justify-content: space-around;
+}
+
+.modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

@@ -1,91 +1,110 @@
-﻿import React, {useEffect, useState} from "react";
+﻿import React, {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {handleFormSubmit} from "../../Utils";
-import "./Auth.css"
+import "./Auth.css";
+import icon_close from '../../images/close.svg';
+import AuthValid from "../AuthValid/AuthValid";
 
-const  Auth = () =>{
-    const [email,setEmail] = useState('')
-    const [password,setPassword] = useState('')
-    const [emailDirty,setEmailDirty] = useState(false)
-    const [passwordDirty,setPasswordDirty] = useState(false)
-    const [emailError,setEmailError] = useState("Email не может быть пустым")
-    const [passwordError,setPasswordError] = useState("Пароль не может быть пустым")
-    const [formValid,setFormValid] = useState(false)
-    const [validUser,setValidUser] = useState('')
-    
-    useEffect(() =>{
-        if(emailError || passwordError){
-            setFormValid(false)
-        }else{
-            setFormValid(true)
-        }
-    },[emailError,passwordError])
-    
+const Auth = () => {
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [emailError, setEmailError] = useState("")
+    const [passwordError, setPasswordError] = useState("")
+    const [formValid, setFormValid] = useState(true)
+    const [validUser, setValidUser] = useState('')
+
     let navigate = useNavigate()
-    async function handleSubmit(event){
-        const response = await handleFormSubmit(event,"/api/Auth")
-        const user = await response.json()
-        if(user.statusCode === 404){
-            setValidUser('Не верный логин или пароль!')
-            setFormValid(false)
-            setEmail('')
-            setPassword('')
+
+    async function handleSubmit(event) {
+        event.preventDefault();
+        let email = document.getElementById("auth_email");
+        let password = document.getElementById("auth_password");
+        let check = true
+
+        if (!email.value) {
+            setEmailError("Введите email!")
+            check = false
         }
-        else{
-            setValidUser('')
-            localStorage.setItem("access_token", user.value.access_token)
-            navigate('/')
+        if (!password.value) {
+            setPasswordError("Введите пароль!")
+            check = false
         }
-    }
-    
-    
-    const blurHandler = (e) =>{
-        switch (e.target.name){
-            case "login":
-                setEmailDirty(true)
-                break
-            case "password":
-                setPasswordDirty(true)
-                break
-        }
-    }
-    const emailHandler = (e) =>{
-        setEmail(e.target.value)
-        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        if(!re.test(String(e.target.value).toLowerCase())){
-            setEmailError("Некорректный email")
-        }
-        else{
-            setEmailError("")
-        }
-    }
-    const passwordHandler = (e) =>{
-        setPassword(e.target.value)
-        if(e.target.value.length < 3){
-            setPasswordError("Пароль не может быть меньше 3 символов")
-            if(!e.target.value){
-                setPasswordError("Пароль не может быть пустым")
+        if (check) {
+            const response = await handleFormSubmit(event, "/api/Auth")
+            const user = await response.json()
+            if (user.statusCode === 404) {
+                setValidUser('Не верный логин или пароль!')
+                setFormValid(false)
+                setEmail('')
+                setPassword('')
+            } else {
+                setValidUser('')
+                localStorage.setItem("access_token", user.value.access_token)
+                navigate('/')
             }
         }
-        else{
-            setPasswordError('')
+    }
+
+    const close = () => {
+        navigate('/')
+    }
+
+    const emailHandler = (e) => {
+        setEmail(e.target.value)
+        setValidUser('')
+        if (!e.target.value) {
+            setEmailError("")
+        } else {
+            const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            if (!re.test(String(e.target.value).toLowerCase())) {
+                setEmailError("Некорректный email")
+            } else {
+                setEmailError("")
+            }
         }
     }
-    
-    return(
-        <div className="form_content">
-            <h3>Вход</h3>
-            <form onSubmit={handleSubmit} className="form">
-                {(emailDirty && emailError) && <div style={{color:'red'}}>{emailError}</div>}
-                <input onChange={e => emailHandler(e)} value={email} onBlur={(e) => blurHandler(e)} name="login" placeholder="Email" className="auth_input"/>
-                {(passwordDirty && passwordError) && <div style={{color:'red'}}>{passwordError}</div>}
-                <input onChange={e => passwordHandler(e)} value={password} onBlur={(e) => blurHandler(e)} name="password" placeholder="Password" type="password" className="auth_input"/>
-                <input disabled={!formValid} type="submit" value="Войти" className="auth_input submit"/>
-                {validUser !== "" ? <div style={{color: 'red'}}>{validUser}</div> : <></>}
-            </form>
-            <div className="bottom_links">
-                <Link to="/forgotPass" className="bottom_link">Забыли пароль</Link>
-                <Link to="/reg" className="bottom_link">Еще не зарегистрирован!</Link>
+    const passwordHandler = (e) => {
+        setPassword(e.target.value)
+        setValidUser('')
+        if (!e.target.value) {
+            setPasswordError("")
+        } else {
+            if (e.target.value.length < 3) {
+                setPasswordError("Пароль не может быть меньше 3 символов")
+            } else {
+                setPasswordError('')
+            }
+        }
+    }
+
+    return (
+        <div className="modal">
+            <div className="form_content">
+                <div className="header_auth">
+                    <div className="title_header">Вход</div>
+                    <img className="icon_close" onClick={() => close()} src={icon_close} alt="Закрыть"/>
+                </div>
+                <form onSubmit={handleSubmit} className="form">
+                    <div className="container_form">
+                        <input onChange={e => emailHandler(e)} value={email} name="login"
+                               id="auth_email" placeholder="Email" className="auth_input"/>
+                        <AuthValid error_msg={emailError}></AuthValid>
+                    </div>
+                    <div className="container_form">
+                        <input onChange={e => passwordHandler(e)} value={password}
+                               name="password" id="auth_password" placeholder="Password" type="password"
+                               className="auth_input"/>
+                        <AuthValid error_msg={passwordError}></AuthValid>
+                    </div>
+                    <div className="container_form_btn">
+                        <input disabled={!formValid} type="submit" value="Войти" className="submit"/>
+                        <AuthValid error_msg={validUser}></AuthValid>
+                    </div>
+                </form>
+                <div className="bottom_links">
+                    <Link to="/forgotPass" className="bottom_link">Забыли пароль</Link>
+                    <Link to="/reg" className="bottom_link">Еще не зарегистрированы?</Link>
+                </div>
             </div>
         </div>
     )
