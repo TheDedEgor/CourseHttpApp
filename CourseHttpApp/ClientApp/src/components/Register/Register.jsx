@@ -13,12 +13,17 @@ const  Register = () =>{
     }
     
     return(
-        <form onSubmit={handleSubmit} className="form">
-            <input name="name" placeholder="First Name"/>
-            <input name="login" placeholder="Email"/>
-            <input name="password" placeholder="Password" type="password"/>
-            <input type="submit" value="Зарегистрироваться"/>
-        </form>
+        <div className="modal">
+            <div className="form_content_reg">
+                <form onSubmit={handleSubmit} className="form">
+                    <input name="name" placeholder="First Name"/>
+                    <input name="login" placeholder="Email"/>
+                    <input name="password" placeholder="Password" type="password"/>
+                    <input type="submit" value="Зарегистрироваться"/>
+                </form>
+            </div>
+        </div>
+        
     )
 }
 export default Register;
