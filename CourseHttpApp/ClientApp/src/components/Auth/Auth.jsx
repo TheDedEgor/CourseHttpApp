@@ -95,8 +95,8 @@ const Auth = () => {
     }
 
     return (
-        <div className="modal">
-            <div className="form_content_auth">
+        <div className="modal" onClick={() => navigate('/')}>
+            <div className="form_content_auth" onClick={(e) => e.stopPropagation()}>
                 <div className="header_auth">
                     <div className="title_header">Вход</div>
                     <img className="icon_close" onClick={() => close()} src={icon_close} alt="Закрыть"/>

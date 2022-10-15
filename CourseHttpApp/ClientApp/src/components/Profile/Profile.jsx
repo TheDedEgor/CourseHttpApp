@@ -6,7 +6,7 @@ const Profile = () =>{
     const token = localStorage.getItem("access_token")
     const handleLogOut = () =>{
         localStorage.removeItem("access_token")
-        navigate('/auth')
+        navigate('/')
     }
     return(
         <div>

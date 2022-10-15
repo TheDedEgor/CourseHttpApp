@@ -1,4 +1,5 @@
-﻿.course-block{
+﻿/*
+.course-block{
     display: flex;
 }
 .course{
@@ -41,4 +42,5 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
-}
+}*/
+

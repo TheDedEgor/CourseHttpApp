@@ -2,6 +2,7 @@
 import "./Traning.css"
 import {Link} from 'react-router-dom'
 import sticker from '../../images/bad_sticker.png'
+import NotAuth from "../NotAuth/NotAuth";
 const Traning = ({tasks}) =>{
     const token = localStorage.getItem("access_token")
     const params = ['Params','Header','Body']
@@ -59,10 +60,7 @@ const Traning = ({tasks}) =>{
                     </div>
                 </div>
                 :
-                <div className="error_traning">
-                    <img src={sticker} alt="sticker"/>
-                    <h3>Вам не доступен тренажёр, пожалуйста, войдите в свой <Link to="/auth" className="auth_link">аккаунт</Link></h3>
-                </div>
+                <NotAuth link="тренажёр"/>
             }
         </div>
     )

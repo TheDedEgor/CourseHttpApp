@@ -2,36 +2,55 @@
 import "./Course.css"
 import {Link, Route, Router, Routes, useParams} from 'react-router-dom'
 import sticker from '../../images/bad_sticker.png'
+import NotAuth from "../NotAuth/NotAuth";
+import Loader from "../UI/Loader/Loader";
 const Course = () =>{
+    const token = localStorage.getItem("access_token")
     const [course,setCourse] = useState([])
-    const isAuth = getData()
+    const [loading,setLoading] = useState(true)
+    const [error,setError] = useState('')
+    useEffect( () => {
+        getData()
+    },[])
+    if(token === null){
+        return <NotAuth link="курс"/>
+    }
     async function getData(){
-        const token = localStorage.getItem("access_token")
         const response = await fetch("/api/Course", {
             method: 'GET',
-            headers:{
+            headers: {
                 "Accept": "application/json",
                 "Authorization": "Bearer " + token
             }
-        })
-        if(response.ok === false){
-            return false
-        }
-        else{
-            const data = await response.json();
+        }).then(response => {
+            if (response.ok) {
+                return response.json()
+            }
+            throw response
+        }).then(data => {
             setCourse(data.value)
-            return true
-        }
+            setLoading(false)
+        }).catch((e) => {
+            setError(e)
+        }).finally(() => {
+            setLoading(false)
+        })
     }
-   /* const {id} = useParams()*/
-   /* const {practike} = useParams()*/
-    /*const params = useParams()*/
-    /*let post = courses[0].dependises[id -1]
+    if(error){
+        console.log("Ошибка входа")
+    }
+    if(loading){
+        return <Loader/>
+    }
+    /*const {id} = useParams()
+    const {practike} = useParams()
+    const params = useParams()
+    let post = courses[0].dependises[id -1]
     let test = post?.praktika[0]
     const token = sessionStorage.getItem("access_token")*/
     return(
         <div>
-                {/*<div className="course-block">
+            {/*<div className="course-block">
                     {courses.map((course) =>(
                         <div className="course" key={course.id}>
                             <div className="course-title">
@@ -69,11 +88,19 @@ const Course = () =>{
                     <img src={sticker} alt="sticker"/>
                     <h3>Вам не доступен курс, пожалуйста, войдите в свой <Link to="/auth" className="auth_link">аккаунт</Link></h3>
                 </div>*/}
-            {isAuth ? <div>
+            <div>
                 {course.map(course => (
-                    <div>{course.theme}</div>
+                    <div>
+                       <h2>{course.theme}</h2>
+                        {course.theory.map(a => (
+                            <div className="theory">
+                                <p>Теория</p>
+                                {a.description}
+                            </div>
+                        ))}
+                    </div>
                 ))}
-            </div> : <div>Bad</div>}
+            </div> 
         </div>
     )
 }
