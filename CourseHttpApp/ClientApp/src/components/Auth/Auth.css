@@ -26,18 +26,6 @@
     gap: 15px;
 }
 
-.icon_close {
-    width: 24px;
-    height: 24px;
-    color: red;
-}
-
-.icon_close:hover {
-    cursor: pointer;
-    background-color: #B9B5B5;
-    border-radius: 50%;
-}
-
 .header_modal {
     display: flex;
     align-items: center;
@@ -48,14 +36,6 @@
 .container_form {
     position: relative;
     width: 100%;
-}
-
-.container_form_btn {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
 }
 
 .auth_input {
@@ -76,31 +56,9 @@
     outline: none;
     border: 2px solid #2C36C6;
 }
-
-.submit {
-    color: white;
+.auth_btn{
     width: 50%;
     height: 50px;
-    border-radius: 10px;
-    background-color: cornflowerblue;
-    transition: all 0.2s ease-in;
-    border: 1px solid gray;
-}
-
-.submit:hover {
-    cursor: pointer;
-    box-shadow: 3px 3px 3px rgba(23, 45, 98, 0.3);
-    outline: 1px solid black;
-}
-
-.submit:disabled {
-    cursor: not-allowed;
-    background-color: gray;
-}
-
-.submit:disabled:hover {
-    box-shadow: none;
-    outline: none;
 }
 
 .bottom_link {
@@ -113,19 +71,7 @@
     justify-content: space-around;
 }
 
-.modal {
-    position: fixed;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.password_control {
+.auth_password_control {
     width: 25px;
     height: 25px;
     position: absolute;

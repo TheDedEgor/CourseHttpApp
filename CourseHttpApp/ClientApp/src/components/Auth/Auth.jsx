@@ -2,6 +2,7 @@
 import {Link, useNavigate} from "react-router-dom";
 import {handleFormSubmit} from "../../Utils";
 import "./Auth.css";
+import "../../css/modal.css";
 import icon_close from '../../images/close.svg';
 import icon_show from '../../images/show_pass.png';
 import icon_hide from '../../images/hide_pass.png'
@@ -31,11 +32,12 @@ const Auth = () => {
             setPasswordError("Введите пароль!")
             check = false
         }
+        
         if (check) {
             const response = await handleFormSubmit(event, "/api/Auth")
             const user = await response.json()
             if (user.statusCode === 404) {
-                setValidUser('Не верный логин или пароль!')
+                setValidUser('Неверный логин или пароль!')
                 setFormValid(false)
                 setEmail('')
                 setPassword('')
@@ -74,8 +76,8 @@ const Auth = () => {
         if (!e.target.value) {
             setPasswordError("")
         } else {
-            if (e.target.value.length < 3) {
-                setPasswordError("Пароль не может быть меньше 3 символов")
+            if (e.target.value.length < 6) {
+                setPasswordError("Пароль не может быть меньше 6 символов")
                 setFormValid(false)
             } else {
                 setPasswordError('')
@@ -111,17 +113,17 @@ const Auth = () => {
                         <input onChange={e => passwordHandler(e)} value={password}
                                name="password" id="auth_password" placeholder="Пароль" type="password"
                                className="auth_input"/>
-                        <img alt="Пароль" onClick={(event) => showPassword(event)} className="password_control"
+                        <img alt="Пароль" onClick={(event) => showPassword(event)} className="auth_password_control"
                              src={icon_show}/>
                         <AuthValid error_msg={passwordError}></AuthValid>
                     </div>
                     <div className="container_form_btn">
-                        <input disabled={!formValid} type="submit" value="Войти" className="submit"/>
+                        <input disabled={!formValid} type="submit" value="Войти" className="submit_btn auth_btn"/>
                         <AuthValid error_msg={validUser}></AuthValid>
                     </div>
                 </form>
                 <div className="bottom_links">
-                    <Link to="/forgotPass" className="bottom_link">Забыли пароль</Link>
+                    <Link to="/forgotPass" className="bottom_link">Забыли пароль?</Link>
                     <Link to="/reg" className="bottom_link">Еще не зарегистрированы?</Link>
                 </div>
             </div>

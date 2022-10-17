@@ -1,0 +1,55 @@
+﻿.modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon_close {
+    width: 24px;
+    height: 24px;
+    color: red;
+}
+
+.icon_close:hover {
+    cursor: pointer;
+    background-color: #B9B5B5;
+    border-radius: 50%;
+}
+
+.container_form_btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.submit_btn {
+    color: white;
+    border-radius: 10px;
+    background-color: cornflowerblue;
+    transition: all 0.2s ease-in;
+    border: 1px solid gray;
+}
+
+.submit_btn:hover {
+    cursor: pointer;
+    box-shadow: 3px 3px 3px rgba(23, 45, 98, 0.3);
+    outline: 1px solid black;
+}
+
+.submit_btn:disabled {
+    cursor: not-allowed;
+    background-color: gray;
+}
+
+.submit_btn:disabled:hover {
+    box-shadow: none;
+    outline: none;
+}
