@@ -83,7 +83,7 @@ const Auth = () => {
         }
     }
 
-    const test = (e) => {
+    const showPassword = (e) => {
         let input = document.getElementById('auth_password');
         if (input.getAttribute('type') === 'password') {
             e.target.src = icon_hide;
@@ -95,10 +95,10 @@ const Auth = () => {
     }
 
     return (
-        <div className="modal" onClick={() => navigate('/')}>
+        <div className="modal" onClick={() => close()}>
             <div className="form_content_auth" onClick={(e) => e.stopPropagation()}>
-                <div className="header_auth">
-                    <div className="title_header">Вход</div>
+                <div className="header_modal">
+                    <div className="title_header_auth">Вход</div>
                     <img className="icon_close" onClick={() => close()} src={icon_close} alt="Закрыть"/>
                 </div>
                 <form onSubmit={handleSubmit} className="form_auth">
@@ -111,7 +111,7 @@ const Auth = () => {
                         <input onChange={e => passwordHandler(e)} value={password}
                                name="password" id="auth_password" placeholder="Пароль" type="password"
                                className="auth_input"/>
-                        <img alt="Пароль" onClick={(event) => test(event)} className="password_control"
+                        <img alt="Пароль" onClick={(event) => showPassword(event)} className="password_control"
                              src={icon_show}/>
                         <AuthValid error_msg={passwordError}></AuthValid>
                     </div>

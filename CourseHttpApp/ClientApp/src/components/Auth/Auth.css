@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    padding: 10px;
+    padding: 20px;
     margin-right: auto;
     gap: 10px;
     margin-left: auto;
@@ -12,7 +12,7 @@
     border-radius: 10px;
 }
 
-.title_header {
+.title_header_auth {
     margin-right: 37%;
     font-size: 30px;
     font-weight: 500;
@@ -38,7 +38,7 @@
     border-radius: 50%;
 }
 
-.header_auth {
+.header_modal {
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -100,6 +100,7 @@
 
 .submit:disabled:hover {
     box-shadow: none;
+    outline: none;
 }
 
 .bottom_link {

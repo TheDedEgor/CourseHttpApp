@@ -1,4 +1,4 @@
-﻿.form_content_reg{
+﻿.form_content_reg {
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -6,8 +6,22 @@
     margin-right: auto;
     gap: 10px;
     margin-left: auto;
-    width: 500px;
-    height: 350px;
+    width: 450px;
+    height: 450px;
     background-color: white;
     border-radius: 10px;
+}
+
+.title_header_reg {
+    margin-right: 25%;
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.form_reg {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 80%;
+    gap: 15px;
 }
