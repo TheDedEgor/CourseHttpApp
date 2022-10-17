@@ -1,17 +1,28 @@
-﻿import React, {useEffect, useState} from "react";
+﻿import React, {createRef, useEffect, useRef, useState} from "react";
 import "./Course.css"
-import {Link, Route, Router, Routes, useParams} from 'react-router-dom'
-import sticker from '../../images/bad_sticker.png'
 import NotAuth from "../NotAuth/NotAuth";
 import Loader from "../UI/Loader/Loader";
+import photo from '../../images/theory-1-2.png'
+import {AiOutlineArrowDown} from 'react-icons/ai'
+import {AiOutlineArrowUp} from 'react-icons/ai'
+import ScrollTop from "../UI/ScrollTop/ScrollTop";
+import {AiFillLock} from 'react-icons/ai'
+import Slider from "../UI/Slider/Slider";
 const Course = () =>{
     const token = localStorage.getItem("access_token")
     const [course,setCourse] = useState([])
     const [loading,setLoading] = useState(true)
     const [error,setError] = useState('')
+    const [active,setActive] = useState(0)
+    const [activeBlock,setActiveBlock] = useState(false)
+    const dataRefs = []
     useEffect( () => {
         getData()
     },[])
+    const handleOnClick = (index) =>{
+        setActive(index)
+        setActiveBlock(!activeBlock)
+    }
     if(token === null){
         return <NotAuth link="курс"/>
     }
@@ -42,65 +53,68 @@ const Course = () =>{
     if(loading){
         return <Loader/>
     }
-    /*const {id} = useParams()
-    const {practike} = useParams()
-    const params = useParams()
-    let post = courses[0].dependises[id -1]
-    let test = post?.praktika[0]
-    const token = sessionStorage.getItem("access_token")*/
+    course.forEach(_ =>{
+        dataRefs.push(React.createRef(null))
+    })
+    const scrollToSection = (e,index) =>{
+        dataRefs[index].current.focus()
+        dataRefs[index].current.scrollIntoView({
+            behavior:'smooth',
+            block:'start'
+        })
+    }
+    console.log(course)
     return(
-        <div>
-            {/*<div className="course-block">
-                    {courses.map((course) =>(
-                        <div className="course" key={course.id}>
-                            <div className="course-title">
-                                <h2>{course.name}</h2>
-                            </div>
-                            <div className="course-links">
-                                {course.dependises.map((depend,index) =>(
-                                    <div key={depend.id}>
-                                        <h3 className="main-link">{depend.name}</h3>
-                                        <div className="depend-links">
-                                            <Link to={`/${depend.name}/${depend.id}`}>Теория</Link>
-                                            <Link to={`/${depend.name}/${depend.id}/${depend.praktika[0].title}`}>Практика</Link>
-                                        </div>
-                                    </div>
-                                ))}
+        <div className="course">
+            <ScrollTop/>
+            <h1 className="course-title">Курс по HTTP-запросам</h1>
+            <div className="course-block">
+                {course.map((course_name,index) => (
+                    <div className="course-burger-item" key={index}>
+                        <div onClick={() => handleOnClick(course_name.theme_id)} className="course-name-title">
+                            {course_name.theme}
+                            { active === course_name.theme_id ? <AiOutlineArrowUp/> :  <AiOutlineArrowDown/>}
+                        </div>
+                        <div className={active === course_name.theme_id  ? "active-block" : "not-active-block"}>
+                            <p onClick={(e) => scrollToSection(e,index)} className="course-links">Теория</p>
+                            <div onClick={(e) => scrollToSection(e,index)} className="course-links lock-links">
+                                <p>Практика</p>
+                                <AiFillLock className="lock"/>
                             </div>
                         </div>
-                    ))}
-                    <div className="main-block">
-                        <Routes>
-                            <Route path={`${id}/${id}`} element={<div>asd</div>}/>
-                            <Route path={`${id}/${id}`} element={<div>asdad</div>}/>
-                        </Routes>
-                        {post && <div>
-                            <h1>{post.name}</h1>
-                            <span>{post.desc}</span>
-                            {post.image === null ? <></> :<img src={post.image} alt="post-img"/>}
-                        </div>}
-                        {
-                            test && <div>{test.title}</div>
-                        }
                     </div>
-                </div> :
-                <div className="error_course">
-                    <img src={sticker} alt="sticker"/>
-                    <h3>Вам не доступен курс, пожалуйста, войдите в свой <Link to="/auth" className="auth_link">аккаунт</Link></h3>
-                </div>*/}
-            <div>
-                {course.map(course => (
-                    <div>
-                       <h2>{course.theme}</h2>
-                        {course.theory.map(a => (
-                            <div className="theory">
-                                <p>Теория</p>
-                                {a.description}
+                ))}
+            </div>
+            {course.map((a,index) => (
+                <div ref={dataRefs[index]} key={index}>
+                    {/*<h3>{a.theme}</h3>
+                    <div>{a.theory.map((d,index) => (
+                            <div className="thory-content" key={index}>
+                                {d.description}
+                                <img src="../../images/theory-1-2.png" alt="theory"/>
+                            </div>
+                        <Slider d={a}/>
+                        ))}
+                    </div>*/}
+                    <Slider a={a} title={a.theme}/>
+                    <div className="practice-block">
+                        <h3>Практика</h3>
+                        {a.practice.map((prac,index) => (
+                            <div className="practice">
+                                <p>{prac.description}</p>
+                                <div className="test-block">
+                                    <input type="radio" value="a" name="1"/>
+                                    <label>Ответ 1</label>
+                                </div>
+                                <div className="test-block">
+                                    <input type="radio" value="a" name="1"/>
+                                    <label>Ответ 2</label>
+                                </div>
                             </div>
                         ))}
                     </div>
-                ))}
-            </div> 
+                </div>
+            ))}
         </div>
     )
 }
