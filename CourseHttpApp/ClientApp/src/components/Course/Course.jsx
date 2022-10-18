@@ -7,7 +7,8 @@ import {AiOutlineArrowDown} from 'react-icons/ai'
 import {AiOutlineArrowUp} from 'react-icons/ai'
 import ScrollTop from "../UI/ScrollTop/ScrollTop";
 import {AiFillLock} from 'react-icons/ai'
-import Slider from "../UI/Slider/Slider";
+import SliderComponent from "../UI/Slider/SliderComponent";
+import Slider from 'react-slick'
 const Course = () =>{
     const token = localStorage.getItem("access_token")
     const [course,setCourse] = useState([])
@@ -17,7 +18,7 @@ const Course = () =>{
     const [activeBlock,setActiveBlock] = useState(false)
     const dataRefs = []
     useEffect( () => {
-        getData()
+        getData()   
     },[])
     const handleOnClick = (index) =>{
         setActive(index)
@@ -30,7 +31,7 @@ const Course = () =>{
         const response = await fetch("/api/Course", {
             method: 'GET',
             headers: {
-                "Accept": "application/json",
+                "Accept": "applica  tion/json",
                 "Authorization": "Bearer " + token
             }
         }).then(response => {
@@ -63,11 +64,9 @@ const Course = () =>{
             block:'start'
         })
     }
-    console.log(course)
     return(
-        <div className="course">
-            <ScrollTop/>
-            <h1 className="course-title">Курс по HTTP-запросам</h1>
+        <div className="course">    
+            
             <div className="course-block">
                 {course.map((course_name,index) => (
                     <div className="course-burger-item" key={index}>
@@ -85,20 +84,13 @@ const Course = () =>{
                     </div>
                 ))}
             </div>
-            {course.map((a,index) => (
+            
+            <div className="course-content">
+                {course.map((a,index) => (
                 <div ref={dataRefs[index]} key={index}>
-                    {/*<h3>{a.theme}</h3>
-                    <div>{a.theory.map((d,index) => (
-                            <div className="thory-content" key={index}>
-                                {d.description}
-                                <img src="../../images/theory-1-2.png" alt="theory"/>
-                            </div>
-                        <Slider d={a}/>
-                        ))}
-                    </div>*/}
-                    <Slider a={a} title={a.theme}/>
-                    <div className="practice-block">
-                        <h3>Практика</h3>
+                    <SliderComponent d={a.theory} title={a.theme}/>
+                    {/*<div className="practice-block">
+                        <h3>Практика {a.theme}</h3>
                         {a.practice.map((prac,index) => (
                             <div className="practice">
                                 <p>{prac.description}</p>
@@ -112,9 +104,10 @@ const Course = () =>{
                                 </div>
                             </div>
                         ))}
-                    </div>
+                    </div>*/}
                 </div>
             ))}
+            </div>
         </div>
     )
 }
