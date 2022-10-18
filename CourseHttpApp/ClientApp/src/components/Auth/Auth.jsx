@@ -25,11 +25,11 @@ const Auth = () => {
         let check = true
 
         if (!email.value) {
-            setEmailError("Введите email!")
+            setEmailError("Введите Email!")
             check = false
         }
         if (!password.value) {
-            setPasswordError("Введите пароль!")
+            setPasswordError("Введите Пароль!")
             check = false
         }
         

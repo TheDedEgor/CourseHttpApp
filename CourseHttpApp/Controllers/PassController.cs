@@ -26,9 +26,16 @@ public class PassController : ControllerBase
             var user = db.users.FirstOrDefault(item => item.Login == login);
             if (user == null)
                 return Results.NotFound("Email not found");
+            if (user.Send_time_key != null && user.Send_time_key.Value.Ticks - DateTime.Now.Ticks > 0)
+            {
+                return Results.Conflict("Not the time");
+            }
             var change_key = Crypt.GetChangeKey(login);
-            url = $"https://localhost:44414/newPass?key={change_key}";
+            var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+            var urlNewPass = config.GetValue<string>("UrlNewPass");
+            url = $"{urlNewPass}?key={change_key}";
             user.Change_key = change_key;
+            user.Send_time_key = DateTime.Now.AddMinutes(10);
             db.SaveChanges();
         }
         
