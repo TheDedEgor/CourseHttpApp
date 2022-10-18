@@ -18,7 +18,9 @@ const Course = () =>{
     const [activeBlock,setActiveBlock] = useState(false)
     const dataRefs = []
     useEffect( () => {
-        getData()   
+        if(token !== null){
+            getData()
+        }
     },[])
     const handleOnClick = (index) =>{
         setActive(index)
