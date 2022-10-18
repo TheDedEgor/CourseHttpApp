@@ -142,7 +142,8 @@ const Register = () => {
                         <RegValid error_msg={passwordError}></RegValid>
                     </div>
                     <div className="container_form_btn">
-                        <input disabled={!formValid} className="submit_btn reg_btn" type="submit" value="Зарегистрироваться"/>
+                        <input disabled={!formValid} className="submit_btn reg_btn" type="submit"
+                               value="Зарегистрироваться"/>
                         <RegValid error_msg={validUser}></RegValid>
                     </div>
                 </form>

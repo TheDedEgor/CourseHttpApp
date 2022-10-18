@@ -12,6 +12,7 @@
     border-radius: 10px;
 }
 .form_reg_item{
+    position: relative;
     width: 75%;
 }
 
@@ -57,8 +58,8 @@
     width: 22px;
     height: 22px;
     position: absolute;
-    top: 31.4vw;
-    left: 55.5vw;
+    top: 35px;
+    left: 210px;
 }
 .reg_error_red{
     outline: 1px solid #E16161;

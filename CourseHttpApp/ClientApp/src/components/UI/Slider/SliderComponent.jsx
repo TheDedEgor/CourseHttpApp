@@ -1,6 +1,5 @@
 ﻿import React,{useState,useEffect} from "react";
 import "./SliderComponent.css"
-import Slider from 'react-slick'
 import {FiChevronRight, FiChevronsRight} from "react-icons/fi";
 import {FiChevronsLeft} from "react-icons/fi";
 

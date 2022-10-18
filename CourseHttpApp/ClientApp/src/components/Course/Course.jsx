@@ -8,7 +8,7 @@ import {AiOutlineArrowUp} from 'react-icons/ai'
 import ScrollTop from "../UI/ScrollTop/ScrollTop";
 import {AiFillLock} from 'react-icons/ai'
 import SliderComponent from "../UI/Slider/SliderComponent";
-import Slider from 'react-slick'
+
 const Course = () =>{
     const token = localStorage.getItem("access_token")
     const [course,setCourse] = useState([])
