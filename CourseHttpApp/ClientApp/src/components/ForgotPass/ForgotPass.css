@@ -1,11 +1,28 @@
-﻿.form_forgot{
+﻿.form_content_forgot_pass{
     display: flex;
     align-items: center;
     flex-direction: column;
     padding: 10px;
     margin-right: auto;
+    gap: 10px;
     margin-left: auto;
-    width: 500px;
+    width: 420px;
+    height: 235px;
+    background-color: white;
+    border-radius: 10px;
+}
+.title_header_forgot_pass{
+    margin-right: 10%;
+    font-size: 25px;
+    font-weight: 500;
+}
+
+.form_forgot_pass{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 85%;
+    gap: 10px;
 }
 .form_forgot input{
     text-align: center;

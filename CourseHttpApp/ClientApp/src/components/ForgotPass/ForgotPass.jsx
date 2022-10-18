@@ -1,52 +1,84 @@
 ﻿import React, {useState} from "react";
 import "./ForgotPass.css"
+import "../../css/modal.css"
 import {handleFormSubmit} from "../../Utils";
+import icon_close from "../../images/close.svg";
+import {useNavigate} from "react-router-dom";
+import AuthValid from "../AuthValid/AuthValid";
 
-const ForgotPass = () =>{
-    const [validEmail,setValidEmail] = useState('')
-    const [email,setEmail] = useState('')
-    const [emailError,setEmailError] = useState('')
-    const [emailDirty,setEmailDirty] = useState(false)
-    async function handleSubmit(event){
-        const response = await handleFormSubmit(event,"/api/Pass");
-        debugger;
-        const data = await response.json();
-        if(data.statusCode === 404){
-            setValidEmail("Введён не верный email, попробуйте еще раз!")
+const ForgotPass = () => {
+    let navigate = useNavigate()
+    const [email, setEmail] = useState('')
+    const [emailError, setEmailError] = useState('')
+    const [formValid, setFormValid] = useState(true)
+    const [validUser, setValidUser] = useState('')
+
+    async function handleSubmit(event) {
+        event.preventDefault()
+
+        let email = document.getElementById("reg_email");
+        let check = true
+
+        if (!email.value) {
+            setEmailError("Введите Email!")
+            check = false
         }
-        else{
-            setValidEmail("Письмо отправлено, в течение 1-3 минут сообщение придет на вашу почту.\n Проверьте папку \"Спам\".")
-            setEmail('')
-        }
-    }
-    
-    const handleInputChange =(e)=> {
-        setEmail(e.target.value)
-        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        if (!re.test(String(e.target.value).toLowerCase())) {
-            setEmailError("Некорректный email")
-        } else {
-            setEmailError("")
-        }
-    }    
-    
-        const blurHandler = (e) =>{
-            switch (e.target.name){
-                case "login":
-                    setEmailDirty(true)
-                    break
+
+        if (check) {
+            const response = await handleFormSubmit(event, "/api/Pass");
+            const data = await response.json();
+            if (data.statusCode === 404) {
+                setValidUser("Введён неверный Email, попробуйте еще раз!")
+            } else if (data.statusCode === 409) {
+                setValidUser("Вы недавно отправляли письмо, попробуйте позже!")
+            } else {
+                close()
             }
         }
-    return(
-        <>
-            <h3>Восстановление пароля</h3>
-            <form onSubmit={handleSubmit} className="form_forgot" >
-                {(emailDirty && emailError) && <div style={{color:'red'}}>{emailError}</div>}
-                <input onBlur={e => blurHandler(e)} name="login" placeholder="Введите email" value={email} onChange={handleInputChange}/>
-                <input type="submit" value="Отправить"/>
-                {validEmail}
-            </form> 
-        </>
+    }
+
+    const close = () => {
+        navigate('/')
+    }
+
+    const emailHandler = (e) => {
+        setEmail(e.target.value)
+        setFormValid(true)
+        setValidUser("")
+        if (!e.target.value) {
+            setEmailError("")
+        } else {
+            const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            if (!re.test(String(e.target.value).toLowerCase())) {
+                setEmailError("Некорректный email")
+                setFormValid(false)
+            } else {
+                setEmailError("")
+            }
+        }
+    }
+
+    return (
+        <div className="modal" onClick={() => close()}>
+            <div className="form_content_forgot_pass" onClick={(e) => e.stopPropagation()}>
+                <div className="header_modal">
+                    <div className="title_header_forgot_pass">Восстановление пароля</div>
+                    <img className="icon_close" onClick={() => close()} src={icon_close} alt="Закрыть"/>
+                </div>
+                <form onSubmit={handleSubmit} className="form_forgot_pass">
+                    <div className="form_reg_item">
+                        <div className="title_form_reg_item">Введите вашу почту</div>
+                        <input className="reg_input" id="reg_email" name="login" placeholder="Почта"
+                               onChange={e => emailHandler(e)} value={email}/>
+                        <AuthValid error_msg={emailError}></AuthValid>
+                    </div>
+                    <div className="container_form_btn">
+                        <input disabled={!formValid} className="submit_btn reg_btn" type="submit" value="Отправить"/>
+                        <AuthValid error_msg={validUser}></AuthValid>
+                    </div>
+                </form>
+            </div>
+        </div>
     )
 }
 

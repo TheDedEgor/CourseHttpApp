@@ -26,13 +26,6 @@
     gap: 15px;
 }
 
-.header_modal {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    width: 100%;
-}
-
 .container_form {
     position: relative;
     width: 100%;
@@ -75,6 +68,6 @@
     width: 25px;
     height: 25px;
     position: absolute;
-    top: 20%;
-    left: 88%;
+    top: 0.9vw;
+    left: 19vw;
 }

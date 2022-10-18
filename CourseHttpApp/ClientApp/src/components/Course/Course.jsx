@@ -17,7 +17,9 @@ const Course = () =>{
     const [activeBlock,setActiveBlock] = useState(false)
     const dataRefs = []
     useEffect( () => {
-        getData()
+        if(token !== null){
+            getData()
+        }
     },[])
     const handleOnClick = (index) =>{
         setActive(index)
@@ -35,9 +37,9 @@ const Course = () =>{
             }
         }).then(response => {
             if (response.ok) {
-                return response.json()
+                return response.json();
             }
-            throw response
+            throw response;
         }).then(data => {
             setCourse(data.value)
             setLoading(false)
@@ -48,7 +50,7 @@ const Course = () =>{
         })
     }
     if(error){
-        console.log("Ошибка входа")
+        console.error(error);
     }
     if(loading){
         return <Loader/>
