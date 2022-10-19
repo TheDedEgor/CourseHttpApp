@@ -43,7 +43,6 @@ const Course = () =>{
             throw response
         }).then(data => {
             setCourse(data.value)
-            setLoading(false)
         }).catch((e) => {
             setError(e)
         }).finally(() => {
@@ -66,7 +65,27 @@ const Course = () =>{
             block:'start'
         })
     }
-    console.log(course)
+    async function getInfo(theme_id, type_id){
+        const response = await fetch(`/api/Info?theme_id=${theme_id}&type_id=${type_id}`, {
+            method: 'GET',
+            headers: {
+                "Accept": "application/json",
+                "Authorization": "Bearer " + token
+            }
+        }).then(response => {
+            if (response.ok) {
+                return response.json()
+            }
+            throw response
+        }).then(data => {
+            console.log(data.value)
+            setLoading(false)
+        }).catch((e) => {
+            setError(e)
+        }).finally(() => {
+            setLoading(false)
+        })
+    }
     return(
         <div className="course">    
             
@@ -78,9 +97,9 @@ const Course = () =>{
                             { active === course_name.id ? <AiOutlineArrowUp/> :  <AiOutlineArrowDown/>}
                         </div>
                         <div className={active === course_name.id  ? "active-block" : "not-active-block"}>
-                            <p onClick={(e) => scrollToSection(e,index)} className="course-links">Теория</p>
-                            <div onClick={(e) => scrollToSection(e,index)} className="course-links lock-links">
-                                <p>Практика</p>
+                            <p onClick={()=>getInfo(course_name.id, 1)} className="course-links">Теория</p>
+                            <div className="course-links lock-links">
+                                <p onClick={()=>getInfo(course_name.id, 2)}>Практика</p>
                                 <AiFillLock className="lock"/>
                             </div>
                         </div>
