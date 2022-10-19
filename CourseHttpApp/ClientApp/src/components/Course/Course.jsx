@@ -33,7 +33,7 @@ const Course = () =>{
         const response = await fetch("/api/Course", {
             method: 'GET',
             headers: {
-                "Accept": "applica  tion/json",
+                "Accept": "application/json",
                 "Authorization": "Bearer " + token
             }
         }).then(response => {
@@ -56,9 +56,9 @@ const Course = () =>{
     if(loading){
         return <Loader/>
     }
-    course.forEach(_ =>{
+    /*course.forEach(_ =>{
         dataRefs.push(React.createRef(null))
-    })
+    })*/
     const scrollToSection = (e,index) =>{
         dataRefs[index].current.focus()
         dataRefs[index].current.scrollIntoView({
@@ -66,17 +66,18 @@ const Course = () =>{
             block:'start'
         })
     }
+    console.log(course)
     return(
         <div className="course">    
             
             <div className="course-block">
-                {course.map((course_name,index) => (
+                {course.themes.map((course_name,index) => (
                     <div className="course-burger-item" key={index}>
-                        <div onClick={() => handleOnClick(course_name.theme_id)} className="course-name-title">
-                            {course_name.theme}
-                            { active === course_name.theme_id ? <AiOutlineArrowUp/> :  <AiOutlineArrowDown/>}
+                        <div onClick={() => handleOnClick(course_name.id)} className="course-name-title">
+                            {course_name.title}
+                            { active === course_name.id ? <AiOutlineArrowUp/> :  <AiOutlineArrowDown/>}
                         </div>
-                        <div className={active === course_name.theme_id  ? "active-block" : "not-active-block"}>
+                        <div className={active === course_name.id  ? "active-block" : "not-active-block"}>
                             <p onClick={(e) => scrollToSection(e,index)} className="course-links">Теория</p>
                             <div onClick={(e) => scrollToSection(e,index)} className="course-links lock-links">
                                 <p>Практика</p>
@@ -87,11 +88,11 @@ const Course = () =>{
                 ))}
             </div>
             
-            <div className="course-content">
-                {course.map((a,index) => (
+            {/*<div className="course-content">
+                {course.themes.map((a,index) => (
                 <div ref={dataRefs[index]} key={index}>
-                    <SliderComponent d={a.theory} title={a.theme}/>
-                    {/*<div className="practice-block">
+                    <SliderComponent d={a} title={a.title}/>
+                    <div className="practice-block">
                         <h3>Практика {a.theme}</h3>
                         {a.practice.map((prac,index) => (
                             <div className="practice">
@@ -106,10 +107,10 @@ const Course = () =>{
                                 </div>
                             </div>
                         ))}
-                    </div>*/}
+                    </div>
                 </div>
             ))}
-            </div>
+            </div>*/}
         </div>
     )
 }

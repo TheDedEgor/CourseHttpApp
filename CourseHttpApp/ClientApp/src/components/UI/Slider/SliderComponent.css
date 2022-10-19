@@ -46,9 +46,10 @@ Variables
 
 /* section */
 .section {
-    width: 60vw;
-    margin: 5rem auto;
-    max-width: var(--max-width);
+    width: 1000px;
+    height: 800px;
+    margin-left: 50px;
+    /*max-width: var(--max-width);*/
 }
 /*
 =============== 
@@ -57,7 +58,6 @@ Slider
 */
 .title {
     text-align: center;
-    margin-bottom: 2rem;
 }
 .title h2 {
     display: flex;
@@ -72,24 +72,15 @@ Slider
     font-weight: 700;
 }
 .section-center {
+    display: flex;
+    flex-direction: column;
     margin: 0 auto;
-    margin-top: 4rem;
-    width: 40vw;
-    height: 450px;
-    max-width: 800px;
+    width: 1000px;
+    height: 550px;
     text-align: center;
     position: relative;
-    display: flex;
     overflow: hidden;
-}
-.person-img {
-    border-radius: 50%;
-    margin-bottom: 1rem;
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    border: 4px solid var(--clr-grey-8);
-    box-shadow: var(--dark-shadow);
+    border: 1px solid black;
 }
 article h4 {
     text-transform: uppercase;
@@ -98,13 +89,11 @@ article h4 {
 }
 .title {
     text-transform: capitalize;
-    margin-bottom: 0.75rem;
     color: var(--clr-grey-3);
 }
 .text {
     max-width: 35em;
     margin: 0 auto;
-    margin-top: 2rem;
     line-height: 2;
     color: var(--clr-grey-5);
 }
@@ -116,14 +105,14 @@ article h4 {
 .prev,
 .next {
     position: absolute;
-    top: 200px;
+    top: 500px;
     transform: translateY(-50%);
     background: var(--clr-grey-5);
     color: var(--clr-white);
-    width: 1.25rem;
-    height: 1.25rem;
-    display: grid;
-    place-items: center;
+    width: 100px;
+    height: 100px;
+    /*display: grid;*/
+    /*place-items: center;*/
     border-color: transparent;
     font-size: 1rem;
     border-radius: var(--radius);
@@ -139,17 +128,6 @@ article h4 {
 }
 .next {
     right: 0;
-}
-@media (min-width: 800px) {
-    .text {
-        max-width: 45em;
-    }
-    .prev,
-    .next {
-        width: 2rem;
-        height: 2rem;
-        font-size: 1.5rem;
-    }
 }
 article {
     position: absolute;
@@ -169,4 +147,7 @@ article.lastSlide {
 }
 article.nextSlide {
     transform: translateX(100%);
+}
+.slick-desc{
+    
 }
