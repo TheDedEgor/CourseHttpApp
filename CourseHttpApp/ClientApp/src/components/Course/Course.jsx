@@ -7,16 +7,20 @@ import {AiOutlineArrowDown} from 'react-icons/ai'
 import {AiOutlineArrowUp} from 'react-icons/ai'
 import ScrollTop from "../UI/ScrollTop/ScrollTop";
 import {AiFillLock} from 'react-icons/ai'
-import SliderComponent from "../UI/Slider/SliderComponent";
+import TheorySlider from "../UI/TheorySlider/TheorySlider";
+import PracticeSlider from "../UI/PracticeSLider/PracticeSlider";
 
-const Course = () =>{
+const Course = ({theme_id,type_id}) =>{
     const token = localStorage.getItem("access_token")
     const [course,setCourse] = useState([])
     const [loading,setLoading] = useState(true)
     const [error,setError] = useState('')
     const [active,setActive] = useState(0)
     const [activeBlock,setActiveBlock] = useState(false)
-    const dataRefs = []
+    const [theory,setTheory] = useState(null)
+    const [practice,setPractice] = useState(null)
+    const [themeIdCourse,setThemeIdCourse] = useState(document.cookie.match(/theme_id=(.+?)(;|$)/))
+    const [typeIdCourse,setTypeIdCourse] = useState(document.cookie.match(/type_id=(.+?)(;|$)/))
     useEffect( () => {
         if(token !== null){
             getData()
@@ -25,9 +29,16 @@ const Course = () =>{
     const handleOnClick = (index) =>{
         setActive(index)
         setActiveBlock(!activeBlock)
+        document.cookie = `theme_id=${index}`
     }
     if(token === null){
         return <NotAuth link="курс"/>
+    }
+    if(error){
+        console.log("Ошибка входа")
+    }
+    if(loading){
+        return <Loader/>
     }
     async function getData(){
         const response = await fetch("/api/Course", {
@@ -49,22 +60,6 @@ const Course = () =>{
             setLoading(false)
         })
     }
-    if(error){
-        console.log("Ошибка входа")
-    }
-    if(loading){
-        return <Loader/>
-    }
-    /*course.forEach(_ =>{
-        dataRefs.push(React.createRef(null))
-    })*/
-    const scrollToSection = (e,index) =>{
-        dataRefs[index].current.focus()
-        dataRefs[index].current.scrollIntoView({
-            behavior:'smooth',
-            block:'start'
-        })
-    }
     async function getInfo(theme_id, type_id){
         const response = await fetch(`/api/Info?theme_id=${theme_id}&type_id=${type_id}`, {
             method: 'GET',
@@ -78,8 +73,15 @@ const Course = () =>{
             }
             throw response
         }).then(data => {
-            console.log(data.value)
-            setLoading(false)
+            if(type_id === 1){
+                setTheory(data.value)
+                setPractice(null)
+            }
+            else{
+                setPractice(data.value)
+                setTheory(null)
+            }
+            document.cookie = `type_id=${type_id}`
         }).catch((e) => {
             setError(e)
         }).finally(() => {
@@ -87,8 +89,7 @@ const Course = () =>{
         })
     }
     return(
-        <div className="course">    
-            
+        <div className="course">
             <div className="course-block">
                 {course.themes.map((course_name,index) => (
                     <div className="course-burger-item" key={index}>
@@ -100,36 +101,17 @@ const Course = () =>{
                             <p onClick={()=>getInfo(course_name.id, 1)} className="course-links">Теория</p>
                             <div className="course-links lock-links">
                                 <p onClick={()=>getInfo(course_name.id, 2)}>Практика</p>
-                                <AiFillLock className="lock"/>
+                                {/*<AiFillLock className="lock"/>*/}
                             </div>
                         </div>
                     </div>
                 ))}
             </div>
-            
-            {/*<div className="course-content">
-                {course.themes.map((a,index) => (
-                <div ref={dataRefs[index]} key={index}>
-                    <SliderComponent d={a} title={a.title}/>
-                    <div className="practice-block">
-                        <h3>Практика {a.theme}</h3>
-                        {a.practice.map((prac,index) => (
-                            <div className="practice">
-                                <p>{prac.description}</p>
-                                <div className="test-block">
-                                    <input type="radio" value="a" name="1"/>
-                                    <label>Ответ 1</label>
-                                </div>
-                                <div className="test-block">
-                                    <input type="radio" value="a" name="1"/>
-                                    <label>Ответ 2</label>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+            {loading ? <Loader/> :
+                <div className="course-content">
+                    {theory ? <TheorySlider theory={theory}/> : practice ? <PracticeSlider practice={practice}/> : <div>Выберите тему</div>}
                 </div>
-            ))}
-            </div>*/}
+            }
         </div>
     )
 }

@@ -13,6 +13,8 @@ import NewPass from "./components/NewPass/NewPass";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 
 const App = () =>{
+    const theme_id = document.cookie.match(/theme_id=(.+?)(;|$)/);
+    const type_id = document.cookie.match(/type_id=(.+?)(;|$)/)
     const tasks = [
         {
             id:1,
@@ -45,14 +47,14 @@ const App = () =>{
             success:false
         },
     ]
-    const token = localStorage.getItem("access_token")
+    console.log(theme_id,type_id)
     return(
         <div className="App">
             <div className="container">
                 <Header />
                 <>
                 <Routes>
-                    <Route path="/" element={<Course/>}/>
+                    <Route path="/" element={<Course theme_id={theme_id} type_id={type_id}/>}/>
                     <Route path="/traning" element={<Traning tasks={tasks}/>}/>
                     <Route path="/contacts" element={<Contacts/>}/>
                     <Route path="/auth" element={<Auth />}/>
