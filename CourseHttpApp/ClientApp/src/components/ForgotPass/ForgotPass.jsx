@@ -5,9 +5,11 @@ import {handleFormSubmit} from "../../Utils";
 import icon_close from "../../images/close.svg";
 import {useNavigate} from "react-router-dom";
 import AuthValid from "../AuthValid/AuthValid";
+import {useNotification} from "use-toast-notification";
 
 const ForgotPass = () => {
     let navigate = useNavigate()
+    const notification = useNotification()
     const [email, setEmail] = useState('')
     const [emailError, setEmailError] = useState('')
     const [formValid, setFormValid] = useState(true)
@@ -30,9 +32,17 @@ const ForgotPass = () => {
             if (data.statusCode === 404) {
                 setValidUser("Введён неверный Email, попробуйте еще раз!")
             } else if (data.statusCode === 409) {
-                setValidUser("Вы недавно отправляли письмо, попробуйте позже!")
+                close()
+                notification.show({
+                    message: 'Вы недавно отправляли письмо, попробуйте позже!',
+                    variant: 'error'
+                })
             } else {
                 close()
+                notification.show({
+                    message: 'Письмо отправлено и будет в течение нескольких минут, обязательно проверьте папку спам!',
+                    variant: 'success'
+                })
             }
         }
     }
@@ -67,7 +77,6 @@ const ForgotPass = () => {
                 </div>
                 <form onSubmit={handleSubmit} className="form_forgot_pass">
                     <div className="form_reg_item">
-                        <div className="title_form_reg_item">Введите вашу почту</div>
                         <input className="reg_input" id="reg_email" name="login" placeholder="Почта"
                                onChange={e => emailHandler(e)} value={email}/>
                         <AuthValid error_msg={emailError}></AuthValid>

@@ -1,0 +1,55 @@
+.form_content_new_pass {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    margin-right: auto;
+    gap: 10px;
+    margin-left: auto;
+    width: 450px;
+    height: 230px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.title_header_new_pass {
+    margin-right: 17%;
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.new_pass_input {
+    width: 100%;
+    padding: 10px;
+    height: 50px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+.form_new_pass {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 80%;
+    gap: 15px;
+}
+
+.new_pass_input:hover {
+    outline: none;
+    border: 2px solid #8888D0;
+}
+
+.new_pass_input:focus {
+    outline: none;
+    border: 2px solid #2C36C6;
+}
+
+.container_form {
+    position: relative;
+    width: 100%;
+}
+.new_pass_btn{
+    width: 50%;
+    height: 50px;
+}

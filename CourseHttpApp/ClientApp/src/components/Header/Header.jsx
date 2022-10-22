@@ -22,6 +22,8 @@ const Header = () =>{
                     <Link className="header-link" to="/">Курс</Link>
                     <Link className="header-link" to="/traning">Тренажер</Link>
                     <Link className="header-link" to="/contacts">Контакты</Link>
+                    <Link className="header-link header-link_auth" to="/auth">Войти</Link>
+                    <Link className="header-link header-link_auth" to="/reg">Регистрация</Link>
                 </div>
             }
         </div>

@@ -2,7 +2,7 @@
 using CourseHttpApp.Models.Common;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CourseHttpApp.Controllers;
+namespace CourseHttpApp.Controllers.Authorization;
 
 [ApiController]
 [Route("api/[controller]")]

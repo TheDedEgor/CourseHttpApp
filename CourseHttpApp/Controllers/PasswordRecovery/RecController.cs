@@ -2,7 +2,7 @@
 using CourseHttpApp.Models.Common;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CourseHttpApp.Controllers;
+namespace CourseHttpApp.Controllers.PasswordRecovery;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -25,7 +25,7 @@ public class RecController : ControllerBase
         {
             var user = db.users.FirstOrDefault(item => item.Change_key == key);
             if (user == null)
-                return Results.NotFound("Key not found");
+                return Results.NotFound("Key not found or invalid key");
             var hash = Crypt.GetHashPassword(new_password);
             user.Change_key = null;
             user.Password = hash;
