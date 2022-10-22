@@ -18,20 +18,31 @@ const NewPass = () => {
     let navigate = useNavigate()
 
     async function handleSubmit(event) {
-        const response = await handleFormSubmit(event, "/api/rec")
-        const data = await response.json()
-        if (data.statusCode === 404) {
-            close()
-            notification.show({
-                message: 'Что-то пошло не так, попробуйте еще раз!',
-                variant: 'error'
-            })
-        } else {
-            close()
-            notification.show({
-                message: 'Пароль был успешно изменен!',
-                variant: 'success'
-            })
+        event.preventDefault()
+        let password = document.getElementById("new_password");
+        let check = true
+
+        if (!password.value) {
+            setPasswordError("Введите Пароль!")
+            check = false
+        }
+
+        if (check) {
+            const response = await handleFormSubmit(event, "/api/rec")
+            const data = await response.json()
+            if (data.statusCode === 404) {
+                close()
+                notification.show({
+                    message: 'Что-то пошло не так, попробуйте еще раз!',
+                    variant: 'error'
+                })
+            } else {
+                close()
+                notification.show({
+                    message: 'Пароль был успешно изменен!',
+                    variant: 'success'
+                })
+            }
         }
     }
 
