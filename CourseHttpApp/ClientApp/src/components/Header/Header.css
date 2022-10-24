@@ -7,6 +7,7 @@
     background-color: #26325c;
 }
 .header-links{
+    /*position: relative;*/
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -50,4 +51,9 @@
 .header-link,
 .target {
     transition: all .35s ease-in-out;
+}
+
+.target{
+    border-color: white;
+    transform: none;
 }
