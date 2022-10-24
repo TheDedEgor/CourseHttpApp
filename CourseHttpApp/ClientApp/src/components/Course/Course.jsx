@@ -1,4 +1,5 @@
 ﻿import React, {createRef, useEffect, useRef, useState} from "react";
+import {useSearchParams} from "react-router-dom";
 import "./Course.css"
 import NotAuth from "../NotAuth/NotAuth";
 import Loader from "../UI/Loader/Loader";
@@ -10,7 +11,7 @@ import {AiFillLock} from 'react-icons/ai'
 import TheorySlider from "../UI/TheorySlider/TheorySlider";
 import PracticeSlider from "../UI/PracticeSLider/PracticeSlider";
 
-const Course = ({theme_id,type_id}) =>{
+const Course = () =>{
     const token = localStorage.getItem("access_token")
     const [course,setCourse] = useState([])
     const [loading,setLoading] = useState(true)
@@ -19,17 +20,20 @@ const Course = ({theme_id,type_id}) =>{
     const [activeBlock,setActiveBlock] = useState(false)
     const [theory,setTheory] = useState(null)
     const [practice,setPractice] = useState(null)
-    const [themeIdCourse,setThemeIdCourse] = useState(document.cookie.match(/theme_id=(.+?)(;|$)/))
-    const [typeIdCourse,setTypeIdCourse] = useState(document.cookie.match(/type_id=(.+?)(;|$)/))
+    const [searchParams,setSearchParams] = useSearchParams()
+    const themeQuery = searchParams.get('theme') || ''
     useEffect( () => {
         if(token !== null){
             getData()
         }
     },[])
-    const handleOnClick = (index) =>{
-        setActive(index)
-        setActiveBlock(!activeBlock)
-        document.cookie = `theme_id=${index}`
+    const handleOnClick = (index,course_name) =>{
+        const query = course_name
+        setSearchParams({theme:query})
+        if(course_name === themeQuery){
+            setActive(index)
+            setActiveBlock(!activeBlock)   
+        }
     }
     if(token === null){
         return <NotAuth link="курс"/>
@@ -76,12 +80,14 @@ const Course = ({theme_id,type_id}) =>{
             if(type_id === 1){
                 setTheory(data.value)
                 setPractice(null)
+                const params = {
+                    
+                }
             }
             else{
                 setPractice(data.value)
                 setTheory(null)
             }
-            document.cookie = `type_id=${type_id}`
         }).catch((e) => {
             setError(e)
         }).finally(() => {
@@ -93,15 +99,14 @@ const Course = ({theme_id,type_id}) =>{
             <div className="course-block">
                 {course.themes.map((course_name,index) => (
                     <div className="course-burger-item" key={index}>
-                        <div onClick={() => handleOnClick(course_name.id)} className="course-name-title">
+                        <div onClick={() => handleOnClick(course_name.id,course_name.title)} className="course-name-title">
                             {course_name.title}
-                            { active === course_name.id ? <AiOutlineArrowUp/> :  <AiOutlineArrowDown/>}
+                            { themeQuery === course_name.title ? <AiOutlineArrowUp/> :  <AiOutlineArrowDown/>}
                         </div>
-                        <div className={active === course_name.id  ? "active-block" : "not-active-block"}>
+                        <div className={themeQuery === course_name.title  ? "active-block" : "not-active-block"}>
                             <p onClick={()=>getInfo(course_name.id, 1)} className="course-links">Теория</p>
                             <div className="course-links lock-links">
                                 <p onClick={()=>getInfo(course_name.id, 2)}>Практика</p>
-                                {/*<AiFillLock className="lock"/>*/}
                             </div>
                         </div>
                     </div>
