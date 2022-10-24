@@ -96,7 +96,7 @@ const Course = () =>{
     }
     return(
         <div className="course">
-            <div className="course-block">
+            {/*<div className="course-block">
                 {course.themes.map((course_name,index) => (
                     <div className="course-burger-item" key={index}>
                         <div onClick={() => handleOnClick(course_name.id,course_name.title)} className="course-name-title">
@@ -116,7 +116,7 @@ const Course = () =>{
                 <div className="course-content">
                     {theory ? <TheorySlider theory={theory}/> : practice ? <PracticeSlider practice={practice}/> : <div>Выберите тему</div>}
                 </div>
-            }
+            }*/}
         </div>
     )
 }

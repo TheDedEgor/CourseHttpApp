@@ -29,6 +29,7 @@
     color: white;
     text-decoration: none;
     padding: 7px 15px;
+    z-index: 2;
     margin-left: 40px;
 }
 .header-link:hover{
@@ -38,10 +39,12 @@
     background-color:olivedrab;
     padding: 10px 20px;
 }
+
+
 .target {
     position: absolute;
     border-bottom: 4px solid transparent;
-    z-index: -1;
+    z-index: 1;
     transform: translateX(-60px);
 }
 .header-link,
