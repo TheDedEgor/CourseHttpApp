@@ -3,7 +3,7 @@ import {useNavigate} from "react-router-dom";
 import "./Header.css"
 import {Link} from "react-router-dom";
 
-const Header = () => {
+const Header = ({setActive}) => {
     let navigate = useNavigate()
     let token = localStorage.getItem("access_token")
     useEffect(() =>{
@@ -55,7 +55,7 @@ const Header = () => {
         for (let i = 0; i < links.length; i++) {
             links[i].addEventListener("click", mouseenterFunc);
         }
-    },[])
+    },[token])
     
     return (
         <div className="header">
@@ -66,17 +66,17 @@ const Header = () => {
                     <Link className="header-link" to="/traning">Тренажер</Link>
                     <Link className="header-link" to="/contacts">Контакты</Link>
                     <Link className="header-link" to="/profile">Профиль</Link>
-                    <span className="target"></span>
                 </div>
                 :
                 <div className="header-links">
                     <Link className="header-link" to="/">Курс</Link>
                     <Link className="header-link" to="/traning">Тренажер</Link>
                     <Link className="header-link" to="/contacts">Контакты</Link>
-                    <Link className="header-link header-link_auth" to="/auth">Войти</Link>
-                    <Link className="header-link header-link_auth" to="/reg">Регистрация</Link>
+                    <a onClick={() => setActive(true)} className="header-linkaa header-link_auth" to="/auth">Войти</a>
+                    <Link className="header-linkaa header-link_auth" to="/reg">Регистрация</Link>
                 </div>
             }
+            <span className="target"></span>
         </div>
     )
 };

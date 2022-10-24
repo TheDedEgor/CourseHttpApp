@@ -8,7 +8,7 @@ import icon_show from '../../images/show_pass.png';
 import icon_hide from '../../images/hide_pass.png'
 import AuthValid from "../AuthValid/AuthValid";
 
-const Auth = () => {
+const Auth = ({setActive}) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [emailError, setEmailError] = useState("")
@@ -44,13 +44,13 @@ const Auth = () => {
             } else {
                 setValidUser('')
                 localStorage.setItem("access_token", user.value.access_token)
-                navigate('/')
+                close()
             }
         }
     }
 
     const close = () => {
-        navigate('/')
+       setActive(false)
     }
 
     const emailHandler = (e) => {
