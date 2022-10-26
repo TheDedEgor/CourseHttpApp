@@ -1,9 +1,7 @@
 ﻿import React, {useState} from "react";
 import "./Traning.css"
-import {Link} from 'react-router-dom'
-import sticker from '../../images/bad_sticker.png'
-import NotAuth from "../NotAuth/NotAuth";
 import NotAuthTraning from "../NotAuthTraning/NotAuthTraning";
+
 const Traning = ({tasks}) =>{
     const token = localStorage.getItem("access_token")
     const params = ['Params','Header','Body']

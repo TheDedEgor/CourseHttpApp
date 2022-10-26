@@ -45,7 +45,6 @@ const App = () => {
             success: false
         },
     ]
-    const [course, setCourse] = useState([])
     const [active, setActive] = useState(false)
     return (
         <div className="App">
@@ -53,10 +52,10 @@ const App = () => {
                 <Header setActive={setActive}/>
                 <>
                     <Routes>
-                        <Route path="/" element={<Course/>}/>
+                        <Route path="/:title/:id/:slider_id/*" element={<Course/>}/>
+                        <Route path="/" element={<Course setActive={setActive}/>}/>
                         <Route path="/traning" element={<Traning tasks={tasks}/>}/>
                         <Route path="/contacts" element={<Contacts/>}/>
-                        <Route path="/auth" element={<Auth/>}/>
                         <Route path="/reg" element={<Register/>}/>
                         <Route path="/profile" element={<Profile/>}/>
                         <Route path="/forgotPass" element={<ForgotPass/>}/>

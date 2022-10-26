@@ -1,11 +1,11 @@
 ﻿import React from "react";
-import {Link} from 'react-router-dom'
-import "./NotAuth.css"
+import "./NotAuthCourse.css"
 import course_photo from '../../images/course_photo.png'
 import {AiFillCheckCircle} from 'react-icons/ai'
 import junior from '../../images/junior.png'
 import senior from '../../images/senior.png'
-const NotAuth = ({link}) => {
+
+const NotAuthCourse = ({setActive}) => {
     return(
         <div className="error_course">
             <div className="error-course-content-1">
@@ -14,7 +14,7 @@ const NotAuth = ({link}) => {
                     <p>HTTP — протокол прикладного уровня передачи данных, изначально — в виде гипертекстовых документов в формате HTML,
                         в настоящее время используется для передачи произвольных данных.
                     </p>
-                    <Link className="auth-btn" to="/auth">Записаться на курс</Link>
+                    <p className="auth-btn" onClick={() => setActive(true)}>Записаться на курс</p>
                 </div>
                 <div className="course-photo">
                     <img src={course_photo} alt="Курс Http" width={700} height={400}/>
@@ -78,4 +78,4 @@ const NotAuth = ({link}) => {
     )
 }
 
-export default NotAuth;
+export default NotAuthCourse;

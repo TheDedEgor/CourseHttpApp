@@ -44,16 +44,11 @@
 
 .target {
     position: absolute;
-    border-bottom: 4px solid transparent;
+    border-bottom: 3px solid white;
     z-index: 1;
-    transform: translateX(-60px);
+    transform: none;
 }
 .header-link,
 .target {
     transition: all .35s ease-in-out;
-}
-
-.target{
-    border-color: white;
-    transform: none;
 }

@@ -1,4 +1,4 @@
-﻿import React, {useState} from "react";
+﻿import React, {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {handleFormSubmit} from "../../Utils";
 import "./Auth.css";
@@ -17,7 +17,9 @@ const Auth = ({setActive}) => {
     const [validUser, setValidUser] = useState('')
 
     let navigate = useNavigate()
-
+    useEffect(() =>{
+        document.body.style.overflowY = "hidden" 
+    },[])
     async function handleSubmit(event) {
         event.preventDefault();
         let email = document.getElementById("auth_email");
@@ -48,9 +50,10 @@ const Auth = ({setActive}) => {
             }
         }
     }
-
+    
     const close = () => {
-       setActive(false)
+        setActive(false)
+        document.body.style.overflow = "auto"
     }
 
     const emailHandler = (e) => {
