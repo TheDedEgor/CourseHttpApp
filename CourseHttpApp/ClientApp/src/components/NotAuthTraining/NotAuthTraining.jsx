@@ -1,7 +1,7 @@
 import React from "react";
-import './NotAuthTraning.css'
+import './NotAuthTraining.css'
 
-const NotAuthTraning = () =>{
+const NotAuthTraining = () =>{
     return(
         <div>
             Не зарегистрирован
@@ -9,4 +9,4 @@ const NotAuthTraning = () =>{
     )
 }
 
-export default NotAuthTraning;
+export default NotAuthTraining;

@@ -1,8 +1,8 @@
 ﻿import React, {useState} from "react";
-import "./Traning.css"
-import NotAuthTraning from "../NotAuthTraning/NotAuthTraning";
+import "./Training.css"
+import NotAuthTraining from "../NotAuthTraining/NotAuthTraining";
 
-const Traning = ({tasks}) =>{
+const Training = ({tasks}) =>{
     const token = localStorage.getItem("access_token")
     const data = {}
     const params = ['Params','Header','Body']
@@ -81,9 +81,9 @@ const Traning = ({tasks}) =>{
                     <span style={{fontSize:'15px'}}>]</span>
                 </div>
                 :
-                <NotAuthTraning/>
+                <NotAuthTraining/>
             }
         </div>
     )
 }
-export default Traning;
+export default Training;

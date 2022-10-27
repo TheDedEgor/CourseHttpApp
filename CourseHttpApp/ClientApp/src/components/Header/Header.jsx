@@ -1,4 +1,4 @@
-﻿import React, {useEffect, useState} from "react";
+﻿import React, {useEffect} from "react";
 import "./Header.css"
 import {Link} from "react-router-dom";
 import {resizeWindow} from "../../Utils";
@@ -12,7 +12,7 @@ const Header = ({setActiveAuth, setActiveReg, token}) => {
         function clickLogo() {
             links[0].click();
         }
-        debugger;
+        
         function clickNavMenu() {
             const target = document.querySelector(".target");
             for (let i = 0; i < links.length; i++) {
@@ -45,7 +45,23 @@ const Header = ({setActiveAuth, setActiveReg, token}) => {
         }
 
         logo.addEventListener("click", clickLogo)
-        links[0].click();
+        
+        const path = window.location.pathname;
+        
+        if(path === "/"){
+             links[0].click();
+        }
+        else if(path === "/training")
+        {
+            links[1].click();
+        }
+        else  if(path === "/contacts"){
+            links[2].click();
+        }
+        else {
+            links[3].click();
+        }
+       
         
     }, [token])
     return (
@@ -53,7 +69,7 @@ const Header = ({setActiveAuth, setActiveReg, token}) => {
             <Link className="header-logo" to="/"><b>H</b>ttp://course</Link>
             <nav className="header-menu">
                 <Link className="menu-item" to="/">Курс</Link>
-                <Link className="menu-item" to="/traning">Тренажер</Link>
+                <Link className="menu-item" to="/training">Тренажер</Link>
                 <Link className="menu-item" to="/contacts">Контакты</Link>
                 {token && <Link className="menu-item no-active" to="/profile">Профиль</Link>}
                 {!token && <div className="menu-item-auth">
