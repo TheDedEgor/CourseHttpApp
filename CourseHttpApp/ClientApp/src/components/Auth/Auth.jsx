@@ -7,7 +7,7 @@ import icon_show from '../../images/show_pass.png';
 import icon_hide from '../../images/hide_pass.png'
 import AuthValid from "../AuthValid/AuthValid";
 
-const Auth = ({setActiveAuth, setActiveReg, setActiveForgotPass}) => {
+const Auth = ({setActiveAuth, setActiveReg, setActiveForgotPass, setToken}) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [emailError, setEmailError] = useState("")
@@ -46,6 +46,7 @@ const Auth = ({setActiveAuth, setActiveReg, setActiveForgotPass}) => {
             } else {
                 setValidUser('')
                 localStorage.setItem("access_token", user.value.access_token)
+                setToken(user.value.access_token)
                 close()
             }
         }

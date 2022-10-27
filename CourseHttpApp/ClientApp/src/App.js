@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
 import Header from "./components/Header/Header";
-import {Route, Routes,useNavigate} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import Course from "./components/Course/Course";
 import Traning from "./components/Traning/Traning";
 import Contacts from "./components/Contacts/Contacts";
@@ -48,23 +48,25 @@ const App = () => {
     const [activeAuth, setActiveAuth] = useState(false)
     const [activeReg, setActiveReg] = useState(false)
     const [activeForgotPass, setActiveForgotPass] = useState(false)
+    const [token, setToken] = useState(localStorage.getItem("access_token"));
+    
     return (
         <div className="App">
             <div className="container">
-                <Header setActiveAuth={setActiveAuth} setActiveReg={setActiveReg}/>
+                <Header setActiveAuth={setActiveAuth} setActiveReg={setActiveReg} token={token}/>
                 <>
                     <Routes>
-                        <Route path="/" element={<Course setActive={setActiveAuth}/>}/>
+                        <Route path="/" element={<Course setActive={setActiveAuth} token={token}/>}/>
                         <Route path="/traning" element={<Traning tasks={tasks}/>}/>
                         <Route path="/contacts" element={<Contacts/>}/>
-                        <Route path="/profile" element={<Profile/>}/>
+                        <Route path="/profile" element={<Profile setToken={setToken}/>}/>
                         <Route path="/newPass" element={<NewPass/>}/>
                     </Routes>
                     {activeAuth && <Modal>
-                        <Auth setActiveAuth={setActiveAuth} setActiveReg={setActiveReg} setActiveForgotPass={setActiveForgotPass}/>
+                        <Auth setActiveAuth={setActiveAuth} setActiveReg={setActiveReg} setActiveForgotPass={setActiveForgotPass} setToken={setToken}/>
                     </Modal>}
                     {activeReg && <Modal>
-                        <Register setActiveReg={setActiveReg}/>
+                        <Register setActiveReg={setActiveReg} setToken={setToken}/>
                     </Modal>}
                     {activeForgotPass && <Modal>
                         <ForgotPass setActiveForgotPass={setActiveForgotPass}/>

@@ -1,10 +1,9 @@
-﻿import React, {useEffect} from "react";
+﻿import React, {useEffect, useState} from "react";
 import "./Header.css"
 import {Link} from "react-router-dom";
 import {resizeWindow} from "../../Utils";
 
-const Header = ({setActiveAuth, setActiveReg}) => {
-    let token = localStorage.getItem("access_token")
+const Header = ({setActiveAuth, setActiveReg, token}) => {
 
     useEffect(() => {
         const links = document.querySelectorAll(".menu-item");
@@ -13,7 +12,7 @@ const Header = ({setActiveAuth, setActiveReg}) => {
         function clickLogo() {
             links[0].click();
         }
-
+        debugger;
         function clickNavMenu() {
             const target = document.querySelector(".target");
             for (let i = 0; i < links.length; i++) {
@@ -47,28 +46,21 @@ const Header = ({setActiveAuth, setActiveReg}) => {
 
         logo.addEventListener("click", clickLogo)
         links[0].click();
+        
     }, [token])
     return (
         <div className="header">
             <Link className="header-logo" to="/"><b>H</b>ttp://course</Link>
-            {token ?
-                <nav className="header-menu">
-                    <Link className="menu-item" to="/">Курс</Link>
-                    <Link className="menu-item" to="/traning">Тренажер</Link>
-                    <Link className="menu-item" to="/contacts">Контакты</Link>
-                    <Link className="menu-item no-active" to="/profile">Профиль</Link>
-                </nav>
-                :
-                <nav className="header-menu">
-                    <Link className="menu-item active" to="/">Курс</Link>
-                    <Link className="menu-item" to="/traning">Тренажер</Link>
-                    <Link className="menu-item" to="/contacts">Контакты</Link>
-                    <div className="menu-item-auth">
-                        <a onClick={() => setActiveAuth(true)} className="link-auth">Вход</a>
-                        <a onClick={() => setActiveReg(true)} className="link-auth">Регистрация</a>
-                    </div>
-                </nav>
-            }
+            <nav className="header-menu">
+                <Link className="menu-item" to="/">Курс</Link>
+                <Link className="menu-item" to="/traning">Тренажер</Link>
+                <Link className="menu-item" to="/contacts">Контакты</Link>
+                {token && <Link className="menu-item no-active" to="/profile">Профиль</Link>}
+                {!token && <div className="menu-item-auth">
+                    <a onClick={() => setActiveAuth(true)} className="link-auth">Вход</a>
+                    <a onClick={() => setActiveReg(true)} className="link-auth">Регистрация</a>
+                </div>}
+            </nav>
             <span className="target"></span>
         </div>
     )

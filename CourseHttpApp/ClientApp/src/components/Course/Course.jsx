@@ -7,8 +7,7 @@ import {AiOutlineArrowDown} from 'react-icons/ai'
 import {AiOutlineArrowUp} from 'react-icons/ai'
 import TheorySlider from "../UI/TheorySlider/TheorySlider";
 
-const Course = ({setActive}) => {
-    const token = localStorage.getItem("access_token")
+const Course = ({setActive, token}) => {
     const [course, setCourse] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
