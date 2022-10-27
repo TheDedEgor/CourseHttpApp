@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
 import Header from "./components/Header/Header";
-import {Route, Routes} from "react-router-dom";
+import {Route, Routes,useNavigate} from "react-router-dom";
 import Course from "./components/Course/Course";
 import Traning from "./components/Traning/Traning";
 import Contacts from "./components/Contacts/Contacts";
@@ -54,7 +54,6 @@ const App = () => {
                 <Header setActiveAuth={setActiveAuth} setActiveReg={setActiveReg}/>
                 <>
                     <Routes>
-                        <Route path="/:title/:id/:slider_id/*" element={<Course/>}/>
                         <Route path="/" element={<Course setActive={setActiveAuth}/>}/>
                         <Route path="/traning" element={<Traning tasks={tasks}/>}/>
                         <Route path="/contacts" element={<Contacts/>}/>

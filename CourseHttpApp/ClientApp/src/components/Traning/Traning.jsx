@@ -4,6 +4,7 @@ import NotAuthTraning from "../NotAuthTraning/NotAuthTraning";
 
 const Traning = ({tasks}) =>{
     const token = localStorage.getItem("access_token")
+    const data = {}
     const params = ['Params','Header','Body']
     const [activeParams,setActiveParams] = useState(-1)
     const [visible,setVisible] = useState(-1)
@@ -14,9 +15,9 @@ const Traning = ({tasks}) =>{
         setVisible(index)
     }
     return(
-        <div>
+        <div style={{marginLeft:'50px',height:"100%"}}>
             {token?
-                <div className="traning-block">
+                /*<div className="traning-block">
                         <div className="traning-from">
                             <h1>Тренажёр</h1>
                             <form>
@@ -57,6 +58,27 @@ const Traning = ({tasks}) =>{
                                 ))}
                         </div>
                     </div>
+                </div>*/
+                <div>
+                <span style={{fontSize:'15px'}}>[</span>
+                <>
+                    {tasks.map(task => (
+                        <div style={{fontSize:'15px',fontWeight:'600',height:"30%",borderColor:'red'}}>
+                            <span style={{marginLeft:"50px",}}>{`{`}</span>
+                            <p style={{marginLeft:"100px"}}>
+                                <span style={{color:'red'}}>"id"</span>: <span style={{color:"blue"}}>"{task.id}</span>"
+                            </p>
+                            <p style={{marginLeft:"100px"}}>
+                                <span style={{color:'red'}}>"description"</span>: <span style={{color:"blue"}}>"{task.title}"</span>
+                            </p>
+                            <p style={{marginLeft:"100px"}}>
+                                <span style={{color:'red'}}>"image_url"</span>: <span style={{color:"blue"}}>"{task.success}"</span>
+                            </p>
+                            <span style={{marginLeft:"50px"}}>},</span>
+                        </div>
+                    ))}
+                </>
+                    <span style={{fontSize:'15px'}}>]</span>
                 </div>
                 :
                 <NotAuthTraning/>

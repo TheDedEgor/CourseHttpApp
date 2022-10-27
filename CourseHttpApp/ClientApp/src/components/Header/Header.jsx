@@ -47,9 +47,7 @@ const Header = ({setActiveAuth, setActiveReg}) => {
 
         logo.addEventListener("click", clickLogo)
         links[0].click();
-
     }, [token])
-
     return (
         <div className="header">
             <Link className="header-logo" to="/"><b>H</b>ttp://course</Link>

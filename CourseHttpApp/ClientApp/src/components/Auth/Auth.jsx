@@ -50,13 +50,11 @@ const Auth = ({setActiveAuth, setActiveReg, setActiveForgotPass}) => {
             }
         }
     }
-
     const close = () => {
         setActiveAuth(false)
         setTimeout(resizeWindow, 10);
         document.body.style.overflow = "auto"
     }
-
     const emailHandler = (e) => {
         setEmail(e.target.value)
         setValidUser('')
@@ -88,7 +86,6 @@ const Auth = ({setActiveAuth, setActiveReg, setActiveForgotPass}) => {
             }
         }
     }
-
     const showPassword = (e) => {
         let input = document.getElementById('auth_password');
         if (input.getAttribute('type') === 'password') {
@@ -99,12 +96,10 @@ const Auth = ({setActiveAuth, setActiveReg, setActiveForgotPass}) => {
             input.setAttribute('type', 'password');
         }
     }
-
     const showModalReg = () => {
         close()
         setActiveReg(true)
     }
-
     const showModalForgotPass = () => {
         close()
         setActiveForgotPass(true)
