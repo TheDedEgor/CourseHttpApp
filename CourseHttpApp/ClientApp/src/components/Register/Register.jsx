@@ -1,14 +1,14 @@
-﻿import React, {useState} from "react";
+﻿import React, {useEffect, useState} from "react";
 import "./Register.css";
 import "../../css/modal.css";
 import {useNavigate} from "react-router-dom";
-import {handleFormSubmit} from "../../Utils";
+import {handleFormSubmit, resizeWindow} from "../../Utils";
 import icon_close from "../../images/close.svg";
 import icon_show from "../../images/show_pass.png";
 import icon_hide from "../../images/hide_pass.png";
 import RegValid from "../RegValid/RegValid";
 
-const Register = () => {
+const Register = ({setActiveReg}) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [emailError, setEmailError] = useState("")
@@ -16,6 +16,11 @@ const Register = () => {
     const [formValid, setFormValid] = useState(true)
     const [validUser, setValidUser] = useState('')
     let navigate = useNavigate()
+
+    useEffect(() =>{
+        setTimeout(resizeWindow, 10);
+        document.body.style.overflowY = "hidden"
+    },[])
 
     async function handleSubmit(event) {
         event.preventDefault();
@@ -51,13 +56,15 @@ const Register = () => {
             } else {
                 setValidUser('')
                 localStorage.setItem("access_token", user.value.access_token)
-                navigate('/')
+                close()
             }
         }
     }
 
     const close = () => {
-        navigate('/')
+        setActiveReg(false)
+        setTimeout(resizeWindow, 10);
+        document.body.style.overflow = "auto"
     }
 
     const emailHandler = (e) => {

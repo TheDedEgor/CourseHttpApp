@@ -1,19 +1,22 @@
-﻿import React, {useState} from "react";
+﻿import React, {useEffect, useState} from "react";
 import "./ForgotPass.css"
 import "../../css/modal.css"
-import {handleFormSubmit} from "../../Utils";
+import {handleFormSubmit, resizeWindow} from "../../Utils";
 import icon_close from "../../images/close.svg";
-import {useNavigate} from "react-router-dom";
 import AuthValid from "../AuthValid/AuthValid";
 import {useNotification} from "use-toast-notification";
 
-const ForgotPass = () => {
-    let navigate = useNavigate()
+const ForgotPass = ({setActiveForgotPass}) => {
     const notification = useNotification()
     const [email, setEmail] = useState('')
     const [emailError, setEmailError] = useState('')
     const [formValid, setFormValid] = useState(true)
     const [validUser, setValidUser] = useState('')
+
+    useEffect(() => {
+        setTimeout(resizeWindow, 10);
+        document.body.style.overflowY = "hidden"
+    }, [])
 
     async function handleSubmit(event) {
         event.preventDefault()
@@ -48,7 +51,9 @@ const ForgotPass = () => {
     }
 
     const close = () => {
-        navigate('/')
+        setActiveForgotPass(false)
+        setTimeout(resizeWindow, 10);
+        document.body.style.overflow = "auto"
     }
 
     const emailHandler = (e) => {

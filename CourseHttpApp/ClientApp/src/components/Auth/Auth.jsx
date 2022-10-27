@@ -1,6 +1,5 @@
 ﻿import React, {useEffect, useState} from "react";
-import {Link, useNavigate} from "react-router-dom";
-import {handleFormSubmit} from "../../Utils";
+import {handleFormSubmit, resizeWindow} from "../../Utils";
 import "./Auth.css";
 import "../../css/modal.css";
 import icon_close from '../../images/close.svg';
@@ -8,7 +7,7 @@ import icon_show from '../../images/show_pass.png';
 import icon_hide from '../../images/hide_pass.png'
 import AuthValid from "../AuthValid/AuthValid";
 
-const Auth = ({setActive}) => {
+const Auth = ({setActiveAuth, setActiveReg, setActiveForgotPass}) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [emailError, setEmailError] = useState("")
@@ -16,10 +15,11 @@ const Auth = ({setActive}) => {
     const [formValid, setFormValid] = useState(true)
     const [validUser, setValidUser] = useState('')
 
-    let navigate = useNavigate()
-    useEffect(() =>{
-        document.body.style.overflowY = "hidden" 
-    },[])
+    useEffect(() => {
+        setTimeout(resizeWindow, 10);
+        document.body.style.overflowY = "hidden"
+    }, [])
+
     async function handleSubmit(event) {
         event.preventDefault();
         let email = document.getElementById("auth_email");
@@ -34,7 +34,7 @@ const Auth = ({setActive}) => {
             setPasswordError("Введите Пароль!")
             check = false
         }
-        
+
         if (check) {
             const response = await handleFormSubmit(event, "/api/Auth")
             const user = await response.json()
@@ -50,9 +50,10 @@ const Auth = ({setActive}) => {
             }
         }
     }
-    
+
     const close = () => {
-        setActive(false)
+        setActiveAuth(false)
+        setTimeout(resizeWindow, 10);
         document.body.style.overflow = "auto"
     }
 
@@ -99,6 +100,16 @@ const Auth = ({setActive}) => {
         }
     }
 
+    const showModalReg = () => {
+        close()
+        setActiveReg(true)
+    }
+
+    const showModalForgotPass = () => {
+        close()
+        setActiveForgotPass(true)
+    }
+
     return (
         <div className="modal" onClick={() => close()}>
             <div className="form_content_auth" onClick={(e) => e.stopPropagation()}>
@@ -126,8 +137,8 @@ const Auth = ({setActive}) => {
                     </div>
                 </form>
                 <div className="bottom_links">
-                    <Link to="/forgotPass" className="bottom_link">Забыли пароль?</Link>
-                    <Link to="/reg" className="bottom_link">Еще не зарегистрированы?</Link>
+                    <a onClick={() => showModalForgotPass()} className="bottom_link">Забыли пароль?</a>
+                    <a onClick={() => showModalReg()} className="bottom_link">Еще не зарегистрированы?</a>
                 </div>
             </div>
         </div>

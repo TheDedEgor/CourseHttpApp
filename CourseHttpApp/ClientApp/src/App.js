@@ -45,24 +45,30 @@ const App = () => {
             success: false
         },
     ]
-    const [active, setActive] = useState(false)
+    const [activeAuth, setActiveAuth] = useState(false)
+    const [activeReg, setActiveReg] = useState(false)
+    const [activeForgotPass, setActiveForgotPass] = useState(false)
     return (
         <div className="App">
             <div className="container">
-                <Header setActive={setActive}/>
+                <Header setActiveAuth={setActiveAuth} setActiveReg={setActiveReg}/>
                 <>
                     <Routes>
                         <Route path="/:title/:id/:slider_id/*" element={<Course/>}/>
-                        <Route path="/" element={<Course setActive={setActive}/>}/>
+                        <Route path="/" element={<Course setActive={setActiveAuth}/>}/>
                         <Route path="/traning" element={<Traning tasks={tasks}/>}/>
                         <Route path="/contacts" element={<Contacts/>}/>
-                        <Route path="/reg" element={<Register/>}/>
                         <Route path="/profile" element={<Profile/>}/>
-                        <Route path="/forgotPass" element={<ForgotPass/>}/>
                         <Route path="/newPass" element={<NewPass/>}/>
                     </Routes>
-                    {active && <Modal>
-                        <Auth setActive={setActive}/>
+                    {activeAuth && <Modal>
+                        <Auth setActiveAuth={setActiveAuth} setActiveReg={setActiveReg} setActiveForgotPass={setActiveForgotPass}/>
+                    </Modal>}
+                    {activeReg && <Modal>
+                        <Register setActiveReg={setActiveReg}/>
+                    </Modal>}
+                    {activeForgotPass && <Modal>
+                        <ForgotPass setActiveForgotPass={setActiveForgotPass}/>
                     </Modal>}
                 </>
             </div>
