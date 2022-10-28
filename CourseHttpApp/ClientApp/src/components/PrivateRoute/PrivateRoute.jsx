@@ -1,14 +1,13 @@
 import React from "react";
-import "./PrivateRoute.css"
-import {Route,useNavigate} from "react-router-dom";
-const PrivateRoute = ({component:Component,token}) => {
-    const navigate = useNavigate()
-    return (
-        <Route>
-            render={props => ((token !== null) ? navigate('/') : <Component {...props}/>
-        )}
-        </Route>
-    )
+import {useLocation,Navigate} from "react-router-dom";
+
+const PrivateRoute = ({children}) => {
+    const location = useLocation()
+    const token = localStorage.getItem("access_token")
+    if(token === null){
+        return <Navigate to="/"/>
+    }
+    return children;
 }
 
 export default PrivateRoute

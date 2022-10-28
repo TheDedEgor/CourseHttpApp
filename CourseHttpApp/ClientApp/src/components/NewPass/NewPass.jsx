@@ -1,6 +1,6 @@
 ﻿import React, {useState} from "react";
 import {useNavigate, useSearchParams} from "react-router-dom";
-import {handleFormSubmit} from "../../Utils";
+import {handleFormSubmit, resizeWindow} from "../../Utils";
 import "./NewPass.css"
 import icon_close from "../../images/close.svg";
 import AuthValid from "../AuthValid/AuthValid";
@@ -48,6 +48,8 @@ const NewPass = () => {
 
     const close = () => {
         navigate('/')
+        const links = document.querySelectorAll(".menu-item");
+        links[0].click()
     }
 
     const passwordHandler = (e) => {
@@ -77,8 +79,8 @@ const NewPass = () => {
     }
 
     return (
-        <div className="modal">
-            <div className="form_content_new_pass">
+        <div className="modal" onClick={() => close()}>
+            <div className="form_content_new_pass" onClick={(e) => e.preventDefault()}>
                 <div className="header_modal">
                     <div className="title_header_new_pass">Новый пароль</div>
                     <img className="icon_close" onClick={() => close()} src={icon_close} alt="Закрыть"/>

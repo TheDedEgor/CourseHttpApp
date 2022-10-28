@@ -12,7 +12,7 @@ const Header = ({setActiveAuth, setActiveReg, token}) => {
         function clickLogo() {
             links[0].click();
         }
-        
+
         function clickNavMenu() {
             const target = document.querySelector(".target");
             for (let i = 0; i < links.length; i++) {
@@ -45,24 +45,19 @@ const Header = ({setActiveAuth, setActiveReg, token}) => {
         }
 
         logo.addEventListener("click", clickLogo)
-        
+
         const path = window.location.pathname;
-        
-        if(path === "/"){
-             links[0].click();
-        }
-        else if(path === "/training")
-        {
+
+        if (path === "/") {
+            links[0].click();
+        } else if (path === "/training") {
             links[1].click();
-        }
-        else  if(path === "/contacts"){
+        } else if (path === "/contacts") {
             links[2].click();
-        }
-        else {
+        }/* else if (path === "/profile") {
             links[3].click();
-        }
-       
-        
+        }*/
+
     }, [token])
     return (
         <div className="header">

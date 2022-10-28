@@ -11,6 +11,7 @@ import ForgotPass from "./components/ForgotPass/ForgotPass";
 import NewPass from "./components/NewPass/NewPass";
 import Modal from './components/UI/Modal/Modal'
 import Training from "./components/Training/Training";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 
 const App = () => {
     const tasks = [
@@ -59,8 +60,16 @@ const App = () => {
                         <Route path="/" element={<Course setActive={setActiveAuth} token={token}/>}/>
                         <Route path="/training" element={<Training tasks={tasks}/>}/>
                         <Route path="/contacts" element={<Contacts/>}/>
-                        <Route path="/profile" element={<Profile setToken={setToken}/>}/>
-                        <Route path="/newPass" element={<NewPass/>}/>
+                        <Route path="/profile" element={
+                            <PrivateRoute>
+                                <Profile setToken={setToken}/>
+                            </PrivateRoute>
+                        }/>
+                        <Route path="/newPass" element={
+                            <PrivateRoute>
+                                <NewPass/>
+                            </PrivateRoute>
+                        }/>
                     </Routes>
                     {activeAuth && <Modal>
                         <Auth setActiveAuth={setActiveAuth} setActiveReg={setActiveReg} setActiveForgotPass={setActiveForgotPass} setToken={setToken}/>
