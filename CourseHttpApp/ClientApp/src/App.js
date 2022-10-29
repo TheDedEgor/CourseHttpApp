@@ -17,10 +17,15 @@ const App = () => {
     const tasks = [
         {
             id: 1,
-            title: "Напишите запрос GET",
-            success: false
+            title: "Отправьте GET-запрос по URL-https://jsonplaceholder.typicode.com/todos",
+            success: '323217f643c3e3f1fe7532e72ac01bb0748c97be',
         },
         {
+            id: 2,
+            title: "Отправьте POST-запрос по URL-https://jsonplaceholder.typicode.com/todos",
+            success: '323217f643c3e3f1fe7532e72ac01bb0748c97besdsdsd',
+        },
+        /*{
             id: 2,
             title: "Напишите запрос POST",
             success: false
@@ -44,7 +49,7 @@ const App = () => {
             id: 6,
             title: "Напишите запрос POST",
             success: false
-        },
+        },*/
     ]
     const [activeAuth, setActiveAuth] = useState(false)
     const [activeReg, setActiveReg] = useState(false)

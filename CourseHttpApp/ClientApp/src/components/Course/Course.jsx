@@ -1,4 +1,4 @@
-﻿import React, {useEffect, useState} from "react";
+﻿import React, {useContext, useEffect, useState} from "react";
 import {Link, useParams, Route, Routes, useSearchParams} from "react-router-dom";
 import "./Course.css"
 import NotAuthCourse from "../NotAuthCourse/NotAuthCourse";
@@ -6,6 +6,7 @@ import Loader from "../UI/Loader/Loader";
 import {AiOutlineArrowDown} from 'react-icons/ai'
 import {AiOutlineArrowUp} from 'react-icons/ai'
 import TheorySlider from "../UI/TheorySlider/TheorySlider";
+import {DataContext} from "../../context/DataProvider";
 
 const Course = ({setActive, token}) => {
     const [course, setCourse] = useState([])
@@ -142,7 +143,7 @@ const Course = ({setActive, token}) => {
                 {/*{data ? <TheorySlider data={data}/> :
                     <div>Выберите тему</div>
                 }*/}
-                <span>[</span>
+                {/*<span>[</span>
                 {data?.map((data_name) =>(
                     <>
                     <div>
@@ -158,7 +159,7 @@ const Course = ({setActive, token}) => {
                         </p>
                         <span style={{marginLeft:"50px"}}>},</span>
                     </div>
-                    </>
+                    </>*/}
                 ))}
                 <span>]</span>
             </div>

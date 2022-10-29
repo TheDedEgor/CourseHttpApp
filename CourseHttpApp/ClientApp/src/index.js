@@ -7,25 +7,29 @@ import './index.css'
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import NotificationProvider from "use-toast-notification";
+import DataProvider from "./context/DataProvider";
 
 const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
 const rootElement = document.getElementById('root');
 const root = createRoot(rootElement);
 
 root.render(
-    <BrowserRouter>
-        <NotificationProvider
-            config={{
-                position: 'top-center',
-                isCloseable: false,
-                showTitle: false,
-                showIcon: true,
-                duration: 5,
-            }}
-        >
-            <App/>
-        </NotificationProvider>
-    </BrowserRouter>);
+    <DataProvider>
+        <BrowserRouter>
+            <NotificationProvider
+                config={{
+                    position: 'top-center',
+                    isCloseable: false,
+                    showTitle: false,
+                    showIcon: true,
+                    duration: 5,
+                }}
+            >
+                <App/>
+            </NotificationProvider>
+        </BrowserRouter>
+    </DataProvider>
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

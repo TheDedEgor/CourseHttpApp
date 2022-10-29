@@ -1,89 +1,153 @@
-﻿import React, {useState} from "react";
+﻿import React, {useState, useContext} from "react";
 import "./Training.css"
 import NotAuthTraining from "../NotAuthTraining/NotAuthTraining";
+import {Box, Select, MenuItem, TextField, Button, Tabs, Tab} from '@mui/material'
+import CreateTable from "./CreateTable";
+import CreateJson from "./CreateJson";
+import Response from "./Response";
+import ErrorScreen from "./ErrorScreen";
+import {DataContext} from "../../context/DataProvider";
+import {checkParams} from "../../Utils";
+import SnackBar from "./SnakBar";
+import {getData} from "../../service/api";
+import success_logo from '../../images/success.png'
 
-const Training = ({tasks}) =>{
+const Training = ({tasks}) => {
     const token = localStorage.getItem("access_token")
-    const data = {}
-    const params = ['Params','Header','Body']
-    const [activeParams,setActiveParams] = useState(-1)
-    const [visible,setVisible] = useState(-1)
-    const onCLickParams = (index)=>{
-        setActiveParams(index)
+    const {formData, setFormData} = useContext(DataContext)
+    const {paramData, jsonText, setParamData, headerData, setHeaderData} = useContext(DataContext)
+    const [value, setValue] = useState(0)
+    const [error, setError] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
+    const [errorResponse, setErrorResponse] = useState(false)
+    const [apiResponse, setApiResponse] = useState({})
+    const [task, setTask] = useState('')
+    const [hashJson, setHashJson] = useState({})
+    const [taskId, setTaskId] = useState(null)
+    const [successOtvet, setSuccessOtvet] = useState(null)
+    const [otvet, setOtvet] = useState(false)
+
+    const handleChange = (e) => {
+        setFormData({...formData, type: e.target.value})
     }
-    const onCLickTask = (index) =>{
-        setVisible(index)
+    const onUrlChange = (e) => {
+        setFormData({...formData, url: e.target.value})
     }
-    return(
-        <div style={{marginLeft:'50px',height:"100%"}}>
-            {token?
-                /*<div className="traning-block">
-                        <div className="traning-from">
-                            <h1>Тренажёр</h1>
-                            <form>
-                                <div className="request-block">
-                                    <select>
-                                        <option>GET</option>
-                                        <option>POST</option>
-                                        <option>PUT</option>
-                                        <option>DELETE</option>
-                                    </select>
-                                    <input placeholder="Введите адрес URL"/>
-                                    <button>Отправить</button>
+    const handleChangeTabs = (event, newValue) => {
+        setValue(newValue)
+    }
+
+    const onSendClick = async () => {
+        if (!checkParams(formData, jsonText, paramData, headerData, setErrorMessage)) {
+            setError(true)
+            return false
+        }
+        let response = await getData(formData, jsonText, paramData, headerData)
+        if (response === 'error') {
+            setErrorResponse(true)
+            return
+        }
+        setErrorResponse(false)
+        setApiResponse(response.data)
+        setHashJson(response.data)
+        let hash = require('object-hash')
+        if (hash(hashJson) === successOtvet) {
+            setOtvet(true)
+        }
+    }
+    const onClickTask = (id) => {
+        const task_title = tasks.find(task_title => task_title.id === id + 1).title
+        const success_otvet = tasks.find(task => task.id === id + 1)?.success
+        setSuccessOtvet(success_otvet)
+        setTask(task_title)
+        setTaskId(id)
+    }
+    return (
+        <>
+            {token ?
+                <div style={{display: 'flex', justifyContent: 'space-around'}}>
+                    <div>
+                        {tasks.map((task, id) => (
+                            <div className="task-item" onClick={() => onClickTask(id)}>
+                                <div>
+                                    <p>Задание {id + 1}</p>
                                 </div>
-                            </form>
-                        </div>
-                    <div className="bottom-block">
-                        <div className="task-block">
-                            {tasks.map((task,id) =>(
-                                <div className="task">
-                                    <h3 className="task-title" onClick={() => onCLickTask(id)}>Задача {task.id}</h3>
-                                    <div className={visible === id ? 'active-task' : 'not-active-task'}>
-                                        <p >{task.title}</p>
-                                        <span className="start-task">Начать</span>
-                                    </div>
+                                <div>
+                                    {otvet && <img src={success_logo} alt="success" width={20} height={20}/>}
                                 </div>
-                            ))}
-                        </div>
-                        <div className="params-block">
-                                {params.map((value,i) =>(
-                                    <div className="params-links">
-                                        <p onClick={() =>onCLickParams(i)} className={activeParams === i ? 'active' : ''}>
-                                                {value}
-                                        </p>
-                                        <div className={activeParams === i ? 'active-params' : 'not-active-params' }>
-                                            <h2>lorem</h2>
-                                        </div>
-                                    </div>
-                                ))}
-                        </div>
+                            </div>
+                        ))}
                     </div>
-                </div>*/
-                <div>
-                <span style={{fontSize:'15px'}}>[</span>
-                <>
-                    {tasks.map(task => (
-                        <div style={{fontSize:'15px',fontWeight:'600',height:"30%",borderColor:'red'}}>
-                            <span style={{marginLeft:"50px",}}>{`{`}</span>
-                            <p style={{marginLeft:"100px"}}>
-                                <span style={{color:'red'}}>"id"</span>: <span style={{color:"blue"}}>"{task.id}</span>"
-                            </p>
-                            <p style={{marginLeft:"100px"}}>
-                                <span style={{color:'red'}}>"description"</span>: <span style={{color:"blue"}}>"{task.title}"</span>
-                            </p>
-                            <p style={{marginLeft:"100px"}}>
-                                <span style={{color:'red'}}>"image_url"</span>: <span style={{color:"blue"}}>"{task.success}"</span>
-                            </p>
-                            <span style={{marginLeft:"50px"}}>},</span>
-                        </div>
-                    ))}
-                </>
-                    <span style={{fontSize:'15px'}}>]</span>
+                    <div>
+                        {task && <div className="task">{task}</div>}
+                        <Box className="training-block">
+                            <Box className="form-block">
+                                <Select
+                                    value={formData.type}
+                                    label="POST"
+                                    className="select"
+                                    onChange={(e) => handleChange(e)}
+                                >
+                                    <MenuItem value={'POST'}>POST</MenuItem>
+                                    <MenuItem value={'GET'}>GET</MenuItem>
+                                </Select>
+                                <TextField
+                                    size="small"
+                                    className="url-input"
+                                    onChange={(e) => onUrlChange(e)}
+                                />
+                                <Button
+                                    className="send-btn"
+                                    variant="contained"
+                                    onClick={() => onSendClick()}
+                                >
+                                    Send
+                                </Button>
+                            </Box>
+                            <Box className="select-tab-block">
+                                <Tabs value={value}
+                                      onChange={handleChangeTabs}
+                                      TabIndicatorProps={{sx: {backgroundColor: '#F26B3A', height: 4, bottom: 2}}}
+                                      textColor="none"
+                                >
+                                    <Tab label="Params" className="tab-item"/>
+                                    <Tab label="Headers" className="tab-item"/>
+                                    <Tab label="Body" className="tab-item"/>
+                                </Tabs>
+                            </Box>
+                            <Box
+                                role="tabpanel"
+                                hidden={value !== 0}
+                                id={`simple-tabpanel-${0}`}
+                                aria-labelledby={`simple-tab-${0}`}
+                            >
+                                <CreateTable text="Params" data={paramData} setData={setParamData}/>
+                            </Box>
+                            <Box
+                                role="tabpanel"
+                                hidden={value !== 1}
+                                id={`simple-tabpanel-${1}`}
+                                aria-labelledby={`simple-tab-${1}`}
+                            >
+                                <CreateTable text="Headers" data={headerData} setData={setHeaderData}/>
+                            </Box>
+                            <Box
+                                role="tabpanel"
+                                hidden={value !== 2}
+                                id={`simple-tabpanel-${2}`}
+                                aria-labelledby={`simple-tab-${2}`}
+                            >
+                                <CreateJson/>
+                            </Box>
+                            {errorResponse ? <ErrorScreen/> : <Response data={apiResponse}/>}
+                            {error && <SnackBar error={error} setError={setError} errorMsg={errorMessage}/>}
+                        </Box>
+                    </div>
                 </div>
                 :
                 <NotAuthTraining/>
             }
-        </div>
+        </>
     )
 }
 export default Training;
