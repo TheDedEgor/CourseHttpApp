@@ -28,10 +28,12 @@ public class AuthController : ControllerBase
             return Results.NotFound("User not found");
             
         var token = Token.CreateToken(login);
+        var user_info = db.users_info.First(x => x.User_id == user.Id);
         
         return Results.Json(new
         {
-            access_token = token
+            access_token = token,
+            user_name = user_info.First_name
         });
     }
 }

@@ -53,6 +53,37 @@
     margin-left: 20px;
 }
 
+.profile_title {
+    display: flex;
+    gap: 10px;
+    text-decoration: none;
+    align-items: center;
+}
+
+.menu-item-profile {
+    position: relative;
+    font-size: 20px;
+    color: white;
+    text-decoration: none;
+    align-items: center;
+    padding: 7px 15px;
+    z-index: 5;
+    margin-left: 20px;
+}
+
+.menu-item-profile:hover {
+    color: white;
+    cursor: pointer;
+}
+
+.menu-item-profile:hover .arrow-profile {
+    opacity: 1;
+}
+
+.arrow-profile {
+    opacity: 0.35;
+}
+
 .link-auth {
     text-decoration: none;
     color: white;
@@ -84,4 +115,59 @@
 
 .no-active {
     opacity: 0.35;
+}
+
+.switch {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 1em;
+    width: 2em;
+    border-radius: 1em;
+    box-shadow: inset -1em 0px 0px 0px rgba(192, 192, 192, 1);
+    background-color: white;
+    border: 1px solid rgba(192, 192, 192, 1);
+    outline: none;
+    -webkit-transition: 0.2s;
+    transition: 0.2s;
+}
+
+.switch:checked {
+    box-shadow: inset 1em 0px 0px 0px rgba(33, 150, 243, 0.5);
+    border: 1px solid rgba(33, 150, 243, 1);
+}
+
+.switch:focus {
+    outline-width: 0;
+}
+
+.profile-nav {
+    position: absolute;
+    top: 55px;
+    right: 0;
+    width: 230px;
+    background-color: #fff;
+    flex-direction: column;
+    display: flex;
+    padding: 10px 0;
+    z-index: 3;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(5, 12, 38, 0.12);
+}
+
+.profile-nav-item{
+    font-size: 18px;
+    text-decoration: none;
+    color: #26325c;
+    padding: 3px 10px;
+}
+.profile-nav-item:hover{
+    color: #26325c;
+    cursor: pointer;
+    background-color: #E6E3E3;
+}
+.dark-theme{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }

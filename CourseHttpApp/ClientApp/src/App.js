@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import Header from "./components/Header/Header";
 import {Route, Routes} from "react-router-dom";
@@ -50,11 +50,11 @@ const App = () => {
     const [activeReg, setActiveReg] = useState(false)
     const [activeForgotPass, setActiveForgotPass] = useState(false)
     const [token, setToken] = useState(localStorage.getItem("access_token"));
-    
+
     return (
         <div className="App">
             <div className="container">
-                <Header setActiveAuth={setActiveAuth} setActiveReg={setActiveReg} token={token}/>
+                <Header setActiveAuth={setActiveAuth} setActiveReg={setActiveReg} setToken={setToken} token={token}/>
                 <>
                     <Routes>
                         <Route path="/" element={<Course setActive={setActiveAuth} token={token}/>}/>
@@ -72,7 +72,8 @@ const App = () => {
                         }/>
                     </Routes>
                     {activeAuth && <Modal>
-                        <Auth setActiveAuth={setActiveAuth} setActiveReg={setActiveReg} setActiveForgotPass={setActiveForgotPass} setToken={setToken}/>
+                        <Auth setActiveAuth={setActiveAuth} setActiveReg={setActiveReg}
+                              setActiveForgotPass={setActiveForgotPass} setToken={setToken}/>
                     </Modal>}
                     {activeReg && <Modal>
                         <Register setActiveReg={setActiveReg} setToken={setToken}/>

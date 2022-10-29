@@ -46,6 +46,7 @@ const Auth = ({setActiveAuth, setActiveReg, setActiveForgotPass, setToken}) => {
             } else {
                 setValidUser('')
                 localStorage.setItem("access_token", user.value.access_token)
+                localStorage.setItem("user_name", user.value.user_name)
                 setToken(user.value.access_token)
                 close()
             }

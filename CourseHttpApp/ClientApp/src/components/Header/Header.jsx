@@ -1,9 +1,11 @@
-﻿import React, {useEffect} from "react";
+﻿import React, {useEffect, useState} from "react";
 import "./Header.css"
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {resizeWindow} from "../../Utils";
 
-const Header = ({setActiveAuth, setActiveReg, token}) => {
+const Header = ({setActiveAuth, setActiveReg, setToken, token}) => {
+    let navigate = useNavigate()
+    const [isVisibleProfileMenu, setIsVisibleProfileMenu] = useState(false)
 
     useEffect(() => {
         const links = document.querySelectorAll(".menu-item");
@@ -15,6 +17,7 @@ const Header = ({setActiveAuth, setActiveReg, token}) => {
 
         function clickNavMenu() {
             const target = document.querySelector(".target");
+
             for (let i = 0; i < links.length; i++) {
                 if (links[i].classList.contains("active")) {
                     links[i].classList.remove("active");
@@ -45,6 +48,11 @@ const Header = ({setActiveAuth, setActiveReg, token}) => {
         }
 
         logo.addEventListener("click", clickLogo)
+        document.addEventListener("click", (e) => {
+            if (e.target.id !== "drop-menu") {
+                setIsVisibleProfileMenu(false)
+            }
+        })
 
         const path = window.location.pathname;
 
@@ -54,11 +62,54 @@ const Header = ({setActiveAuth, setActiveReg, token}) => {
             links[1].click();
         } else if (path === "/contacts") {
             links[2].click();
-        }/* else if (path === "/profile") {
-            links[3].click();
-        }*/
+        } else if (path === "/profile") {
+            showProfile()
+        }
 
     }, [token])
+
+    const showDropMenu = (e) => {
+        e.stopPropagation()
+        setIsVisibleProfileMenu(!isVisibleProfileMenu)
+    }
+
+    const handleLogOut = () => {
+        localStorage.removeItem("access_token")
+        setToken(undefined)
+        navigate('/')
+    }
+
+    const showProfile = () => {
+        const profile = document.querySelector(".menu-item-profile")
+        const target = document.querySelector(".target");
+        const links = document.querySelectorAll(".menu-item");
+
+        for (let i = 0; i < links.length; i++) {
+            if (links[i].classList.contains("active")) {
+                links[i].classList.remove("active");
+            }
+            links[i].classList.add("no-active")
+        }
+
+        profile.classList.remove("no-active");
+        profile.classList.add("active");
+
+        const width = profile.getBoundingClientRect().width;
+        const height = profile.getBoundingClientRect().height;
+        const left = profile.getBoundingClientRect().left + window.pageXOffset;
+        const top = profile.getBoundingClientRect().top + window.pageYOffset;
+
+        target.style.width = `${width}px`;
+        target.style.height = `${height}px`;
+        target.style.left = `${left}px`;
+        target.style.top = `${top}px`;
+
+        setTimeout(resizeWindow, 10);
+
+        setIsVisibleProfileMenu(false)
+        navigate("/profile")
+    }
+
     return (
         <div className="header">
             <Link className="header-logo" to="/"><b>H</b>ttp://course</Link>
@@ -66,7 +117,33 @@ const Header = ({setActiveAuth, setActiveReg, token}) => {
                 <Link className="menu-item" to="/">Курс</Link>
                 <Link className="menu-item" to="/training">Тренажер</Link>
                 <Link className="menu-item" to="/contacts">Контакты</Link>
-                {token && <Link className="menu-item no-active" to="/profile">Профиль</Link>}
+                {token && <a className="menu-item-profile" id="drop-menu" onClick={(e) => showDropMenu(e)}>
+                    <div className="profile_title">
+                        <div className="name-profile">{localStorage.getItem("user_name")}</div>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2Zm0 5c1.7 0 3 1.3 3 3s-1.3 3-3 3-3-1.3-3-3 1.3-3 3-3Zm0 13c-2.2 0-4.3-.9-5.8-2.5 2.2-3.2 6.5-4 9.7-1.8.7.5 1.3 1.1 1.8 1.8-1.4 1.6-3.5 2.5-5.7 2.5Z"
+                                fill="currentColor"></path>
+                        </svg>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                             className="arrow-profile">
+                            <path
+                                d="M12 16a1 1 0 0 1-.64-.23l-5-4a1.001 1.001 0 0 1 1.28-1.54L12 13.71l4.36-3.32a1.001 1.001 0 0 1 1.41.15 1 1 0 0 1-.14 1.46l-5 3.83A1 1 0 0 1 12 16Z"
+                                fill="currentColor"></path>
+                        </svg>
+                    </div>
+                    {isVisibleProfileMenu &&
+                        <div className="profile-nav" id="profile-drop-menu" onClick={(e) => e.stopPropagation()}>
+                            <a className="profile-nav-item" onClick={() => showProfile()}>Профиль</a>
+                            <a className="profile-nav-item dark-theme">
+                                <label>Темная тема</label>
+                                <input className="switch" type="checkbox"/>
+                            </a>
+                            <a className="profile-nav-item" onClick={() => handleLogOut()}>Выйти</a>
+                        </div>
+                    }
+                </a>}
                 {!token && <div className="menu-item-auth">
                     <a onClick={() => setActiveAuth(true)} className="link-auth">Вход</a>
                     <a onClick={() => setActiveReg(true)} className="link-auth">Регистрация</a>

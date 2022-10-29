@@ -4,7 +4,24 @@ import "./Profile.css";
 
 const Profile = ({setToken}) => {
     let navigate = useNavigate()
-    /*const token = localStorage.getItem("access_token")*/
+
+    async function getInfoUser(){
+        const token = localStorage.getItem("access_token")
+        const response = await fetch("api/Profile",{
+            method: 'GET',
+            headers: {
+                "Accept": "application/json",
+                "Authorization": "Bearer " + token
+            }
+        })
+        const data = (await response.json()).value;
+        console.log(data)
+    }
+    
+    useEffect(()=>{
+        getInfoUser()
+    },[])
+   
     const handleLogOut = () => {
         localStorage.removeItem("access_token")
         setToken(undefined)
