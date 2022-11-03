@@ -22,7 +22,7 @@ async function sendData(data, url) {
 }
 
 export function resizeWindow() {
-    const active = document.querySelector(".header-menu .menu-item.active");
+    let active = document.querySelector(".header-menu .menu-item.active");
     const target = document.querySelector(".target");
 
     if (active) {
@@ -31,35 +31,43 @@ export function resizeWindow() {
 
         target.style.left = `${left}px`;
         target.style.top = `${top}px`;
+    } else {
+        active = document.querySelector(".header-menu .menu-item-profile.active")
+        if (active) {
+            const left = active.getBoundingClientRect().left + window.pageXOffset;
+            const top = active.getBoundingClientRect().top + window.pageYOffset;
+
+            target.style.left = `${left}px`;
+            target.style.top = `${top}px`;
+        }
     }
 }
+
 const checkValidJson = (text) => {
-    if(/^[\],:{}\s]*$/.test(text.replace(/\\["\\\/bfnrtu]/g, '@').
-    replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
-    replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
+    if (/^[\],:{}\s]*$/.test(text.replace(/\\["\\\/bfnrtu]/g, '@').replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
         return true;
-    }else{
+    } else {
         return false;
     }
 }
 
-export const checkParams = (formData,jsonText,paramData,headerData,setErrorMessage) =>{
-    if(!formData.url){
+export const checkParams = (formData, jsonText, paramData, headerData, setErrorMessage) => {
+    if (!formData.url) {
         setErrorMessage('Request URL is Missing')
         return false;
     }
-    if(!checkValidJson(jsonText)){
+    if (!checkValidJson(jsonText)) {
         setErrorMessage('Text is not valid json')
         return false
     }
     return true
 }
 
-export const getHeaderAndParams = (objArr) =>{
+export const getHeaderAndParams = (objArr) => {
     let obj = {}
     objArr.forEach(data => {
-        if(data.hasOwnProperty('check') && data.check){
-            obj = {...obj,[data.key]:data.value}
+        if (data.hasOwnProperty('check') && data.check) {
+            obj = {...obj, [data.key]: data.value}
         }
     })
     return obj
