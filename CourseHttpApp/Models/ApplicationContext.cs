@@ -12,8 +12,8 @@ public class ApplicationContext : DbContext
     public DbSet<Practice> practice { get; set; }
     public DbSet<Response_option> response_options { get; set; }
     public DbSet<Training> training { get; set; }
-    public DbSet<Course_or_training_tasks_users> course_tasks_users { get; set; }
-    public DbSet<Course_or_training_tasks_users> training_tasks_users { get; set; }
+    public DbSet<Course_tasks_users> course_tasks_users { get; set; }
+    public DbSet<Training_tasks_users> training_tasks_users { get; set; }
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

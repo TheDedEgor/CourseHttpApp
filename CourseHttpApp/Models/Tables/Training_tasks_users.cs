@@ -1,6 +1,6 @@
 ﻿namespace CourseHttpApp.Models.Tables;
 
-public class Course_or_training_tasks_users
+public class Training_tasks_users
 {
     public int Id { get; set; }
     public int User_id { get; set; }
