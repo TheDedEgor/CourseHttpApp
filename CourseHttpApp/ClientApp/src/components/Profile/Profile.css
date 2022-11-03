@@ -1,15 +1,18 @@
 .profile{
-    border-radius: 10px;
-    background-color: white;
     padding: 20px;
 }
 .profile-data{
     border:1px solid black;
     max-width: 400px;
-    padding: 10px;
+    padding: 15px;
+    text-align: center;
+}
+.profile-data-input>input{
+    text-align: center;
 }
 .btn-block{
     display: flex;
+    margin-top: 200px;
     justify-content: space-between;
 }
 .loginout-btn{
@@ -35,4 +38,25 @@
 }
 .profile-title{
     text-align: center;
+}
+.profile-top-block{
+    display: flex;
+    margin-top: 20px;
+}
+.profile-progress{
+    margin-left: 100px;
+}
+.profile-progress-title>p{
+    font-size: 30px;
+}
+.progress-bar-block{
+    display: flex;
+    align-items: center;
+}
+.progress-bar-slice{
+    width: 800px;
+    height:50px;
+    display:flex;
+    margin-left:50px;
+    margin-top:20px;
 }

@@ -1,13 +1,14 @@
 import React,{useState} from "react";
 import './AddRow.css'
 import {TableCell, TableRow, Checkbox, TextField} from "@mui/material";
+import {resizeWindow} from "../../Utils";
 
 const AddRow = ({addRows,rowId,data,setData}) =>{
     const [checkCheckBox,setCheckCheckBox] = useState(false)
     
     const handleChange = (e) =>{
         let result = data.filter(entry => entry.id === Number(e.target.name))[0]
-        
+        setTimeout(resizeWindow,10)
         if(!checkCheckBox){
             setCheckCheckBox(true)
             addRows(oldArr => [...oldArr,rowId])
@@ -39,7 +40,6 @@ const AddRow = ({addRows,rowId,data,setData}) =>{
             })
             setData(newArr)
         }
-        console.log(data)
     }
     return(
         <TableRow>

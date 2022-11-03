@@ -1,33 +1,36 @@
-﻿import React, {useContext, useEffect, useState} from "react";
-import {Link, useParams, Route, Routes, useSearchParams} from "react-router-dom";
+﻿import React, {useEffect, useState} from "react";
 import "./Course.css"
 import NotAuthCourse from "../NotAuthCourse/NotAuthCourse";
 import Loader from "../UI/Loader/Loader";
 import {AiOutlineArrowDown} from 'react-icons/ai'
 import {AiOutlineArrowUp} from 'react-icons/ai'
 import TheorySlider from "../UI/TheorySlider/TheorySlider";
-import {DataContext} from "../../context/DataProvider";
 
-const Course = ({setActive, token}) => {
+import {useDispatch, useSelector} from "react-redux";
+import {getData} from "../../features/dataSlice";
+import {fetchData} from "../../features/infoSlice";
+
+const Course = ({setActive}) => {
+    const token = localStorage.getItem("access_token")
     const [course, setCourse] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
     const [activeItem, setActiveItem] = useState(0)
     const [activeBlock, setActiveBlock] = useState(false)
-    const [data, setData] = useState(null)
-    const [choice, setChoice] = useState(false)
-    const [localStorageParams, setLocalStorageParams] = useState(null)
-    const {title, id} = useParams()
-    const params = useSearchParams()
+    /*const [data, setData] = useState(null)*/
+    const [localStorageParams,setLocalStorageParams] = useState(null)
+    const dispatch = useDispatch()
+    const data = useSelector(state => state.data.data)
+    const fetchData_all = useSelector(state => state.info.info)
+    useEffect(() => {
+        dispatch(fetchData())
+    }, [])
     useEffect(() => {
         if (token !== null) {
-            getData()
+            getDataCourse()
         }
     }, [token])
-    /*useEffect(() => {
-            fetchData()
-    }, [])*/
-    const fetchData = () => {
+    /*const fetchData = () => {
         const theme_id = localStorage.getItem("theme_id")
         const type_id = localStorage.getItem("type_id")
         setLocalStorageParams({theme_id, type_id})
@@ -57,7 +60,7 @@ const Course = ({setActive, token}) => {
                 setLoading(false)
             })
         }
-    }
+    }*/
     const handleOnClick = (index) => {
         setActiveItem(index)
         setActiveBlock(!activeBlock)
@@ -72,8 +75,7 @@ const Course = ({setActive, token}) => {
     if (loading) {
         return <Loader/>
     }
-
-    async function getData() {
+    async function getDataCourse() {
         const response = await fetch("/api/Course", {
             method: 'GET',
             headers: {
@@ -94,7 +96,7 @@ const Course = ({setActive, token}) => {
         })
     }
 
-    async function getInfo(theme_id, type_id) {
+    /*async function getInfo(theme_id, type_id) {
         const response = await fetch(`/api/Info?theme_id=${theme_id}&type_id=${type_id}`, {
             method: 'GET',
             headers: {
@@ -119,6 +121,18 @@ const Course = ({setActive, token}) => {
         }).finally(() => {
             setLoading(false)
         })
+        console.log(theme_id,type_id)
+    }*/
+    const handleClickTheme = (theme_id,type_id) =>{
+        localStorage.setItem("theme_id", theme_id)
+        localStorage.setItem("type_id",type_id)
+        dispatch(
+            getData({
+                theme_id,
+                type_id
+            })
+        )
+        dispatch(fetchData())
     }
     return (
         <div className="course">
@@ -130,38 +144,20 @@ const Course = ({setActive, token}) => {
                             {course_name.title}
                             {activeItem === course_name.id ? <AiOutlineArrowUp/> : <AiOutlineArrowDown/>}
                         </div>
-                        <div className={activeItem === course_name.id ? "active-block" : "not-active-block"}>
-                            <p onClick={() => getInfo(course_name.id, 1)} className="course-links">Теория</p>
+                        <div
+                            className={(activeItem === course_name.id) ? "active-block" : "not-active-block"}>
+                            <p onClick={() => handleClickTheme(course_name.id,1)} className="course-links">Теория</p>
                             <div className="course-links lock-links">
-                                <p onClick={() => getInfo(course_name.id, 2)}>Практика</p>
+                                <p onClick={() => handleClickTheme(course_name.id,2)}>Практика</p>
                             </div>
                         </div>
                     </div>
                 ))}
             </div>
             <div className="course-content">
-                {/*{data ? <TheorySlider data={data}/> :
+                {fetchData_all.value ? <TheorySlider data={fetchData_all.value}/> :
                     <div>Выберите тему</div>
-                }*/}
-                {/*<span>[</span>
-                {data?.map((data_name) =>(
-                    <>
-                    <div>
-                        <span style={{marginLeft:"50px"}}>{`{`}</span>
-                        <p style={{marginLeft:"100px"}}>
-                            <span style={{color:'red'}}>"id"</span>: <span style={{color:"blue"}}>"{data_name.id}</span>"
-                        </p>
-                        <p style={{marginLeft:"100px"}}>
-                            <span style={{color:'red'}}>"description"</span>: <span style={{color:"blue"}}>"{data_name.description}"</span>
-                        </p>
-                        <p style={{marginLeft:"100px"}}>
-                            <span style={{color:'red'}}>"image_url"</span>: <span style={{color:"blue"}}>"{data_name.image_url}"</span>
-                        </p>
-                        <span style={{marginLeft:"50px"}}>},</span>
-                    </div>
-                    </>*/}
-                ))}
-                <span>]</span>
+                }
             </div>
         </div>
     )

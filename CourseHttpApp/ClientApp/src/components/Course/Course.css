@@ -1,5 +1,6 @@
 ﻿.course{
     display: flex;
+    justify-content: space-around;
 }
 .course-content{
     width: 1100px;
@@ -9,7 +10,7 @@
 }
 .course-block{
     max-width: 900px;
-    margin: 0 auto;
+    /*margin: 0 auto;*/
 }
 .lock-links{
     display: flex;
@@ -21,17 +22,18 @@
 }
 .course-burger-item{
     width: 300px;
-    background-color: white;
+    background-color: #9ebeec;
     border-radius: 10px;
     padding: 20px;
     margin-top: 20px;
 }
 .course-burger-item:hover{
+    cursor: pointer;
+    box-shadow: 4px 4px 4px rgba(0,0,0, .1);
 }
 .thory-content{
     max-width: 1300px;
     margin: 0 auto;
-    margin-top: 50px;
     border:1px solid black;
     padding: 20px;
 }

@@ -1,13 +1,20 @@
-﻿import React, {useEffect} from "react";
+﻿import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import "./Profile.css";
 
 const Profile = ({setToken}) => {
     let navigate = useNavigate()
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+    const [email, setEmail] = useState('')
+    const [progress, setProgress] = useState(26)
+    useEffect(() => {
+        getInfoUser()
+    }, [])
 
-    async function getInfoUser(){
+    async function getInfoUser() {
         const token = localStorage.getItem("access_token")
-        const response = await fetch("api/Profile",{
+        const response = await fetch("api/Profile", {
             method: 'GET',
             headers: {
                 "Accept": "application/json",
@@ -15,40 +22,52 @@ const Profile = ({setToken}) => {
             }
         })
         const data = (await response.json()).value;
-        console.log(data)
+        setFirstName(data.first_name)
+        setLastName(data.last_name)
+        setEmail(data.email)
     }
-    
-    useEffect(()=>{
-        getInfoUser()
-    },[])
-   
+
     const handleLogOut = () => {
         localStorage.removeItem("access_token")
+        localStorage.setItem("theme_id","1")
+        localStorage.setItem("type_id","1")
         setToken(undefined)
         navigate('/')
     }
     return (
-        <div>
-            <div className="profile">
-                <h1>Личный кабинет</h1>
+        <div className="profile">
+            <h1>Личный кабинет</h1>
+            <div className="profile-top-block">
                 <div className="profile-data">
                     <h3 className="profile-title">Персональные данные</h3>
                     <div className="profile-data-input">
                         <p>Имя</p>
-                        <input/>
+                        <input value={firstName}/>
                         <p>Фамилия</p>
-                        <input/>
+                        <input value={lastName}/>
                         <p>Email</p>
-                        <input/>
+                        <input value={email}/>
                     </div>
                 </div>
-                <div className="theme-block">
-                    <p>Выберите тему</p>
+                <div className="profile-progress">
+                    <div className="profile-progress-title">
+                        <p>Прогресс курса</p>
+                    </div>
+                    <div className="progress-bar-block">
+                        <progress max="100" value={progress} className="progress-bar-slice">
+                            {progress} %
+                        </progress>
+                        <div style={{marginTop: '13px', marginLeft: '20px'}}>
+                            {progress}/100
+                        </div>
+                        {/*<button onClick={() => setProgress(progress + 2)}>+</button>
+                        <button onClick={() => setProgress(progress - 2)}>-</button>*/}
+                    </div>
                 </div>
-                <div className="btn-block">
-                    <p className="save-change-btn">Сохранить изменения</p>
-                    <p className="loginout-btn" onClick={() => handleLogOut()}>Выйти</p>
-                </div>
+            </div>
+            <div className="btn-block">
+                <p className="save-change-btn">Сохранить изменения</p>
+                <p className="loginout-btn" onClick={() => handleLogOut()}>Выйти</p>
             </div>
         </div>
     )

@@ -74,13 +74,16 @@ Slider
 .section-center {
     display: flex;
     flex-direction: column;
-    margin: 0 auto;
     width: 1000px;
-    height: 550px;
+    height: 600px;
     text-align: center;
     position: relative;
     overflow: hidden;
     border: 1px solid black;
+    margin-top: 20px;
+}
+.slider{
+   
 }
 article h4 {
     text-transform: uppercase;
@@ -105,14 +108,12 @@ article h4 {
 .prev,
 .next {
     position: absolute;
-    top: 500px;
+    bottom: 0;
     transform: translateY(-50%);
-    background: var(--clr-grey-5);
-    color: var(--clr-white);
+    /*background: var(--clr-grey-5);*/
+   /* color: var(--clr-white);*/
     width: 100px;
-    height: 100px;
-    /*display: grid;*/
-    /*place-items: center;*/
+    height: 40px;
     border-color: transparent;
     font-size: 1rem;
     border-radius: var(--radius);
@@ -121,15 +122,22 @@ article h4 {
 }
 .prev:hover,
 .next:hover {
-    background: var(--clr-primary-5);
+   /* background: var(--clr-primary-5);*/
 }
 .prev {
     left: 0;
+}
+.prev-none{
+    display: none;
+}
+.next-none{
+    display: none;
 }
 .next {
     right: 0;
 }
 article {
+    padding: 15px;
     position: absolute;
     top: 0;
     left: 0;
@@ -150,4 +158,11 @@ article.nextSlide {
 }
 .slick-desc{
     
+}
+
+.top-bar{
+    display: flex;
+}
+.check-circle{
+    margin-right: 10px;
 }

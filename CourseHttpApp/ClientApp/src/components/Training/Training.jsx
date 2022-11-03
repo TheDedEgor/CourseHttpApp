@@ -1,13 +1,14 @@
 ﻿import React, {useState, useContext} from "react";
 import "./Training.css"
 import NotAuthTraining from "../NotAuthTraining/NotAuthTraining";
-import {Box, Select, MenuItem, TextField, Button, Tabs, Tab} from '@mui/material'
+import {Box, Select, MenuItem, TextField, Button, Tabs, Tab, FormControl} from '@mui/material'
+import InputLabel from "@mui/material/InputLabel";
 import CreateTable from "./CreateTable";
 import CreateJson from "./CreateJson";
 import Response from "./Response";
 import ErrorScreen from "./ErrorScreen";
 import {DataContext} from "../../context/DataProvider";
-import {checkParams} from "../../Utils";
+import {checkParams, resizeWindow} from "../../Utils";
 import SnackBar from "./SnakBar";
 import {getData} from "../../service/api";
 import success_logo from '../../images/success.png'
@@ -16,6 +17,7 @@ const Training = ({tasks}) => {
     const token = localStorage.getItem("access_token")
     const {formData, setFormData} = useContext(DataContext)
     const {paramData, jsonText, setParamData, headerData, setHeaderData} = useContext(DataContext)
+    const {taskId, setTaskId} = useContext(DataContext)
     const [value, setValue] = useState(0)
     const [error, setError] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
@@ -23,9 +25,9 @@ const Training = ({tasks}) => {
     const [apiResponse, setApiResponse] = useState({})
     const [task, setTask] = useState('')
     const [hashJson, setHashJson] = useState({})
-    const [taskId, setTaskId] = useState(null)
     const [successOtvet, setSuccessOtvet] = useState(null)
     const [otvet, setOtvet] = useState(false)
+    const [check, setCheck] = useState(null)
 
     const handleChange = (e) => {
         setFormData({...formData, type: e.target.value})
@@ -52,28 +54,32 @@ const Training = ({tasks}) => {
         setHashJson(response.data)
         let hash = require('object-hash')
         if (hash(hashJson) === successOtvet) {
+            const task = tasks.find(task => task.success === successOtvet)
             setOtvet(true)
+            setTaskId(task.id)
+        } else {
+            setOtvet(false)
         }
     }
     const onClickTask = (id) => {
-        const task_title = tasks.find(task_title => task_title.id === id + 1).title
-        const success_otvet = tasks.find(task => task.id === id + 1)?.success
-        setSuccessOtvet(success_otvet)
-        setTask(task_title)
-        setTaskId(id)
+        const task = tasks.find(task => task.id === id + 1)
+        setSuccessOtvet(task.success)
+        setTask(task.title)
+        setTimeout(resizeWindow, 10)
     }
     return (
         <>
             {token ?
                 <div style={{display: 'flex', justifyContent: 'space-around'}}>
-                    <div>
+                    <div className="tasks">
                         {tasks.map((task, id) => (
-                            <div className="task-item" onClick={() => onClickTask(id)}>
+                            <div className="task-item" onClick={() => onClickTask(id)} key={id}>
                                 <div>
                                     <p>Задание {id + 1}</p>
                                 </div>
                                 <div>
-                                    {otvet && <img src={success_logo} alt="success" width={20} height={20}/>}
+                                    {(taskId === id + 1) &&
+                                        <img src={success_logo} alt="success" width={20} height={20}/>}
                                 </div>
                             </div>
                         ))}
@@ -82,15 +88,20 @@ const Training = ({tasks}) => {
                         {task && <div className="task">{task}</div>}
                         <Box className="training-block">
                             <Box className="form-block">
-                                <Select
-                                    value={formData.type}
-                                    label="POST"
-                                    className="select"
-                                    onChange={(e) => handleChange(e)}
-                                >
-                                    <MenuItem value={'POST'}>POST</MenuItem>
-                                    <MenuItem value={'GET'}>GET</MenuItem>
-                                </Select>
+                                <FormControl className="select">
+                                    <InputLabel id="demo-simple-select-label"
+                                                style={{marginTop: '-7px'}}>Method</InputLabel>
+                                    <Select
+                                        id="demo-simple-select-label"
+                                        value={formData.type}
+                                        label="Method"
+                                        style={{height: '40px'}}
+                                        onChange={(e) => handleChange(e)}
+                                    >
+                                        <MenuItem value={'POST'}>POST</MenuItem>
+                                        <MenuItem value={'GET'}>GET</MenuItem>
+                                    </Select>
+                                </FormControl>
                                 <TextField
                                     size="small"
                                     className="url-input"
@@ -100,6 +111,7 @@ const Training = ({tasks}) => {
                                     className="send-btn"
                                     variant="contained"
                                     onClick={() => onSendClick()}
+                                    style={{backgroundColor:'#5e73d0'}}
                                 >
                                     Send
                                 </Button>
@@ -107,7 +119,7 @@ const Training = ({tasks}) => {
                             <Box className="select-tab-block">
                                 <Tabs value={value}
                                       onChange={handleChangeTabs}
-                                      TabIndicatorProps={{sx: {backgroundColor: '#F26B3A', height: 4, bottom: 2}}}
+                                      TabIndicatorProps={{sx: {backgroundColor: 'blue', height: 4, bottom: 2}}}
                                       textColor="none"
                                 >
                                     <Tab label="Params" className="tab-item"/>

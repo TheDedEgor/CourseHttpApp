@@ -4,7 +4,7 @@ import {BeatLoader} from 'react-spinners'
 const Loader = () =>{
     return(
         <div className="loader">
-            <BeatLoader color="#36d7b7" size={50}/>
+            <BeatLoader color="#5e73d0" size={50}/>
         </div>
     )
 }

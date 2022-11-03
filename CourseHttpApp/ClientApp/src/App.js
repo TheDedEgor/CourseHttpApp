@@ -25,44 +25,89 @@ const App = () => {
             title: "Отправьте POST-запрос по URL-https://jsonplaceholder.typicode.com/todos",
             success: '323217f643c3e3f1fe7532e72ac01bb0748c97besdsdsd',
         },
-        /*{
-            id: 2,
-            title: "Напишите запрос POST",
-            success: false
-        },
         {
             id: 3,
-            title: "Напишите запрос PUT",
-            success: false
+            title: "Отправьте GET-запрос по URL-https://jsonplaceholder.typicode.com/todos",
+            success: '323217f643c3e3f1fe7532e72ac01bb0748c97be',
         },
         {
             id: 4,
-            title: "Напишите запрос POST",
-            success: false
+            title: "Отправьте GET-запрос по URL-https://jsonplaceholder.typicode.com/todos",
+            success: '323217f643c3e3f1fe7532e72ac01bb0748c97be',
         },
         {
             id: 5,
-            title: "Напишите запрос POST",
-            success: false
+            title: "Отправьте GET-запрос по URL-https://jsonplaceholder.typicode.com/todos",
+            success: '323217f643c3e3f1fe7532e72ac01bb0748c97be',
         },
         {
             id: 6,
-            title: "Напишите запрос POST",
-            success: false
-        },*/
+            title: "Отправьте GET-запрос по URL-https://jsonplaceholder.typicode.com/todos",
+            success: '323217f643c3e3f1fe7532e72ac01bb0748c97be',
+        },
+        {
+            id: 7,
+            title: "Отправьте GET-запрос по URL-https://jsonplaceholder.typicode.com/todos",
+            success: '323217f643c3e3f1fe7532e72ac01bb0748c97be',
+        },
+        {
+            id: 8,
+            title: "Отправьте GET-запрос по URL-https://jsonplaceholder.typicode.com/todos",
+            success: '323217f643c3e3f1fe7532e72ac01bb0748c97be',
+        },
+        {
+            id: 9,
+            title: "Отправьте GET-запрос по URL-https://jsonplaceholder.typicode.com/todos",
+            success: '323217f643c3e3f1fe7532e72ac01bb0748c97be',
+        },
+        {
+            id: 10,
+            title: "Отправьте GET-запрос по URL-https://jsonplaceholder.typicode.com/todos",
+            success: '323217f643c3e3f1fe7532e72ac01bb0748c97be',
+        },
+        {
+            id: 11,
+            title: "Отправьте GET-запрос по URL-https://jsonplaceholder.typicode.com/todos",
+            success: '323217f643c3e3f1fe7532e72ac01bb0748c97be',
+        },
+        {
+            id: 11,
+            title: "Отправьте GET-запрос по URL-https://jsonplaceholder.typicode.com/todos",
+            success: '323217f643c3e3f1fe7532e72ac01bb0748c97be',
+        },
+        {
+            id: 11,
+            title: "Отправьте GET-запрос по URL-https://jsonplaceholder.typicode.com/todos",
+            success: '323217f643c3e3f1fe7532e72ac01bb0748c97be',
+        },
+        {
+            id: 11,
+            title: "Отправьте GET-запрос по URL-https://jsonplaceholder.typicode.com/todos",
+            success: '323217f643c3e3f1fe7532e72ac01bb0748c97be',
+        },
+        {
+            id: 11,
+            title: "Отправьте GET-запрос по URL-https://jsonplaceholder.typicode.com/todos",
+            success: '323217f643c3e3f1fe7532e72ac01bb0748c97be',
+        },
+        {
+            id: 11,
+            title: "Отправьте GET-запрос по URL-https://jsonplaceholder.typicode.com/todos",
+            success: '323217f643c3e3f1fe7532e72ac01bb0748c97be',
+        }
+        
     ]
     const [activeAuth, setActiveAuth] = useState(false)
     const [activeReg, setActiveReg] = useState(false)
     const [activeForgotPass, setActiveForgotPass] = useState(false)
     const [token, setToken] = useState(localStorage.getItem("access_token"));
-
     return (
         <div className="App">
             <div className="container">
                 <Header setActiveAuth={setActiveAuth} setActiveReg={setActiveReg} setToken={setToken} token={token}/>
                 <>
                     <Routes>
-                        <Route path="/" element={<Course setActive={setActiveAuth} token={token}/>}/>
+                        <Route path="/" element={<Course setActive={setActiveAuth}/>}/>
                         <Route path="/training" element={<Training tasks={tasks}/>}/>
                         <Route path="/contacts" element={<Contacts/>}/>
                         <Route path="/profile" element={

@@ -1,29 +1,25 @@
 import React,{useContext} from "react";
 import {Typography,TextareaAutosize} from "@mui/material";
 import {DataContext} from "../../context/DataProvider";
+import {resizeWindow} from "../../Utils";
+import ReactCodeMirror from "@uiw/react-codemirror";
+import {json} from '@codemirror/lang-json'
+import {myTheme} from "../../Utils";
 
-const textareaStyle = {
-    width : '100%',
-    padding:10,
-    background:'url(https://i.imgur.com/2cOaJ.png)',
-    backgroundAttachment:'local',
-    backgroundRepeat:'no-repeat',
-    paddingLeft:35,
-    paddingTop:5,
-    borderColor:"black"
-}
 const CreateJson = () =>{
     const {setJsonText} = useContext(DataContext) 
     const onValueChange = (e) =>{
         setJsonText(e.target.value)
+        setTimeout(resizeWindow,10)
     }
     return(
         <>
             <Typography mt={2} mb={2}>JSON</Typography>
-            <TextareaAutosize
-                minRows={3}
-                maxRows={5}
-                style={textareaStyle}
+            <ReactCodeMirror
+                style={{border:'1px solid black'}}
+                extensions={[json()]}
+                height="100px"
+                theme={myTheme}
                 onChange={(e) => onValueChange(e)}
             />
         </>
