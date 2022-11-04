@@ -31,6 +31,9 @@ public class InfoController : ControllerBase
             if (user == null)
                 return Results.NotFound();
             var user_id = user.Id;
+            var user_info = db.users_info.First(x => x.User_id == user_id);
+            user_info.Progress_theme_id = theme_id;
+            user_info.Progress_type_id = type_id;
             if (type_id == 1)
             {
                 foreach (var item in db.theory.Where(x => x.Theme_id == theme_id).ToList())
@@ -71,6 +74,8 @@ public class InfoController : ControllerBase
                     });
                 }
             }
+
+            db.SaveChanges();
 
             return Results.Json(result);
         }
