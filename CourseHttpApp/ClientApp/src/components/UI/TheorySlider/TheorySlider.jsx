@@ -8,7 +8,7 @@ import photo2 from '../../../images/theory-1-1.png'
 const SliderComponent = ({data}) => {
     const [currentIndex, setCurrentIndex] = useState(0)
     useEffect(() => {
-        const lastIndex = data.length - 1
+        const lastIndex = data?.length - 1
         if (currentIndex < 0) {
             setCurrentIndex(lastIndex)
         }
@@ -26,7 +26,7 @@ const SliderComponent = ({data}) => {
                         if (e_index === currentIndex) {
                             position = "activeSlide"
                         }
-                        if (e_index === currentIndex - 1 || (currentIndex === 0 && e_index === data.length - 1)) {
+                        if (e_index === currentIndex - 1 || (currentIndex === 0 && e_index === data?.length - 1)) {
                             position = "lastSlide"
                         }
                         return (

@@ -8,10 +8,6 @@
 .course-title{
     text-align: center;
 }
-
-
-
-
 .course-block{
     max-width: 300px;
 }
@@ -37,24 +33,14 @@
     max-width: 9999px;
     transition: all 0.5s cubic-bezier(1,0,0,1);
 }
-
-
-
-
 .lock-links{
     display: flex;
-    
 }
 .lock{
     margin-top: 6px;
     margin-left: 10px;
 }
 .course-burger-item{
-    /*width: 300px;
-    background-color: #9ebeec;
-    border-radius: 10px;
-    padding: 20px;
-    margin-top: 20px;*/
     background-color: #f0ebe1;
     margin-bottom: 5px;
     padding: 10px 20px;

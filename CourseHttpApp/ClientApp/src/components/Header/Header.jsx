@@ -119,7 +119,7 @@ const Header = ({setActiveAuth, setActiveReg, setToken, token}) => {
                 <Link className="menu-item" to="/">Курс</Link>
                 <Link className="menu-item" to="/training">Тренажер</Link>
                 <Link className="menu-item" to="/contacts">Контакты</Link>
-                {token && <p className="menu-item-profile" id="drop-menu" onClick={(e) => showDropMenu(e)}>
+                {token && <div className="menu-item-profile" id="drop-menu" onClick={(e) => showDropMenu(e)}>
                     <div className="profile_title">
                         <div className="name-profile">{localStorage.getItem("user_name")}</div>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -145,7 +145,7 @@ const Header = ({setActiveAuth, setActiveReg, setToken, token}) => {
                             <a className="profile-nav-item" onClick={() => handleLogOut()}>Выйти</a>
                         </div>
                     }
-                </p>}
+                </div>}
                 {!token && <div className="menu-item-auth">
                     <a onClick={() => setActiveAuth(true)} className="link-auth">Вход</a>
                     <a onClick={() => setActiveReg(true)} className="link-auth">Регистрация</a>
