@@ -10,8 +10,8 @@ export const fetchData = createAsyncThunk(
     'info/fetchData',
     async (_,{rejectWithValue}) =>{
         try{
-            const theme_id = localStorage.getItem("theme_id")
-            const type_id = localStorage.getItem("type_id")
+            let theme_id = localStorage.getItem("theme_id")
+            let type_id = localStorage.getItem("type_id")
             const response = await  fetch(`/api/Info?theme_id=${theme_id}&type_id=${type_id}`, {
                 method: 'GET',
                 headers: {

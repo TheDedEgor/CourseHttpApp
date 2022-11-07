@@ -55,8 +55,6 @@ const Register = ({setActiveReg, setToken}) => {
                 setValidUser('')
                 localStorage.setItem("access_token", user.value.access_token)
                 localStorage.setItem("user_name", user.value.user_name)
-                localStorage.setItem("theme_id",1)
-                localStorage.setItem("type_id",1)
                 setToken(user.value.access_token)
                 close()
             }

@@ -29,8 +29,6 @@ const Profile = ({setToken}) => {
 
     const handleLogOut = () => {
         localStorage.removeItem("access_token")
-        localStorage.setItem("theme_id","1")
-        localStorage.setItem("type_id","1")
         setToken(undefined)
         navigate('/')
     }
@@ -60,8 +58,6 @@ const Profile = ({setToken}) => {
                         <div style={{marginTop: '13px', marginLeft: '20px'}}>
                             {progress}/100
                         </div>
-                        {/*<button onClick={() => setProgress(progress + 2)}>+</button>
-                        <button onClick={() => setProgress(progress - 2)}>-</button>*/}
                     </div>
                 </div>
             </div>

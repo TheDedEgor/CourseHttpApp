@@ -1,0 +1,7 @@
+.accordion-icon{
+    margin-left: auto;
+    transition: transform 0.6s ease;
+}
+.rotate{
+    transform: rotate(90deg);
+}

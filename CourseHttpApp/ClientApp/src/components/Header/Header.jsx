@@ -76,6 +76,8 @@ const Header = ({setActiveAuth, setActiveReg, setToken, token}) => {
     const handleLogOut = () => {
         localStorage.removeItem("access_token")
         setToken(undefined)
+        localStorage.removeItem("theme_id")
+        localStorage.removeItem("type_id")
         navigate('/')
     }
 

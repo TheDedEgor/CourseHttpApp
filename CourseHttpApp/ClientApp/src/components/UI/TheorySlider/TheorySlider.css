@@ -65,12 +65,6 @@ Slider
     justify-content: center;
     font-weight: 500;
 }
-.title span {
-    font-size: 0.85em;
-    color: var(--clr-primary-5);
-    margin-right: 1rem;
-    font-weight: 700;
-}
 .section-center {
     display: flex;
     flex-direction: column;
