@@ -70,7 +70,7 @@ public class InfoController : ControllerBase
                         response_options = response_options,
                         correct_id = item.Correct_id,
                         image_url = item.Image_url,
-                        is_done = task != null ? task.Is_done : false
+                        is_done = task == null ? 2 : task.Is_done == true ? 1 : 0
                     });
                 }
             }

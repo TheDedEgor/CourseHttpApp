@@ -34,9 +34,9 @@ public class TrainingController : ControllerBase
                 var task = db.training_tasks_users.FirstOrDefault(x => x.User_id == user_id && x.Task_id == item.Id);
                 result.Add(new
                 {
-                    id=item.Id,
-                    description=item.Description,
-                    is_done = task != null ? task.Is_done : false
+                    id = item.Id,
+                    description = item.Description,
+                    is_done = task == null ? 2 : task.Is_done == true ? 1 : 0
                 });
             }
         }
