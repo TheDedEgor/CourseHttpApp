@@ -33,7 +33,7 @@ public class UpdateTaskTrainingController : ControllerBase
             var trainingTask =
                 db.training_tasks_users.FirstOrDefault(x => x.User_id == user.Id && x.Task_id == task.Task_id);
             if (trainingTask == null)
-                db.training_tasks_users.Add(new Training_tasks_users()
+                db.training_tasks_users.Add(new Training_tasks_users
                 {
                     Id = 0,
                     User_id = user.Id,
