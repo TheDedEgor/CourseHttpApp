@@ -7,15 +7,24 @@ import Accordion from "../Accordion/Accordion";
 import TheorySlider from "../UI/TheorySlider/TheorySlider";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchData} from "../../features/infoSlice";
+import AccordionBlock from "../Accordion/Accordion";
 
 const Course = ({setActive}) => {
     const token = localStorage.getItem("access_token")
+    const [maxLenghtCourse,setMaxLenghtCourse] = useState(null)
     const [course, setCourse] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
     const dispatch = useDispatch()
     const fetchData_all = useSelector(state => state.info.info)
     const loadSLice = useSelector(state => state.info.status)
+    useEffect(() => {
+       if(course?.themes?.length > 3){
+           setMaxLenghtCourse(true)
+       }else{
+           setMaxLenghtCourse(false)
+       }
+    },[course?.themes?.length])
     useEffect(() => {
         if (token !== null) {
             getDataCourse().then(res => {
@@ -55,7 +64,6 @@ const Course = ({setActive}) => {
             setLoading(false)
         })
     }
-
     const handleClickTheme = (theme_id, type_id) => {
         localStorage.setItem("theme_id", theme_id)
         localStorage.setItem("type_id", type_id)
@@ -66,11 +74,12 @@ const Course = ({setActive}) => {
             })
         )
     }
+    console.log(course.themes)
     return (
         <div className="course">
-            <div className="course-block">
+            <div className={`${maxLenghtCourse ? "course-block" : "course-block-overflow-hidden"}`}>
                 {course.themes.map(course_name => (
-                    <Accordion title={course_name.title} id={course_name.id} handleClickTheme={handleClickTheme}/>
+                    <AccordionBlock title={course_name.title} id={course_name.id} handleClickTheme={handleClickTheme}/>
             ))}
             </div>
             <div className="course-content">

@@ -1,4 +1,4 @@
-﻿import React, {useState, useContext} from "react";
+﻿import React, {useState, useContext, useEffect} from "react";
 import "./Training.css"
 import NotAuthTraining from "../NotAuthTraining/NotAuthTraining";
 import {Box, Select, MenuItem, TextField, Button, Tabs, Tab, FormControl} from '@mui/material'
@@ -27,8 +27,15 @@ const Training = ({tasks}) => {
     const [hashJson, setHashJson] = useState({})
     const [successOtvet, setSuccessOtvet] = useState(null)
     const [otvet, setOtvet] = useState(false)
-    const [check, setCheck] = useState(null)
-
+    const [maxLenghtArray,setMaxLenghtArray] = useState(null)
+    useEffect(() => {
+        if(tasks.length > 7){
+            setMaxLenghtArray(true)
+        }
+        else{
+            setMaxLenghtArray(false)
+        }
+    },[tasks.length])
     const handleChange = (e) => {
         setFormData({...formData, type: e.target.value})
     }
@@ -67,11 +74,12 @@ const Training = ({tasks}) => {
         setTask(task.title)
         setTimeout(resizeWindow, 10)
     }
+    console.log(maxLenghtArray)
     return (
         <>
             {token ?
                 <div style={{display: 'flex', justifyContent: 'space-around'}}>
-                    <div className="tasks">
+                    <div className={`${maxLenghtArray ? "tasks" : "task-overflow-hidden"}`}>
                         {tasks.map((task, id) => (
                             <div className="task-item" onClick={() => onClickTask(id)} key={id}>
                                 <div>

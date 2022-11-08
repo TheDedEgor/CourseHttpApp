@@ -47,9 +47,7 @@ Variables
 /* section */
 .section {
     width: 1000px;
-    /*height: 800px;*/
     margin-left: 50px;
-    /*max-width: var(--max-width);*/
 }
 /*
 =============== 
@@ -104,8 +102,6 @@ article h4 {
     position: absolute;
     bottom: 0;
     transform: translateY(-50%);
-    /*background: var(--clr-grey-5);*/
-   /* color: var(--clr-white);*/
     width: 100px;
     height: 40px;
     border-color: transparent;
@@ -113,10 +109,6 @@ article h4 {
     border-radius: var(--radius);
     cursor: pointer;
     transition: var(--transition);
-}
-.prev:hover,
-.next:hover {
-   /* background: var(--clr-primary-5);*/
 }
 .prev {
     left: 0;
@@ -149,9 +141,6 @@ article.lastSlide {
 }
 article.nextSlide {
     transform: translateX(100%);
-}
-.slick-desc{
-    
 }
 
 .top-bar{
