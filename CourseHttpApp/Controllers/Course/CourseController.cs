@@ -29,12 +29,17 @@ public class CourseController : ControllerBase
             var user_info = db.users_info.First(x => x.User_id == user.Id);
             foreach (var theme in db.themes.ToList())
             {
+                var allTasks = db.practice.Count(x => x.Theme_id == theme.Id);
+                var correctTasks = db.course_tasks_users.Count(x => x.Theme_id == theme.Id && x.User_id == user.Id);
+                var result = (int)Math.Round((double)correctTasks / allTasks * 100);
                 themes.Add(new
                 {
                     id = theme.Id,
-                    title = theme.Title
+                    title = theme.Title,
+                    correct_tasks = result
                 });
             }
+
 
             return Results.Json(new
             {
