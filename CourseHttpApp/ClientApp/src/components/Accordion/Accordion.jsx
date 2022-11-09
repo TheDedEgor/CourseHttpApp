@@ -1,4 +1,4 @@
-import React,{useState,useRef} from 'react'
+import React, {useState, useRef, useContext} from 'react'
 import "./Accordion.css"
 import Chevron from "./Chevron/Chevron";
 import Accordion from '@mui/material/Accordion';
@@ -6,9 +6,11 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import {useNotification} from "use-toast-notification";
+import {DataContext} from "../../context/DataProvider";
 
 const AccordionBlock = ({title,handleClickTheme,id}) =>{
-    
+    const {progress} = useContext(DataContext)
     /*const [setActive,setActiveState] = useState("")
     const [setHeight,setHeightState] = useState("0")
     const [setRotate,setRotateState] = useState("accordion-icon")
@@ -57,7 +59,7 @@ const AccordionBlock = ({title,handleClickTheme,id}) =>{
                 <p onClick={() => handleClickTheme(id,2)} className="accordion-text">Практика</p>
             </div>
         </div>*/
-            <Accordion className="accordion" disabled={id > 1}>
+            <Accordion className="accordion">
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
@@ -70,7 +72,7 @@ const AccordionBlock = ({title,handleClickTheme,id}) =>{
                         <p onClick={() => handleClickTheme(id,1)}>Теория</p>
                     </Typography>
                     <Typography>
-                        <p onClick={() => handleClickTheme(id,2)}>Практика</p>
+                        <p onClick={() => handleClickTheme(id,2)}>Практика {progress} %</p>
                     </Typography>
                 </AccordionDetails>
             </Accordion>

@@ -40,31 +40,26 @@ export const getInfo = createAsyncThunk(
 
 export const getData = createAsyncThunk(
     'data/getData',
-    async (params,{rejectWithValue,dispatch}) => {
-        const theme_id = localStorage.getItem("theme_id")
-        const type_id = localStorage.getItem("type_id")
+    async (_,{rejectWithValue}) => {
         try {
-            const response = await fetch(`/api/Info?theme_id=${theme_id}&type_id=${type_id}`, {
+            const response = await fetch("/api/Course", {
                 method: 'GET',
                 headers: {
                     "Accept": "application/json",
                     "Authorization": "Bearer " + token
                 }
             })
-            if (!response.ok) {
+            if(!response.ok){
                 throw new Error('Error in Server!!!')
             }
-            if (type_id === 1) {
-                const data = await response.json()
-                return data
-            } else {
-                const data = await response.json()
-                return data
-            }
+            const data = response.json()
+            localStorage.setItem("theme_id", data.value.progress.progress_theme_id)
+            localStorage.setItem("type_id", data.value.progress.progress_type_id)
+            console.log(data)
+            return data;
         } catch (error) {
             return rejectWithValue(error.message)
         }
-        /*dispatch(setData({params}))*/
     }
 )
 

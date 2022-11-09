@@ -108,7 +108,7 @@ const App = () => {
                 <>
                     <Routes>
                         <Route path="/" element={<Course setActive={setActiveAuth}/>}/>
-                        <Route path="/training" element={<Training tasks={tasks}/>}/>
+                        <Route path="/training" element={<Training/>}/>
                         <Route path="/contacts" element={<Contacts/>}/>
                         <Route path="/profile" element={
                             <PrivateRoute>

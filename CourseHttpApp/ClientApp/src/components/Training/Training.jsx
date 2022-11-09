@@ -12,12 +12,13 @@ import {checkParams, resizeWindow} from "../../Utils";
 import SnackBar from "./SnakBar";
 import {getData} from "../../service/api";
 import success_logo from '../../images/success.png'
+import hash from "object-hash";
+import LoadingSlider from "../UI/LoadingSlider/LoadingSlider";
 
-const Training = ({tasks}) => {
+const Training = () => {
     const token = localStorage.getItem("access_token")
     const {formData, setFormData} = useContext(DataContext)
     const {paramData, jsonText, setParamData, headerData, setHeaderData} = useContext(DataContext)
-    const {taskId, setTaskId} = useContext(DataContext)
     const [value, setValue] = useState(0)
     const [error, setError] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
@@ -25,9 +26,9 @@ const Training = ({tasks}) => {
     const [apiResponse, setApiResponse] = useState({})
     const [task, setTask] = useState('')
     const [hashJson, setHashJson] = useState({})
-    const [successOtvet, setSuccessOtvet] = useState(null)
-    const [otvet, setOtvet] = useState(false)
     const [maxLenghtArray,setMaxLenghtArray] = useState(null)
+    const [tasks,setTasks] = useState([])
+    const [loading,setLoading] = useState(true)
     useEffect(() => {
         if(tasks.length > 7){
             setMaxLenghtArray(true)
@@ -36,6 +37,23 @@ const Training = ({tasks}) => {
             setMaxLenghtArray(false)
         }
     },[tasks.length])
+    useEffect(() => {
+        if(token !== null){
+            getTasks()
+        }
+    },[])
+    async function getTasks() {
+        const response = await fetch("api/Training",{
+            method: 'GET',
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        }).finally(() =>{
+            setLoading(false)
+        })
+        const data = await response.json();
+        setTasks(data.value)
+    }
     const handleChange = (e) => {
         setFormData({...formData, type: e.target.value})
     }
@@ -46,54 +64,68 @@ const Training = ({tasks}) => {
         setValue(newValue)
     }
 
-    const onSendClick = async () => {
+    const onSendClick = async (id) => {
+        const task_ = tasks.find(x => x.id === id)
         if (!checkParams(formData, jsonText, paramData, headerData, setErrorMessage)) {
             setError(true)
-            return false
+            return
         }
         let response = await getData(formData, jsonText, paramData, headerData)
         if (response === 'error') {
             setErrorResponse(true)
-            return
+            task_.is_done = 0
+        }else{
+            setErrorResponse(false)
+            setApiResponse(response.data)
+            setHashJson(response.data)
+            let hash = require('object-hash')
+            if (hash(response.data) === task.correct_hash) {
+                task_.is_done = 1
+            }else{
+                task_.is_done = 0
+            }   
         }
-        setErrorResponse(false)
-        setApiResponse(response.data)
-        setHashJson(response.data)
-        let hash = require('object-hash')
-        if (hash(hashJson) === successOtvet) {
-            const task = tasks.find(task => task.success === successOtvet)
-            setOtvet(true)
-            setTaskId(task.id)
-        } else {
-            setOtvet(false)
-        }
+        fetch("api/UpdateTaskTraining",{
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token
+            },
+            body:JSON.stringify({
+                task_id:id,
+                is_done:task_.is_done === 1
+            })
+        })
     }
     const onClickTask = (id) => {
-        const task = tasks.find(task => task.id === id + 1)
-        setSuccessOtvet(task.success)
-        setTask(task.title)
+        const task_ = tasks.find(task => task.id === id)
+        console.log(task_)
+        setTask(task_)
         setTimeout(resizeWindow, 10)
     }
-    console.log(maxLenghtArray)
     return (
         <>
             {token ?
                 <div style={{display: 'flex', justifyContent: 'space-around'}}>
-                    <div className={`${maxLenghtArray ? "tasks" : "task-overflow-hidden"}`}>
-                        {tasks.map((task, id) => (
-                            <div className="task-item" onClick={() => onClickTask(id)} key={id}>
-                                <div>
-                                    <p>Задание {id + 1}</p>
-                                </div>
-                                <div>
-                                    {(taskId === id + 1) &&
-                                        <img src={success_logo} alt="success" width={20} height={20}/>}
-                                </div>
+                    <div className={`${maxLenghtArray ? "tasks" : "task-overflow-hidden"}`} style={{width:'350px'}}>
+                        {loading === true ? <LoadingSlider/> :
+                            <div>
+                                {tasks.map((task, id) => (
+                                    <div className="task-item" onClick={() => onClickTask(task.id)} key={id}>
+                                        <div>
+                                            <p>Задание {id + 1}</p>
+                                        </div>
+                                        <div>
+                                            {task.is_done === 1 &&
+                                                <img src={success_logo} alt="success" width={20} height={20}/>}
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
-                        ))}
+                        }
                     </div>
                     <div>
-                        {task && <div className="task">{task}</div>}
+                        {task && <div className="task">{task.description}</div>}
                         <Box className="training-block">
                             <Box className="form-block">
                                 <FormControl className="select">
@@ -118,7 +150,7 @@ const Training = ({tasks}) => {
                                 <Button
                                     className="send-btn"
                                     variant="contained"
-                                    onClick={() => onSendClick()}
+                                    onClick={() => onSendClick(task.id)}
                                     style={{backgroundColor:'#5e73d0'}}
                                 >
                                     Send

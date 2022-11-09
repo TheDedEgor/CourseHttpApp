@@ -8,7 +8,7 @@ const DataProvider = ({children}) =>{
     const [headerData,setHeaderData] = useState([])
     const [jsonText,setJsonText] = useState('')
     const [taskId,setTaskId] = useState(-1)
-    
+    const [progress,setProgress] = useState(0)
     return(
         <DataContext.Provider value={{
             formData,
@@ -20,7 +20,9 @@ const DataProvider = ({children}) =>{
             jsonText,
             setJsonText,
             taskId,
-            setTaskId
+            setTaskId,
+            progress,
+            setProgress
         }}>
             {children}
         </DataContext.Provider>
