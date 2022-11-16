@@ -71,10 +71,14 @@ const Training = () => {
             return
         }
         let response = await getData(formData, jsonText, paramData, headerData)
-        if (response === 'error') {
+        console.log(response)
+        if (response.response.status === 404) {
+            console.log('error')
             setErrorResponse(true)
+            setApiResponse(response)
             task_.is_done = 0
         }else{
+            console.log('ok')
             setErrorResponse(false)
             setApiResponse(response.data)
             setHashJson(response.data)
@@ -191,7 +195,7 @@ const Training = () => {
                             >
                                 <CreateJson/>
                             </Box>
-                            {errorResponse ? <ErrorScreen/> : <Response data={apiResponse}/>}
+                            {errorResponse ? <ErrorScreen apiResponse={apiResponse}/> : <Response data={apiResponse}/>}
                             {error && <SnackBar error={error} setError={setError} errorMsg={errorMessage}/>}
                         </Box>
                     </div>

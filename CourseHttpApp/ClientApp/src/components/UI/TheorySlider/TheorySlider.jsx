@@ -17,9 +17,9 @@ const SliderComponent = ({data}) => {
             setCurrentIndex(0)
         }
     }, [currentIndex, data])
-    /*if(data[0].hasOwnProperty('correct_id')){
+    if(data[0].hasOwnProperty('correct_id')){
         return <Quizz data={data}/>
-    }*/
+    }
     return (
         <section className="section">
             <div className="section-center">

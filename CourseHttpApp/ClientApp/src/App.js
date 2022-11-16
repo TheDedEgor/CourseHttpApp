@@ -105,7 +105,7 @@ const App = () => {
         <div className="App">
             <div className="container">
                 <Header setActiveAuth={setActiveAuth} setActiveReg={setActiveReg} setToken={setToken} token={token}/>
-                <>
+                <div className="main">
                     <Routes>
                         <Route path="/" element={<Course setActive={setActiveAuth}/>}/>
                         <Route path="/training" element={<Training/>}/>
@@ -131,7 +131,7 @@ const App = () => {
                     {activeForgotPass && <Modal>
                         <ForgotPass setActiveForgotPass={setActiveForgotPass}/>
                     </Modal>}
-                </>
+                </div>
             </div>
         </div>
     )

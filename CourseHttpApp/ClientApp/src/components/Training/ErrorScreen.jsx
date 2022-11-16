@@ -1,13 +1,16 @@
 import React from "react";
 import {Box, TextareaAutosize, Typography} from "@mui/material";
+import {AxiosError} from "axios";
 
-const ErrorScreen = () =>{
-    const error = 'http://i.stack.imgur.com/01tZQ.png'
+const ErrorScreen = ({apiResponse}) =>{
+    /*console.log(apiResponse.message)*/
     return(
         <Box>
             <Typography mt={2} mb={2}>Response</Typography>
             <Box style={{display:"flex"}}>
-                <img src={error} alt="error" style={{width:'60%',margin:'auto',height:'auto'}}/>
+                <Box>
+                    {apiResponse.message}
+                </Box>
             </Box>
         </Box>
     )

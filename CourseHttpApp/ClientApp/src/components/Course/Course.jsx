@@ -3,7 +3,6 @@ import "./Course.css"
 import NotAuthCourse from "../NotAuthCourse/NotAuthCourse";
 import Loader from "../UI/Loader/Loader";
 import LoadingSlider from "../UI/LoadingSlider/LoadingSlider";
-import Accordion from "../Accordion/Accordion";
 import TheorySlider from "../UI/TheorySlider/TheorySlider";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchData} from "../../features/infoSlice";
@@ -15,17 +14,17 @@ import {DataContext} from "../../context/DataProvider";
 const Course = ({setActive}) => {
     const token = localStorage.getItem("access_token")
     const [maxLenghtCourse, setMaxLenghtCourse] = useState(null)
-    /*const [course, setCourse] = useState([])*/
-    const [loading, setLoading] = useState(false)
+    const [course, setCourse] = useState([])
+    const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
     const dispatch = useDispatch()
     const fetchData_all = useSelector(state => state.info.info)
     const loadSLice = useSelector(state => state.info.status)
-    const course = useSelector(state => state.data.data)
-    const loadCourse = useSelector(state => state.data.status)
+  /*  const course = useSelector(state => state.data.data)
+    const loadCourse = useSelector(state => state.data.status)*/
     useEffect(() => {
         if (token !== null) {
-            dispatch(getData()).then(res => {
+            getDataCourse().then(res => {
                 dispatch(fetchData())
             })
         }
@@ -43,11 +42,11 @@ const Course = ({setActive}) => {
     if (error) {
         console.log("Ошибка входа")
     }
-    /*if (loading) {
+    if (loading) {
         return <Loader/>
-    }*/
+    }
 
-    /*async function getDataCourse() {
+    async function getDataCourse() {
         const response = await fetch("/api/Course", {
             method: 'GET',
             headers: {
@@ -68,7 +67,7 @@ const Course = ({setActive}) => {
         }).finally(() => {
             setLoading(false)
         })
-    }*/
+    }
 
     const handleClickTheme = (theme_id, type_id) => {
         localStorage.setItem("theme_id", theme_id)
@@ -80,20 +79,17 @@ const Course = ({setActive}) => {
             })
         )
     }
-    console.log(course)
     return (
         <div className="course">
             <div className={`${maxLenghtCourse ? "course-block" : "course-block-overflow-hidden"}`}>
-                {/*{course.value?.themes?.map(course_name => (
+                {course?.themes?.map(course_name => (
                     <AccordionBlock title={course_name.title} id={course_name.id} progress={course_name.correct_tasks}
                                     handleClickTheme={handleClickTheme}/>
-                ))}*/}
+                ))}
             </div>
             <div className="course-content">
-                {/*{loadSLice === 'loading' ? <LoadingSlider/> :
-                    fetchData_all?.value[0]?.hasOwnProperty('correct_id') ?
-                        <Quizz data={fetchData_all.value}/> :
-                        <TheorySlider data={fetchData_all.value}/>}*/}
+                {loadSLice === 'loading' ? <LoadingSlider/> :
+                        <TheorySlider data={fetchData_all.value}/>}
             </div>
         </div>
     )

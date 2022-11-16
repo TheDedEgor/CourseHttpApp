@@ -14,7 +14,6 @@ export const getData = async (formData,jsonText,paramData,headerData) =>{
             params: apiParams
         })
     }catch (error){
-        console.log(error)
-        return 'error'
+        return error
     }
 }
