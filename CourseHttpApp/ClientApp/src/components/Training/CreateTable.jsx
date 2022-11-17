@@ -2,7 +2,7 @@ import React,{useState} from "react";
 import './CreateTable.css'
 import {Box,Typography, Table,TableHead,TableRow,TableCell,TableBody} from "@mui/material";
 import AddRow from "./AddRow";
-import {resizeWindow} from "../../Utils";
+
 const CreateTable = ({text,data,setData}) =>{
     const [rows,addRows] = useState([0])
     return(

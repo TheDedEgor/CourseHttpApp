@@ -1,7 +1,6 @@
-﻿import React, {useEffect, useState} from "react";
+﻿import React, {useState} from "react";
 import "./ForgotPass.css"
 import "../../css/modal.css"
-import {handleFormSubmit, resizeWindow} from "../../Utils";
 import icon_close from "../../images/close.svg";
 import AuthValid from "../AuthValid/AuthValid";
 import {useNotification} from "use-toast-notification";
@@ -12,11 +11,6 @@ const ForgotPass = ({setActiveForgotPass}) => {
     const [emailError, setEmailError] = useState('')
     const [formValid, setFormValid] = useState(true)
     const [validUser, setValidUser] = useState('')
-
-    useEffect(() => {
-        setTimeout(resizeWindow, 10);
-        document.body.style.overflowY = "hidden"
-    }, [])
 
     async function handleSubmit(event) {
         event.preventDefault()
@@ -30,7 +24,15 @@ const ForgotPass = ({setActiveForgotPass}) => {
         }
 
         if (check) {
-            const response = await handleFormSubmit(event, "/api/Pass");
+            const sendData = new FormData(event.target)
+            const token = sessionStorage.getItem("access_token")
+            const response = await fetch("/api/Pass", {
+                method: 'POST',
+                body: sendData,
+                headers: {
+                    "Authorization": "Bearer " + token
+                }
+            })
             const data = await response.json();
             if (data.statusCode === 404) {
                 setValidUser("Введён неверный Email, попробуйте еще раз!")
@@ -52,8 +54,6 @@ const ForgotPass = ({setActiveForgotPass}) => {
 
     const close = () => {
         setActiveForgotPass(false)
-        setTimeout(resizeWindow, 10);
-        document.body.style.overflow = "auto"
     }
 
     const emailHandler = (e) => {

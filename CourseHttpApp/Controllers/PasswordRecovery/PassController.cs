@@ -1,6 +1,7 @@
 ﻿using CourseHttpApp.Models;
 using CourseHttpApp.Models.Common;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CourseHttpApp.Controllers.PasswordRecovery;
 
@@ -16,29 +17,27 @@ public class PassController : ControllerBase
     }
 
     [HttpPost]
-    public IResult Post()
+    public async Task<IResult> Post()
     {
         var form = HttpContext.Request.Form;
         var login = form["login"];
         var url = "";
-        using (var db = new ApplicationContext())
+        await using (var db = new ApplicationContext())
         {
-            var user = db.users.FirstOrDefault(item => item.Login == login);
+            var user = await db.users.FirstOrDefaultAsync(item => item.Login == login);
             if (user == null)
                 return Results.NotFound("Email not found");
             if (user.Send_time_key != null && user.Send_time_key.Value.Ticks - DateTime.Now.Ticks > 0)
-            {
                 return Results.Conflict("Not the time");
-            }
             var change_key = Crypt.GetChangeKey(login);
             var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
             var urlNewPass = config.GetValue<string>("UrlNewPass");
             url = $"{urlNewPass}?key={change_key}";
             user.Change_key = change_key;
             user.Send_time_key = DateTime.Now.AddMinutes(10);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
         }
-        
+
         Email.SendEmail(login, url);
 
         return Results.Ok();

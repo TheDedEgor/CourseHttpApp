@@ -2,6 +2,7 @@
 using CourseHttpApp.Models.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CourseHttpApp.Controllers.Course;
 
@@ -18,25 +19,25 @@ public class InfoController : ControllerBase
 
     [HttpGet]
     [Authorize]
-    public IResult Get()
+    public async Task<IResult> Get()
     {
         var theme_id = int.Parse(HttpContext.Request.Query["theme_id"]);
         var type_id = int.Parse(HttpContext.Request.Query["type_id"]);
         var token = HttpContext.Request.Headers.Authorization.ToString().Split(" ")[1];
         var login = Token.GetLogin(token);
-        using (var db = new ApplicationContext())
+        await using (var db = new ApplicationContext())
         {
             var result = new List<object>();
-            var user = db.users.FirstOrDefault(x => x.Login == login);
+            var user = await db.users.FirstOrDefaultAsync(x => x.Login == login);
             if (user == null)
                 return Results.NotFound();
             var user_id = user.Id;
-            var user_info = db.users_info.First(x => x.User_id == user_id);
+            var user_info = await db.users_info.FirstAsync(x => x.User_id == user_id);
             user_info.Progress_theme_id = theme_id;
             user_info.Progress_type_id = type_id;
             if (type_id == 1)
             {
-                foreach (var item in db.theory.Where(x => x.Theme_id == theme_id).ToList())
+                foreach (var item in await db.theory.Where(x => x.Theme_id == theme_id).ToListAsync())
                 {
                     result.Add(new
                     {
@@ -48,7 +49,7 @@ public class InfoController : ControllerBase
             }
             else
             {
-                foreach (var item in db.practice.Where(x => x.Theme_id == theme_id).ToList())
+                foreach (var item in await db.practice.Where(x => x.Theme_id == theme_id).ToListAsync())
                 {
                     var response_options = new List<object>();
                     foreach (var response in db.response_options.Where(x =>
@@ -61,7 +62,8 @@ public class InfoController : ControllerBase
                         });
                     }
 
-                    var task = db.course_tasks_users.FirstOrDefault(x => x.User_id == user_id && x.Task_id == item.Id);
+                    var task = await db.course_tasks_users.FirstOrDefaultAsync(x =>
+                        x.User_id == user_id && x.Task_id == item.Id);
 
                     result.Add(new
                     {
@@ -75,7 +77,7 @@ public class InfoController : ControllerBase
                 }
             }
 
-            db.SaveChanges();
+            await db.SaveChangesAsync();
 
             return Results.Json(result);
         }

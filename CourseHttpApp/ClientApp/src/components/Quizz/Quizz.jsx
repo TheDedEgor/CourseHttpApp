@@ -2,7 +2,7 @@ import React, {useContext, useRef, useState} from "react";
 import "./Quizz.css"
 import {DataContext} from "../../context/DataProvider";
 
-const Quizz = ({data,getDataCourse}) => {
+const Quizz = ({data}) => {
     const token = localStorage.getItem("access_token")
     const [currentQuestion, setCurrentQuestion] = useState(0)
     const [score, setScore] = useState(0)
@@ -26,7 +26,7 @@ const Quizz = ({data,getDataCourse}) => {
         if (nextQuestion < data.length) {
             setCurrentQuestion(nextQuestion)
         } else {
-            fetch("api/UpdateTaskCourse",{
+            fetch("api/Course",{
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json",

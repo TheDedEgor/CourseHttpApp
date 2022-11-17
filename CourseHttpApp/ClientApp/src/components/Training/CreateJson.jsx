@@ -1,16 +1,14 @@
 import React,{useContext} from "react";
-import {Typography,TextareaAutosize} from "@mui/material";
+import {Typography} from "@mui/material";
 import {DataContext} from "../../context/DataProvider";
-import {resizeWindow} from "../../Utils";
 import ReactCodeMirror from "@uiw/react-codemirror";
 import {json} from '@codemirror/lang-json'
-import {myTheme} from "../../Utils";
+import {myTheme} from "../../utils";
 
 const CreateJson = () =>{
     const {setJsonText} = useContext(DataContext) 
     const onValueChange = (e) =>{
         setJsonText(e.target.value)
-        setTimeout(resizeWindow,10)
     }
     return(
         <>

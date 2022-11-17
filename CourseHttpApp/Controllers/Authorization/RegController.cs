@@ -2,6 +2,7 @@
 using CourseHttpApp.Models.Common;
 using CourseHttpApp.Models.Tables;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CourseHttpApp.Controllers.Authorization;
 
@@ -17,7 +18,7 @@ public class RegController : ControllerBase
     }
 
     [HttpPost]
-    public IResult Post()
+    public async Task<IResult> Post()
     {
         var form = HttpContext.Request.Form;
         var login = form["login"];
@@ -25,9 +26,9 @@ public class RegController : ControllerBase
         var first_name = form["first_name"];
         var last_name = form["last_name"];
         var hash = Crypt.GetHashPassword(password);
-        using (var db = new ApplicationContext())
+        await using (var db = new ApplicationContext())
         {
-            var user = db.users.FirstOrDefault(item => item.Login == login);
+            var user = await db.users.FirstOrDefaultAsync(item => item.Login == login);
             if (user != null)
                 return Results.Conflict();
             
@@ -37,8 +38,8 @@ public class RegController : ControllerBase
                 Login = login,
                 Password = hash
             });
-            db.SaveChanges();
-            user = db.users.FirstOrDefault(item => item.Login == login);
+            await db.SaveChangesAsync();
+            user = await db.users.FirstOrDefaultAsync(item => item.Login == login);
             db.users_info.Add(new User_info
             {
                 Id = 0,
@@ -46,7 +47,7 @@ public class RegController : ControllerBase
                 First_name = first_name,
                 Last_name = last_name
             });
-            db.SaveChanges();
+            await db.SaveChangesAsync();
         }
         var token = Token.CreateToken(login);
         

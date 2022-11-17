@@ -2,6 +2,7 @@
 using CourseHttpApp.Models.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CourseHttpApp.Controllers.Authorization;
 
@@ -18,16 +19,16 @@ public class ProfileController : ControllerBase
 
     [HttpGet]
     [Authorize]
-    public IResult Get()
+    public async Task<IResult> Get()
     {
         var token = HttpContext.Request.Headers.Authorization.ToString().Split(" ")[1];
         var login = Token.GetLogin(token);
-        using (var db = new ApplicationContext())
+        await using (var db = new ApplicationContext())
         {
-            var user = db.users.FirstOrDefault(x => x.Login == login);
+            var user = await db.users.FirstOrDefaultAsync(x => x.Login == login);
             if (user == null)
                 return Results.NotFound();
-            var user_info = db.users_info.First(x => x.User_id == user.Id);
+            var user_info = await db.users_info.FirstAsync(x => x.User_id == user.Id);
             return Results.Json(new
             {
                 email = login,

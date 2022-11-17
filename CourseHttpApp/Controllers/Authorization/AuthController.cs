@@ -1,6 +1,7 @@
 ﻿using CourseHttpApp.Models;
 using CourseHttpApp.Models.Common;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CourseHttpApp.Controllers.Authorization;
 
@@ -16,14 +17,14 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost]
-    public IResult Post()
+    public async Task<IResult> Post()
     {
         var form = HttpContext.Request.Form;
         var login = form["login"];
         var password = form["password"];
         var hash = Crypt.GetHashPassword(password);
-        using var db = new ApplicationContext();
-        var user = db.users.FirstOrDefault(item => item.Login == login && item.Password == hash);
+        await using var db = new ApplicationContext();
+        var user = await db.users.FirstOrDefaultAsync(item => item.Login == login && item.Password == hash);
         if (user == null)
             return Results.NotFound("User not found");
             

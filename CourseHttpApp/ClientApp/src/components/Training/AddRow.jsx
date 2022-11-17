@@ -1,7 +1,7 @@
 import React,{useState} from "react";
 import './AddRow.css'
 import {TableCell, TableRow, Checkbox, TextField} from "@mui/material";
-import {resizeWindow} from "../../Utils";
+import {resizeWindow} from "../../utils";
 
 const AddRow = ({addRows,rowId,data,setData}) =>{
     const [checkCheckBox,setCheckCheckBox] = useState(false)

@@ -1,5 +1,4 @@
-﻿import React, {useEffect, useState} from "react";
-import {handleFormSubmit, resizeWindow} from "../../Utils";
+﻿import React, {useState} from "react";
 import "./Auth.css";
 import "../../css/modal.css";
 import icon_close from '../../images/close.svg';
@@ -14,13 +13,8 @@ const Auth = ({setActiveAuth, setActiveReg, setActiveForgotPass, setToken}) => {
     const [passwordError, setPasswordError] = useState("")
     const [formValid, setFormValid] = useState(true)
     const [validUser, setValidUser] = useState('')
-
-    useEffect(() => {
-        setTimeout(resizeWindow, 10);
-        document.body.style.overflowY = "hidden"
-    }, [])
-
-    async function handleSubmit(event) {
+    
+    async function handleFormSubmit(event) {
         event.preventDefault();
         let email = document.getElementById("auth_email");
         let password = document.getElementById("auth_password");
@@ -36,7 +30,15 @@ const Auth = ({setActiveAuth, setActiveReg, setActiveForgotPass, setToken}) => {
         }
 
         if (check) {
-            const response = await handleFormSubmit(event, "/api/Auth")
+            const data = new FormData(event.target)
+            const token = sessionStorage.getItem("access_token")
+            const response = await fetch("/api/Auth", {
+                method: 'POST',
+                body: data,
+                headers: {
+                    "Authorization": "Bearer " + token
+                }
+            })
             const user = await response.json()
             if (user.statusCode === 404) {
                 setValidUser('Неверный логин или пароль!')
@@ -52,10 +54,9 @@ const Auth = ({setActiveAuth, setActiveReg, setActiveForgotPass, setToken}) => {
             }
         }
     }
+
     const close = () => {
         setActiveAuth(false)
-        setTimeout(resizeWindow, 10);
-        document.body.style.overflow = "auto"
     }
     const emailHandler = (e) => {
         setEmail(e.target.value)
@@ -114,7 +115,7 @@ const Auth = ({setActiveAuth, setActiveReg, setActiveForgotPass, setToken}) => {
                     <div className="title_header_auth">Вход</div>
                     <img className="icon_close" onClick={() => close()} src={icon_close} alt="Закрыть"/>
                 </div>
-                <form onSubmit={handleSubmit} className="form_auth">
+                <form onSubmit={handleFormSubmit} className="form_auth">
                     <div className="container_form">
                         <input onChange={e => emailHandler(e)} value={email} name="login"
                                id="auth_email" placeholder="Почта" className="auth_input"/>

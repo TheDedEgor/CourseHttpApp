@@ -1,7 +1,6 @@
-﻿import React, {useEffect, useState} from "react";
+﻿import React, {useState} from "react";
 import "./Register.css";
 import "../../css/modal.css";
-import {handleFormSubmit, resizeWindow} from "../../Utils";
 import icon_close from "../../images/close.svg";
 import icon_show from "../../images/show_pass.png";
 import icon_hide from "../../images/hide_pass.png";
@@ -14,11 +13,6 @@ const Register = ({setActiveReg, setToken}) => {
     const [passwordError, setPasswordError] = useState("")
     const [formValid, setFormValid] = useState(true)
     const [validUser, setValidUser] = useState('')
-
-    useEffect(() =>{
-        setTimeout(resizeWindow, 10);
-        document.body.style.overflowY = "hidden"
-    },[])
 
     async function handleSubmit(event) {
         event.preventDefault();
@@ -44,7 +38,15 @@ const Register = ({setActiveReg, setToken}) => {
         }
 
         if (check) {
-            const response = await handleFormSubmit(event, "/api/Reg")
+            const sendData = new FormData(event.target)
+            const token = sessionStorage.getItem("access_token")
+            const response = await fetch("/api/Reg", {
+                method: 'POST',
+                body: sendData,
+                headers: {
+                    "Authorization": "Bearer " + token
+                }
+            })
             const user = await response.json()
             if (user.statusCode === 409) {
                 setValidUser('Пользователь с такой почтой уже зарегистрирован!')
@@ -63,8 +65,6 @@ const Register = ({setActiveReg, setToken}) => {
 
     const close = () => {
         setActiveReg(false)
-        setTimeout(resizeWindow, 10);
-        document.body.style.overflow = "auto"
     }
 
     const emailHandler = (e) => {

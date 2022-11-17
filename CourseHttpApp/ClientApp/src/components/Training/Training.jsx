@@ -8,12 +8,12 @@ import CreateJson from "./CreateJson";
 import Response from "./Response";
 import ErrorScreen from "./ErrorScreen";
 import {DataContext} from "../../context/DataProvider";
-import {checkParams, resizeWindow} from "../../Utils";
+import {checkParams, getHeaderAndParams} from "../../utils";
 import SnackBar from "./SnakBar";
-import {getData} from "../../service/api";
 import success_logo from '../../images/success.png'
-import hash from "object-hash";
 import LoadingSlider from "../UI/LoadingSlider/LoadingSlider";
+import axios from "axios";
+import hash from "object-hash";
 
 const Training = () => {
     const token = localStorage.getItem("access_token")
@@ -26,34 +26,35 @@ const Training = () => {
     const [apiResponse, setApiResponse] = useState({})
     const [task, setTask] = useState('')
     const [hashJson, setHashJson] = useState({})
-    const [maxLenghtArray,setMaxLenghtArray] = useState(null)
-    const [tasks,setTasks] = useState([])
-    const [loading,setLoading] = useState(true)
+    const [maxLenghtArray, setMaxLenghtArray] = useState(null)
+    const [tasks, setTasks] = useState([])
+    const [loading, setLoading] = useState(true)
     useEffect(() => {
-        if(tasks.length > 7){
+        if (tasks.length > 7) {
             setMaxLenghtArray(true)
-        }
-        else{
+        } else {
             setMaxLenghtArray(false)
         }
-    },[tasks.length])
+    }, [tasks.length])
     useEffect(() => {
-        if(token !== null){
+        if (token !== null) {
             getTasks()
         }
-    },[])
+    }, [])
+
     async function getTasks() {
-        const response = await fetch("api/Training",{
+        const response = await fetch("api/Training", {
             method: 'GET',
             headers: {
                 "Authorization": "Bearer " + token
             }
-        }).finally(() =>{
+        }).finally(() => {
             setLoading(false)
         })
         const data = await response.json();
         setTasks(data.value)
     }
+
     const handleChange = (e) => {
         setFormData({...formData, type: e.target.value})
     }
@@ -70,34 +71,43 @@ const Training = () => {
             setError(true)
             return
         }
-        let response = await getData(formData, jsonText, paramData, headerData)
-        console.log(response)
-        if (response.response.status === 404) {
-            console.log('error')
-            setErrorResponse(true)
-            setApiResponse(response)
-            task_.is_done = 0
-        }else{
-            console.log('ok')
+
+        const apiType = formData.type.toLowerCase()
+        const apiURL = formData.url
+        const apiHeaders = getHeaderAndParams(headerData)
+        const apiParams = getHeaderAndParams(paramData)
+
+        await axios({
+            method: apiType,
+            url: apiURL,
+            body: jsonText,
+            headers: apiHeaders,
+            params: apiParams
+        }).then((response) => {
             setErrorResponse(false)
             setApiResponse(response.data)
             setHashJson(response.data)
             let hash = require('object-hash')
             if (hash(response.data) === task.correct_hash) {
                 task_.is_done = 1
-            }else{
+            } else {
                 task_.is_done = 0
-            }   
-        }
-        fetch("api/UpdateTaskTraining",{
+            }
+        }).catch((error) => {
+            setErrorResponse(true)
+            setApiResponse(error.toJSON())
+            task_.is_done = 0
+        })
+
+        await fetch("api/Training", {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + token
             },
-            body:JSON.stringify({
-                task_id:id,
-                is_done:task_.is_done === 1
+            body: JSON.stringify({
+                task_id: id,
+                is_done: task_.is_done === 1
             })
         })
     }
@@ -105,13 +115,12 @@ const Training = () => {
         const task_ = tasks.find(task => task.id === id)
         console.log(task_)
         setTask(task_)
-        setTimeout(resizeWindow, 10)
     }
     return (
         <>
             {token ?
                 <div style={{display: 'flex', justifyContent: 'space-around'}}>
-                    <div className={`${maxLenghtArray ? "tasks" : "task-overflow-hidden"}`} style={{width:'350px'}}>
+                    <div className={`${maxLenghtArray ? "tasks" : "task-overflow-hidden"}`} style={{width: '350px'}}>
                         {loading === true ? <LoadingSlider/> :
                             <div>
                                 {tasks.map((task, id) => (
@@ -155,7 +164,7 @@ const Training = () => {
                                     className="send-btn"
                                     variant="contained"
                                     onClick={() => onSendClick(task.id)}
-                                    style={{backgroundColor:'#5e73d0'}}
+                                    style={{backgroundColor: '#5e73d0'}}
                                 >
                                     Send
                                 </Button>

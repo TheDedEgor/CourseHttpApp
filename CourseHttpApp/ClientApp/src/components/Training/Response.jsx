@@ -3,7 +3,7 @@ import {Box,Typography} from "@mui/material";
 import "./Response.css"
 import ReactCodeMirror from "@uiw/react-codemirror";
 import {json} from '@codemirror/lang-json'
-import {myTheme} from "../../Utils";
+import {myTheme} from "../../utils";
 
 const Response = ({data}) =>{
     let obj = JSON.stringify(data,null,'\t')

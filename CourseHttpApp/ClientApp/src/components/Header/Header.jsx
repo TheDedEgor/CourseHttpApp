@@ -1,7 +1,7 @@
 ﻿import React, {useEffect, useState} from "react";
 import "./Header.css"
 import {Link, useNavigate} from "react-router-dom";
-import {resizeWindow} from "../../Utils";
+import {resizeWindow} from "../../utils";
 
 const Header = ({setActiveAuth, setActiveReg, setToken, token}) => {
     let navigate = useNavigate()
@@ -37,8 +37,6 @@ const Header = ({setActiveAuth, setActiveReg, setToken, token}) => {
             target.style.height = `${height}px`;
             target.style.left = `${left}px`;
             target.style.top = `${top}px`;
-
-            setTimeout(resizeWindow, 10);
         }
 
         window.addEventListener("resize", resizeWindow);
@@ -105,8 +103,6 @@ const Header = ({setActiveAuth, setActiveReg, setToken, token}) => {
         target.style.height = `${height}px`;
         target.style.left = `${left}px`;
         target.style.top = `${top}px`;
-
-        setTimeout(resizeWindow, 10);
 
         setIsVisibleProfileMenu(false)
         navigate("/profile")

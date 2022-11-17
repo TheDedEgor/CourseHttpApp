@@ -4,7 +4,6 @@ import {AiOutlineArrowRight} from "react-icons/ai";
 import {AiOutlineArrowLeft} from "react-icons/ai";
 import photo from '../../../images/theory-1-2.png'
 import photo2 from '../../../images/theory-1-1.png'
-import Quizz from "../../Quizz/Quizz";
 
 const SliderComponent = ({data}) => {
     const [currentIndex, setCurrentIndex] = useState(0)
@@ -17,9 +16,7 @@ const SliderComponent = ({data}) => {
             setCurrentIndex(0)
         }
     }, [currentIndex, data])
-    if(data[0].hasOwnProperty('correct_id')){
-        return <Quizz data={data}/>
-    }
+   
     return (
         <section className="section">
             <div className="section-center">

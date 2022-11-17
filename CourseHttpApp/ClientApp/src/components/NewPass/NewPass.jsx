@@ -1,6 +1,5 @@
 ﻿import React, {useState} from "react";
 import {useNavigate, useSearchParams} from "react-router-dom";
-import {handleFormSubmit, resizeWindow} from "../../Utils";
 import "./NewPass.css"
 import icon_close from "../../images/close.svg";
 import AuthValid from "../AuthValid/AuthValid";
@@ -10,7 +9,7 @@ import {useNotification} from "use-toast-notification";
 
 const NewPass = () => {
     const notification = useNotification()
-    const [searchParams, setSearchParams] = useSearchParams()
+    const [searchParams] = useSearchParams()
     const [password, setPassword] = useState('')
     const [passwordError, setPasswordError] = useState("")
     const [formValid, setFormValid] = useState(true)
@@ -28,7 +27,15 @@ const NewPass = () => {
         }
 
         if (check) {
-            const response = await handleFormSubmit(event, "/api/rec")
+            const sendData = new FormData(event.target)
+            const token = sessionStorage.getItem("access_token")
+            const response = await fetch("/api/Rec", {
+                method: 'POST',
+                body: sendData,
+                headers: {
+                    "Authorization": "Bearer " + token
+                }
+            })
             const data = await response.json()
             if (data.statusCode === 404) {
                 close()
