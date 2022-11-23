@@ -26,16 +26,9 @@ const Training = () => {
     const [apiResponse, setApiResponse] = useState({})
     const [task, setTask] = useState('')
     const [hashJson, setHashJson] = useState({})
-    const [maxLenghtArray, setMaxLenghtArray] = useState(null)
     const [tasks, setTasks] = useState([])
     const [loading, setLoading] = useState(true)
-    useEffect(() => {
-        if (tasks.length > 7) {
-            setMaxLenghtArray(true)
-        } else {
-            setMaxLenghtArray(false)
-        }
-    }, [tasks.length])
+   
     useEffect(() => {
         if (token !== null) {
             getTasks()
@@ -71,7 +64,7 @@ const Training = () => {
             setError(true)
             return
         }
-
+        
         const apiType = formData.type.toLowerCase()
         const apiURL = formData.url
         const apiHeaders = getHeaderAndParams(headerData)
@@ -120,7 +113,7 @@ const Training = () => {
         <>
             {token ?
                 <div style={{display: 'flex', justifyContent: 'space-around'}}>
-                    <div className={`${maxLenghtArray ? "tasks" : "task-overflow-hidden"}`} style={{width: '350px'}}>
+                    <div className="tasks" style={{width: '350px', position: "relative"}}>
                         {loading === true ? <LoadingSlider/> :
                             <div>
                                 {tasks.map((task, id) => (

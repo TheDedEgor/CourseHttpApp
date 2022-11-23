@@ -12,10 +12,10 @@ import Quizz from "../Quizz/Quizz";
 const Course = ({setActive}) => {
     const token = localStorage.getItem("access_token")
     const [typeId, setTypeId] = useState(0)
-    const [maxLenghtCourse, setMaxLenghtCourse] = useState(null)
     const [course, setCourse] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
+
     const dispatch = useDispatch()
     const fetchData_all = useSelector(state => state.info.info)
     const loadSLice = useSelector(state => state.info.status)
@@ -27,13 +27,6 @@ const Course = ({setActive}) => {
             })
         }
     }, [token])
-    useEffect(() => {
-        if (course.value?.themes?.length > 3) {
-            setMaxLenghtCourse(true)
-        } else {
-            setMaxLenghtCourse(false)
-        }
-    }, [course.value?.themes?.length])
     if (token === null) {
         return <NotAuthCourse setActive={setActive}/>
     }
@@ -79,15 +72,15 @@ const Course = ({setActive}) => {
             })
         )
     }
-    
+
     return (
         <div className="course">
-            <div className={`${maxLenghtCourse ? "course-block" : "course-block-overflow-hidden"}`}>
+            <div className="course-block">
                 {course?.themes?.map(course_name => (
-                    <AccordionBlock title={course_name.title} id={course_name.id} progress={course_name.correct_tasks}
-                                    handleClickTheme={handleClickTheme}/>
+                    <AccordionBlock title={course_name.title} id={course_name.id} handleClickTheme={handleClickTheme} key={course_name.id}/>
                 ))}
             </div>
+            
             <div className="course-content">
                 {loadSLice === 'loading' ? <LoadingSlider/> :
                     typeId === 1 ? <TheorySlider data={fetchData_all.value}/> :

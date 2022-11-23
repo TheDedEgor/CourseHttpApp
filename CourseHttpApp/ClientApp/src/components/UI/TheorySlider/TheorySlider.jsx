@@ -2,6 +2,7 @@
 import "./TheorySlider.css"
 import {AiOutlineArrowRight} from "react-icons/ai";
 import {AiOutlineArrowLeft} from "react-icons/ai";
+import {Pagination} from '@mui/material';
 import photo from '../../../images/theory-1-2.png'
 import photo2 from '../../../images/theory-1-1.png'
 
@@ -16,11 +17,15 @@ const SliderComponent = ({data}) => {
             setCurrentIndex(0)
         }
     }, [currentIndex, data])
-   
+
+    const paginationChange = (event, page) => {
+        setCurrentIndex(page)
+    }
+
     return (
         <section className="section">
             <div className="section-center">
-                <div>
+                <div className="section-content">
                     {data?.map((e, e_index) => {
                         const {id, description} = e
                         let position = 'nextSlide'
@@ -39,17 +44,9 @@ const SliderComponent = ({data}) => {
                     })
                     }
                 </div>
-                <div>
-                    <button className={currentIndex === 0 ? "prev-none" : 'prev'}
-                            onClick={() => setCurrentIndex(prevState => prevState - 1)}>
-                        <AiOutlineArrowLeft/>
-                    </button>
-                    <button className={currentIndex === data?.length - 1 ? "next-none" : 'next'}
-                            onClick={() => setCurrentIndex(prevState => prevState + 1)}>
-                        <AiOutlineArrowRight/>
-                    </button>
-                </div>
             </div>
+            <Pagination variant="outlined" shape="rounded" size="large" className="pagination" count={data.length}
+                        onChange={(event, page) => paginationChange(event, page - 1)}/>
         </section>
     )
 }

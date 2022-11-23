@@ -4,6 +4,8 @@
     padding: 0;
 }
 .main{
-    overflow: auto;
+    position: relative;
+    overflow: hidden;
     height: calc(100vh - 100px);
+    padding: 20px;
 }
