@@ -49,7 +49,8 @@ export const getHeaderAndParams = (objArr) => {
     })
     return obj
 }
-export const myTheme = createTheme({
+
+export const myTheme =  createTheme({
     theme: 'light',
     settings: {
         background: '#ffffff',
@@ -77,4 +78,4 @@ export const myTheme = createTheme({
         {tag: t.tagName, color: '#5c6166'},
         {tag: t.attributeName, color: '#5c6166'},
     ],
-});
+})

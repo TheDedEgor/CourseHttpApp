@@ -12,99 +12,24 @@ import NewPass from "./components/NewPass/NewPass";
 import Modal from './components/UI/Modal/Modal'
 import Training from "./components/Training/Training";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
-
+import {useTheme} from "./context/useTheme";
 const App = () => {
-    const tasks = [
-        {
-            id: 1,
-            title: "Отправьте GET-запрос по URL-https://jsonplaceholder.typicode.com/todos",
-            success: '323217f643c3e3f1fe7532e72ac01bb0748c97be',
-        },
-        {
-            id: 2,
-            title: "Отправьте POST-запрос по URL-https://jsonplaceholder.typicode.com/todos",
-            success: '323217f643c3e3f1fe7532e72ac01bb0748c97besdsdsd',
-        },
-        {
-            id: 3,
-            title: "Отправьте GET-запрос по URL-https://jsonplaceholder.typicode.com/todos",
-            success: '323217f643c3e3f1fe7532e72ac01bb0748c97be',
-        },
-        {
-            id: 4,
-            title: "Отправьте GET-запрос по URL-https://jsonplaceholder.typicode.com/todos",
-            success: '323217f643c3e3f1fe7532e72ac01bb0748c97be',
-        },
-        {
-            id: 5,
-            title: "Отправьте GET-запрос по URL-https://jsonplaceholder.typicode.com/todos",
-            success: '323217f643c3e3f1fe7532e72ac01bb0748c97be',
-        },
-        {
-            id: 6,
-            title: "Отправьте GET-запрос по URL-https://jsonplaceholder.typicode.com/todos",
-            success: '323217f643c3e3f1fe7532e72ac01bb0748c97be',
-        },
-        {
-            id: 7,
-            title: "Отправьте GET-запрос по URL-https://jsonplaceholder.typicode.com/todos",
-            success: '323217f643c3e3f1fe7532e72ac01bb0748c97be',
-        },
-        {
-            id: 8,
-            title: "Отправьте GET-запрос по URL-https://jsonplaceholder.typicode.com/todos",
-            success: '323217f643c3e3f1fe7532e72ac01bb0748c97be',
-        },
-        {
-            id: 9,
-            title: "Отправьте GET-запрос по URL-https://jsonplaceholder.typicode.com/todos",
-            success: '323217f643c3e3f1fe7532e72ac01bb0748c97be',
-        },
-        {
-            id: 10,
-            title: "Отправьте GET-запрос по URL-https://jsonplaceholder.typicode.com/todos",
-            success: '323217f643c3e3f1fe7532e72ac01bb0748c97be',
-        },
-        {
-            id: 11,
-            title: "Отправьте GET-запрос по URL-https://jsonplaceholder.typicode.com/todos",
-            success: '323217f643c3e3f1fe7532e72ac01bb0748c97be',
-        },
-        {
-            id: 11,
-            title: "Отправьте GET-запрос по URL-https://jsonplaceholder.typicode.com/todos",
-            success: '323217f643c3e3f1fe7532e72ac01bb0748c97be',
-        },
-        {
-            id: 11,
-            title: "Отправьте GET-запрос по URL-https://jsonplaceholder.typicode.com/todos",
-            success: '323217f643c3e3f1fe7532e72ac01bb0748c97be',
-        },
-        {
-            id: 11,
-            title: "Отправьте GET-запрос по URL-https://jsonplaceholder.typicode.com/todos",
-            success: '323217f643c3e3f1fe7532e72ac01bb0748c97be',
-        },
-        {
-            id: 11,
-            title: "Отправьте GET-запрос по URL-https://jsonplaceholder.typicode.com/todos",
-            success: '323217f643c3e3f1fe7532e72ac01bb0748c97be',
-        },
-        {
-            id: 11,
-            title: "Отправьте GET-запрос по URL-https://jsonplaceholder.typicode.com/todos",
-            success: '323217f643c3e3f1fe7532e72ac01bb0748c97be',
-        }
-        
-    ]
     const [activeAuth, setActiveAuth] = useState(false)
     const [activeReg, setActiveReg] = useState(false)
     const [activeForgotPass, setActiveForgotPass] = useState(false)
     const [token, setToken] = useState(localStorage.getItem("access_token"));
+    const  {theme,setTheme} = useTheme()
     return (
         <div className="App">
             <div className="container">
-                <Header setActiveAuth={setActiveAuth} setActiveReg={setActiveReg} setToken={setToken} token={token}/>
+                <Header 
+                    setActiveAuth={setActiveAuth} 
+                    setActiveReg={setActiveReg} 
+                    setToken={setToken} 
+                    token={token} 
+                    theme={theme}
+                    setTheme={setTheme}
+                />
                 <div className="main">
                     <Routes>
                         <Route path="/" element={<Course setActive={setActiveAuth}/>}/>

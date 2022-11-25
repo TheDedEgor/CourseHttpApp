@@ -1,10 +1,17 @@
-﻿.header {
+﻿html[data-theme='dark']{
+    --background-color-header: #242F3D;
+}
+html[data-theme='light']{
+    --background-color-header: #26325c;
+}
+.header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
     padding: 20px;
-    background-color: #5e73d0;
+    background-color: var(--background-color-header);
+    transition: background-color 300ms linear;
 }
 
 .header-menu {

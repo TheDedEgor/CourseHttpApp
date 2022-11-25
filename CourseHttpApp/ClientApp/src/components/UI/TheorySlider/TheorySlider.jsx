@@ -1,7 +1,5 @@
 ﻿import React, {useState, useEffect} from "react";
 import "./TheorySlider.css"
-import {AiOutlineArrowRight} from "react-icons/ai";
-import {AiOutlineArrowLeft} from "react-icons/ai";
 import {Pagination} from '@mui/material';
 import photo from '../../../images/theory-1-2.png'
 import photo2 from '../../../images/theory-1-1.png'

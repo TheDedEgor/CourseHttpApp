@@ -1,9 +1,19 @@
+html[data-theme='dark']{
+    --background-color:#17212B;
+    --text-color:white;
+}
+html[data-theme='light']{
+    --background-color: white;
+}
 .container{
     max-width: 100%;
     margin: auto;
     padding: 0;
 }
 .main{
+    background-color: var(--background-color);
+    color: var(--text-color);
+    transition: background-color 200ms linear,color 200ms linear;
     position: relative;
     overflow: hidden;
     height: calc(100vh - 100px);

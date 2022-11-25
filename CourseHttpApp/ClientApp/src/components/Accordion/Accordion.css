@@ -1,10 +1,23 @@
+html[data-theme="dark"]{
+    --background-color-accordion: #242F3D;
+    --color-accordion:#fff;
+}
+html[data-theme="light"]{
+    --background-color-accordion: rgba(38, 50, 92, 0.05);
+    --color-accordion:#26325c;
+}
 .accordion {
     display: flex;
     width: 300px;
     flex-direction: column;
     border: 1px solid gray;
     border-radius: 5px;
-    color: #83899F;
+    color: var(--color-accordion);
+    background-color: var(--background-color-accordion);
+    transition: background-color 200ms linear,color 200ms linear;
+}
+.accordion-items{
+    background-color: var(--background-color-accordion) !important;
 }
 .Mui-expanded{
     color: #26325c;

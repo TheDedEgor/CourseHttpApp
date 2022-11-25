@@ -6,7 +6,12 @@
         opacity: 1;
     }
 }
-
+html[data-theme="dark"]{
+    --border-slider:1px solid white;
+}
+html[data-theme="light"]{
+    --border-slider:1px solid black;
+}
 article::-webkit-scrollbar{
     width: 4px;
     background-color: rgba(26, 24, 47, 0.1);
@@ -53,7 +58,7 @@ article::-webkit-scrollbar-thumb{
 .slider {
     overflow-y: auto;
     overflow-x: hidden;
-    border: 1px solid black;
+    border: var(--border-slider);
     border-radius: 5px;
 }
 
@@ -73,8 +78,9 @@ article::-webkit-scrollbar-thumb{
     border: 2px solid #26325c;
 }
 
-.pagination{
-   
+.pagination>ul>li{
+    color:white !important;
+    background-color: white !important;
 }
 
 .prev:hover, .next:hover {

@@ -1,7 +1,15 @@
-﻿.contacts{
+﻿html[data-theme='dark']{
+    --text-color:white;
+}
+html[data-theme='light']{
+    --text-color:black;
+}
+.contacts{
     margin-top: 10px;
     padding: 10px;
     text-align: center;
+    color: var(--text-color);
+    transition: color 300ms linear;
 }
 .contacts p{
     font-size: 24px;
@@ -12,4 +20,7 @@
 }
 .social-links{
     margin-left: 10px;
+}
+.contacts_icon{
+    color: #6AFCA4;
 }

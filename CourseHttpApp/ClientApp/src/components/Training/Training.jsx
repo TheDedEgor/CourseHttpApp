@@ -11,9 +11,9 @@ import {DataContext} from "../../context/DataProvider";
 import {checkParams, getHeaderAndParams} from "../../utils";
 import SnackBar from "./SnakBar";
 import success_logo from '../../images/success.png'
+import error_logo from '../../images/error-icon.png'
 import LoadingSlider from "../UI/LoadingSlider/LoadingSlider";
 import axios from "axios";
-import hash from "object-hash";
 
 const Training = () => {
     const token = localStorage.getItem("access_token")
@@ -87,8 +87,9 @@ const Training = () => {
                 task_.is_done = 0
             }
         }).catch((error) => {
+            console.log("error")
             setErrorResponse(true)
-            setApiResponse(error.toJSON())
+            setApiResponse(error)
             task_.is_done = 0
         })
 
@@ -112,8 +113,8 @@ const Training = () => {
     return (
         <>
             {token ?
-                <div style={{display: 'flex', justifyContent: 'space-around'}}>
-                    <div className="tasks" style={{width: '350px', position: "relative"}}>
+                <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                    <div className="tasks" style={{width: '350px', position: "relative",marginLeft:'20px'}}>
                         {loading === true ? <LoadingSlider/> :
                             <div>
                                 {tasks.map((task, id) => (
@@ -122,85 +123,92 @@ const Training = () => {
                                             <p>Задание {id + 1}</p>
                                         </div>
                                         <div>
-                                            {task.is_done === 1 &&
-                                                <img src={success_logo} alt="success" width={20} height={20}/>}
+                                            {
+                                                task.is_done === 1 
+                                                    ? <img src={success_logo} alt="success" width={20} height={20}/>
+                                                    : <img src={error_logo} alt="error" width={20} height={20}/>
+                                            }
                                         </div>
                                     </div>
                                 ))}
                             </div>
                         }
                     </div>
-                    <div>
-                        {task && <div className="task">{task.description}</div>}
-                        <Box className="training-block">
-                            <Box className="form-block">
-                                <FormControl className="select">
-                                    <InputLabel id="demo-simple-select-label"
-                                                style={{marginTop: '-7px'}}>Method</InputLabel>
-                                    <Select
-                                        id="demo-simple-select-label"
-                                        value={formData.type}
-                                        label="Method"
-                                        style={{height: '40px'}}
-                                        onChange={(e) => handleChange(e)}
+                    {
+                        task !== '' 
+                            ? <div>{task && <div className="task">{task.description}</div>}<Box className="training-block">
+                                    <Box className="form-block">
+                                        <FormControl className="select">
+                                            <InputLabel id="demo-simple-select-label"
+                                                        style={{marginTop: '-7px',color:'white'}}
+                                            >
+                                                Method
+                                            </InputLabel>
+                                            <Select
+                                                id="demo-simple-select-label"
+                                                value={formData.type}
+                                                label="Method"
+                                                style={{height: '40px',backgroundColor:'white'}}
+                                                onChange={(e) => handleChange(e)}
+                                            >
+                                                <MenuItem value={'POST'}>POST</MenuItem>
+                                                <MenuItem value={'GET'}>GET</MenuItem>
+                                            </Select>
+                                        </FormControl>
+                                        <TextField
+                                            size="small"
+                                            className="url-input"
+                                            onChange={(e) => onUrlChange(e)}
+                                        />
+                                        <Button
+                                            className="send-btn"
+                                            variant="contained"
+                                            onClick={() => onSendClick(task.id)}
+                                            style={{backgroundColor: '#5e73d0'}}
+                                        >
+                                            Send
+                                        </Button>
+                                    </Box>
+                                    <Box className="select-tab-block">
+                                        <Tabs value={value}
+                                              onChange={handleChangeTabs}
+                                              TabIndicatorProps={{sx: {backgroundColor: 'blue', height: 4, bottom: 2}}}
+                                              textColor="none"
+                                        >
+                                            <Tab label="Params" className="tab-item"/>
+                                            <Tab label="Headers" className="tab-item"/>
+                                            <Tab label="Body" className="tab-item"/>
+                                        </Tabs>
+                                    </Box>
+                                    <Box
+                                        role="tabpanel"
+                                        hidden={value !== 0}
+                                        id={`simple-tabpanel-${0}`}
+                                        aria-labelledby={`simple-tab-${0}`}
                                     >
-                                        <MenuItem value={'POST'}>POST</MenuItem>
-                                        <MenuItem value={'GET'}>GET</MenuItem>
-                                    </Select>
-                                </FormControl>
-                                <TextField
-                                    size="small"
-                                    className="url-input"
-                                    onChange={(e) => onUrlChange(e)}
-                                />
-                                <Button
-                                    className="send-btn"
-                                    variant="contained"
-                                    onClick={() => onSendClick(task.id)}
-                                    style={{backgroundColor: '#5e73d0'}}
-                                >
-                                    Send
-                                </Button>
-                            </Box>
-                            <Box className="select-tab-block">
-                                <Tabs value={value}
-                                      onChange={handleChangeTabs}
-                                      TabIndicatorProps={{sx: {backgroundColor: 'blue', height: 4, bottom: 2}}}
-                                      textColor="none"
-                                >
-                                    <Tab label="Params" className="tab-item"/>
-                                    <Tab label="Headers" className="tab-item"/>
-                                    <Tab label="Body" className="tab-item"/>
-                                </Tabs>
-                            </Box>
-                            <Box
-                                role="tabpanel"
-                                hidden={value !== 0}
-                                id={`simple-tabpanel-${0}`}
-                                aria-labelledby={`simple-tab-${0}`}
-                            >
-                                <CreateTable text="Params" data={paramData} setData={setParamData}/>
-                            </Box>
-                            <Box
-                                role="tabpanel"
-                                hidden={value !== 1}
-                                id={`simple-tabpanel-${1}`}
-                                aria-labelledby={`simple-tab-${1}`}
-                            >
-                                <CreateTable text="Headers" data={headerData} setData={setHeaderData}/>
-                            </Box>
-                            <Box
-                                role="tabpanel"
-                                hidden={value !== 2}
-                                id={`simple-tabpanel-${2}`}
-                                aria-labelledby={`simple-tab-${2}`}
-                            >
-                                <CreateJson/>
-                            </Box>
-                            {errorResponse ? <ErrorScreen apiResponse={apiResponse}/> : <Response data={apiResponse}/>}
-                            {error && <SnackBar error={error} setError={setError} errorMsg={errorMessage}/>}
-                        </Box>
-                    </div>
+                                        <CreateTable text="Params" data={paramData} setData={setParamData}/>
+                                    </Box>
+                                    <Box
+                                        role="tabpanel"
+                                        hidden={value !== 1}
+                                        id={`simple-tabpanel-${1}`}
+                                        aria-labelledby={`simple-tab-${1}`}
+                                    >
+                                        <CreateTable text="Headers" data={headerData} setData={setHeaderData}/>
+                                    </Box>
+                                    <Box
+                                        role="tabpanel"
+                                        hidden={value !== 2}
+                                        id={`simple-tabpanel-${2}`}
+                                        aria-labelledby={`simple-tab-${2}`}
+                                    >
+                                        <CreateJson/>
+                                    </Box>
+                                    {errorResponse ? <ErrorScreen apiResponse={apiResponse}/>: <Response data={apiResponse}/>}
+                                    {error && <SnackBar error={error} setError={setError} errorMsg={errorMessage}/>}
+                                </Box></div>
+                            : <div className="select-task">adfdsf</div>
+                    }
                 </div>
                 :
                 <NotAuthTraining/>

@@ -1,5 +1,10 @@
+html[data-theme='dark']{
+    --color-text:white;
+}
 .profile{
     padding: 20px;
+    color: var(--color-text);
+    transition: color 300ms linear;
 }
 .profile-data{
     border:1px solid black;

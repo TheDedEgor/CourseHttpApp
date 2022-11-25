@@ -8,7 +8,7 @@ import senior from '../../images/senior.png'
 const NotAuthCourse = ({setActive}) => {
     return(
         <div className="error_course">
-            <div className="error-course-content-1">
+            <div className="error-course-content-1 course-not-auth">
                 <div className="course-desc">
                     <p className="course-desc-title">HTTP</p>
                     <p>HTTP — протокол прикладного уровня передачи данных, изначально — в виде гипертекстовых документов в формате HTML,
@@ -20,7 +20,7 @@ const NotAuthCourse = ({setActive}) => {
                     <img src={course_photo} alt="Курс Http" width={700} height={400}/>
                 </div>
             </div>
-            <div className="error-course-content-2">
+            <div className="error-course-content-2 course-not-auth">
                 <div className="error-course-content-2-title">
                     <p>Чему вы научитесь</p>
                 </div>
@@ -51,7 +51,7 @@ const NotAuthCourse = ({setActive}) => {
                     </div>
                 </div>
             </div>
-            <div className="error-course-content-3">
+            <div className="error-course-content-3 course-not-auth">
                 <div className="error-course-content-3-title">
                     <p>Кому подойдет этот курс</p>
                 </div>
@@ -66,13 +66,10 @@ const NotAuthCourse = ({setActive}) => {
                     </div>
                 </div>
             </div>
-            <div className="error-course-content-4">
+            <div className="error-course-content-4 course-not-auth">
                 <div className="error-course-content-4-title">
                     <p>Как проходит обучение на платформе</p>
                 </div>
-            </div>
-            <div className="error-course-content-5">
-                
             </div>
         </div>
     )

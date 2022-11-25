@@ -3,14 +3,12 @@ import "./Header.css"
 import {Link, useNavigate} from "react-router-dom";
 import {resizeWindow} from "../../utils";
 
-const Header = ({setActiveAuth, setActiveReg, setToken, token}) => {
+const Header = ({setActiveAuth, setActiveReg, setToken, token,theme,setTheme}) => {
     let navigate = useNavigate()
     const [isVisibleProfileMenu, setIsVisibleProfileMenu] = useState(false)
-
     useEffect(() => {
         const links = document.querySelectorAll(".menu-item");
         const logo = document.querySelector(".header-logo")
-
         function clickLogo() {
             links[0].click();
         }
@@ -65,7 +63,6 @@ const Header = ({setActiveAuth, setActiveReg, setToken, token}) => {
         }
 
     }, [token])
-
     const showDropMenu = (e) => {
         e.stopPropagation()
         setIsVisibleProfileMenu(!isVisibleProfileMenu)
@@ -98,7 +95,6 @@ const Header = ({setActiveAuth, setActiveReg, setToken, token}) => {
         const height = profile.getBoundingClientRect().height;
         const left = profile.getBoundingClientRect().left + window.pageXOffset;
         const top = profile.getBoundingClientRect().top + window.pageYOffset;
-
         target.style.width = `${width}px`;
         target.style.height = `${height}px`;
         target.style.left = `${left}px`;
@@ -107,7 +103,14 @@ const Header = ({setActiveAuth, setActiveReg, setToken, token}) => {
         setIsVisibleProfileMenu(false)
         navigate("/profile")
     }
-
+    const handleClick = () =>{
+        if(document.documentElement.getAttribute("data-theme") === 'light'){
+            setTheme('dark')
+        }
+        else{
+            setTheme('light')
+        }
+    }
     return (
         <div className="header">
             <Link className="header-logo" to="/"><b>H</b>ttp://course</Link>
@@ -136,7 +139,12 @@ const Header = ({setActiveAuth, setActiveReg, setToken, token}) => {
                             <a className="profile-nav-item" onClick={() => showProfile()}>Профиль</a>
                             <a className="profile-nav-item dark-theme">
                                 <label>Темная тема</label>
-                                <input className="switch" type="checkbox"/>
+                                <input 
+                                    className="switch" 
+                                    type="checkbox" 
+                                    checked={theme === 'dark'}
+                                    onChange={handleClick}
+                                />
                             </a>
                             <a className="profile-nav-item" onClick={() => handleLogOut()}>Выйти</a>
                         </div>

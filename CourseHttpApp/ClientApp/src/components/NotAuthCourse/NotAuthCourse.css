@@ -28,10 +28,12 @@
     padding: 10px;
     border-radius: 20px;
     text-align: center;
+    cursor: pointer;
 }
 .auth-btn:hover{
     background-color: #292f79;
     color: white;
+    cursor: pointer;
 }
 .error-course-content-2{
     background-color: #ffffff;
@@ -51,7 +53,7 @@
 .course-flex-items{
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 9px;
 }
 .course-flex>p{
     font-size: 20px;
@@ -92,4 +94,7 @@
     font-size: 60px;
     font-weight: 700;
     margin-bottom: 50px;
+}
+.course-not-auth{
+    border: 1px solid black;
 }

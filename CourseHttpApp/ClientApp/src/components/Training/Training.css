@@ -1,3 +1,7 @@
+html[data-theme='dark']{
+    --color-task:white;
+    --background-input: #494949;
+}
 .error_traning{
     display: flex;
     justify-content: center;
@@ -120,7 +124,7 @@
     box-shadow: 3px 3px 3px rgba(0,0,0, .1);
 }
 .task{
-    background-color: white;
+    color:var(--color-task);
     padding: 10px;
     margin-top: 10px;
 }
@@ -129,7 +133,7 @@
 }
 .url-input{
     width: 100%;
-    background-color: #F6F6F6;
+    background-color: var(--background-input);
 }
 .send-btn{
     width: 100px;
@@ -142,4 +146,10 @@
 }
 .checkbox-block{
     background-color: black;
+}
+.input_label{
+    color: white;
+}
+.select-task{
+    height: 100vh;
 }
