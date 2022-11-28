@@ -1,14 +1,16 @@
-﻿import React, {useEffect, useState} from "react";
+﻿import React, {useEffect, useRef, useState} from "react";
 import "./Header.css"
 import {Link, useNavigate} from "react-router-dom";
 import {resizeWindow} from "../../utils";
 
-const Header = ({setActiveAuth, setActiveReg, setToken, token,theme,setTheme}) => {
+const Header = ({setActiveAuth, setActiveReg, setToken, token, theme, setTheme}) => {
     let navigate = useNavigate()
     const [isVisibleProfileMenu, setIsVisibleProfileMenu] = useState(false)
+    const toogle_switch = useRef()
     useEffect(() => {
         const links = document.querySelectorAll(".menu-item");
         const logo = document.querySelector(".header-logo")
+
         function clickLogo() {
             links[0].click();
         }
@@ -73,6 +75,7 @@ const Header = ({setActiveAuth, setActiveReg, setToken, token,theme,setTheme}) =
         setToken(undefined)
         localStorage.removeItem("theme_id")
         localStorage.removeItem("type_id")
+        setTheme("light")
         navigate('/')
     }
 
@@ -103,11 +106,10 @@ const Header = ({setActiveAuth, setActiveReg, setToken, token,theme,setTheme}) =
         setIsVisibleProfileMenu(false)
         navigate("/profile")
     }
-    const handleClick = () =>{
-        if(document.documentElement.getAttribute("data-theme") === 'light'){
+    const handleClick = () => {
+        if (document.documentElement.getAttribute("data-theme") === 'light') {
             setTheme('dark')
-        }
-        else{
+        } else {
             setTheme('light')
         }
     }
@@ -137,16 +139,18 @@ const Header = ({setActiveAuth, setActiveReg, setToken, token,theme,setTheme}) =
                     {isVisibleProfileMenu &&
                         <div className="profile-nav" id="profile-drop-menu" onClick={(e) => e.stopPropagation()}>
                             <a className="profile-nav-item" onClick={() => showProfile()}>Профиль</a>
-                            <a className="profile-nav-item dark-theme">
-                                <label>Темная тема</label>
-                                <input 
-                                    className="switch" 
-                                    type="checkbox" 
-                                    checked={theme === 'dark'}
-                                    onChange={handleClick}
-                                />
+                            <a className="profile-nav-item dark-theme" onClick={handleClick}>
+                                Темная тема
+                                <label className="label-theme" onClick={event => event.preventDefault()}>
+                                    <input
+                                        className="switch-input"
+                                        type="checkbox"
+                                        checked={theme === 'dark'}
+                                    />
+                                    <div className="switch" ref={toogle_switch}></div>
+                                </label>
                             </a>
-                            <a className="profile-nav-item" onClick={() => handleLogOut()}>Выйти</a>
+                            <a className="profile-nav-item logout" onClick={() => handleLogOut()}>Выйти</a>
                         </div>
                     }
                 </div>}

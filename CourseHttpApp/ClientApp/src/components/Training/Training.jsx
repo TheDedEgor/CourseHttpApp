@@ -14,8 +14,10 @@ import success_logo from '../../images/success.png'
 import error_logo from '../../images/error-icon.png'
 import LoadingSlider from "../UI/LoadingSlider/LoadingSlider";
 import axios from "axios";
+import {useNotification} from "use-toast-notification";
 
 const Training = () => {
+    const notification = useNotification()
     const token = localStorage.getItem("access_token")
     const {formData, setFormData} = useContext(DataContext)
     const {paramData, jsonText, setParamData, headerData, setHeaderData} = useContext(DataContext)
@@ -83,8 +85,16 @@ const Training = () => {
             let hash = require('object-hash')
             if (hash(response.data) === task.correct_hash) {
                 task_.is_done = 1
+                notification.show({
+                    message: 'Задание выполнено верно!',
+                    variant: 'success'
+                })
             } else {
                 task_.is_done = 0
+                notification.show({
+                    message: 'Ошибка в запросе, попробуйте еще раз!',
+                    variant: 'error'
+                })
             }
         }).catch((error) => {
             console.log("error")

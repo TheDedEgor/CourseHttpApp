@@ -19,10 +19,10 @@ const AccordionBlock = ({title, handleClickTheme, id}) => {
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography component={'span'}>
-                        <div className="accordion-items" onClick={() => handleClickTheme(id, 1)}>Теория</div>
+                        <div className="accordion-item" onClick={() => handleClickTheme(id, 1)}>Теория</div>
                     </Typography>
                     <Typography component={'span'}>
-                        <div className="accordion-items" onClick={() => handleClickTheme(id, 2)}>Практика</div>
+                        <div className="accordion-item" onClick={() => handleClickTheme(id, 2)}>Практика</div>
                     </Typography>
                 </AccordionDetails>
             </Accordion>

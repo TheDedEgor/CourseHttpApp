@@ -1,7 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
 import "./Quizz.css";
-import styled, {keyframes} from 'styled-components';
-import {bounce} from 'react-animations';
 
 
 const Quizz = ({data}) => {
@@ -10,12 +8,12 @@ const Quizz = ({data}) => {
     const [score, setScore] = useState(0)
     const [showScore, setShowScore] = useState(false)
     const obj = useRef([])
+    const animation = useRef()
 
     const Animation = () => {
-        let box = document.querySelector('.box-question');
-        box.classList.add('box-animation');
+        animation.current.classList.add('box-animation')
         setTimeout(() => {
-            box.classList.remove('box-animation');
+            animation.current.classList.remove('box-animation');
         }, 1000)
     }
 
@@ -95,7 +93,7 @@ const Quizz = ({data}) => {
                     <div className="question-count">
                         <span>Вопрос {currentQuestion + 1}/{data.length}</span>
                     </div>
-                    <div className="box-question">
+                    <div className="box-question" ref={animation}>
                         <div className="question-section">
                             <div className="question-text">{data[currentQuestion].description}</div>
                         </div>

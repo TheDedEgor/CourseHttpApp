@@ -13,20 +13,21 @@ import Modal from './components/UI/Modal/Modal'
 import Training from "./components/Training/Training";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import {useTheme} from "./context/useTheme";
+
 const App = () => {
     const [activeAuth, setActiveAuth] = useState(false)
     const [activeReg, setActiveReg] = useState(false)
     const [activeForgotPass, setActiveForgotPass] = useState(false)
     const [token, setToken] = useState(localStorage.getItem("access_token"));
-    const  {theme,setTheme} = useTheme()
+    const {theme, setTheme} = useTheme()
     return (
         <div className="App">
             <div className="container">
-                <Header 
-                    setActiveAuth={setActiveAuth} 
-                    setActiveReg={setActiveReg} 
-                    setToken={setToken} 
-                    token={token} 
+                <Header
+                    setActiveAuth={setActiveAuth}
+                    setActiveReg={setActiveReg}
+                    setToken={setToken}
+                    token={token}
                     theme={theme}
                     setTheme={setTheme}
                 />

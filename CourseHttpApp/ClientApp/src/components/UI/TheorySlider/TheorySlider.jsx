@@ -3,6 +3,7 @@ import "./TheorySlider.css"
 import {Pagination} from '@mui/material';
 import photo from '../../../images/theory-1-2.png'
 import photo2 from '../../../images/theory-1-1.png'
+import {StyledEngineProvider} from "@mui/material/styles";
 
 const SliderComponent = ({data}) => {
     const [currentIndex, setCurrentIndex] = useState(0)
@@ -43,8 +44,10 @@ const SliderComponent = ({data}) => {
                     }
                 </div>
             </div>
-            <Pagination variant="outlined" shape="rounded" size="large" className="pagination" count={data.length}
-                        onChange={(event, page) => paginationChange(event, page - 1)}/>
+            <StyledEngineProvider injectFirst>
+                <Pagination variant="outlined" shape="rounded" size="large" className="pagination" count={data.length}
+                            onChange={(event, page) => paginationChange(event, page - 1)}/>
+            </StyledEngineProvider>
         </section>
     )
 }
