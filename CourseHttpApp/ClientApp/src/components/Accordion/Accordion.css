@@ -23,23 +23,28 @@ html[data-theme="light"] {
 
 .accordion-item {
     background-color: var(--background-color-accordion) !important;
+    transition: background-color 200ms linear;
 }
 
 .MuiAccordionSummary-expandIconWrapper {
     color: var(--color-accordion);
+    transition: color 200ms linear;
 }
 
 .Mui-expanded {
     color: var(--hover-color-accordion);
     margin: 0 !important;
+    transition: color 200ms linear;
 }
 
 .accordion:hover {
     color: var(--hover-color-accordion);
+    transition: color 200ms linear;
 }
 
 .accordion:hover .MuiAccordionSummary-expandIconWrapper {
     color: var(--hover-color-accordion);
+    transition: color 200ms linear;
 }
 
 .MuiAccordionDetails-root {

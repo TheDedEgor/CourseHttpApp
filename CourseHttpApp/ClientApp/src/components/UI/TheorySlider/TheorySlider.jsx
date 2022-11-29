@@ -15,7 +15,7 @@ const SliderComponent = ({data}) => {
         if (currentIndex > lastIndex) {
             setCurrentIndex(0)
         }
-    }, [currentIndex, data])
+    }, [currentIndex,data])
 
     const paginationChange = (event, page) => {
         setCurrentIndex(page)

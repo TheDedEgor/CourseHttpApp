@@ -75,7 +75,7 @@ const Header = ({setActiveAuth, setActiveReg, setToken, token, theme, setTheme})
         setToken(undefined)
         localStorage.removeItem("theme_id")
         localStorage.removeItem("type_id")
-        setTheme("light")
+        /*document.documentElement.setAttribute('data-theme', "light")*/
         navigate('/')
     }
 

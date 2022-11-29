@@ -19,7 +19,7 @@ const Quizz = ({data}) => {
 
     useEffect(() => {
         Animation()
-    }, [currentQuestion])
+    }, [currentQuestion,data])
 
     const handleAnswerOptionClick = (indexCorrect) => {
         
@@ -61,7 +61,7 @@ const Quizz = ({data}) => {
         obj.current = []
         setShowScore(false)
     }
-    let res = obj.current.map(function (item, index) {
+    let res = obj.current?.map(function (item, index) {
         return <tr key={item.task_id}>
             <td>{index + 1}</td>
             <td className={item.is_done ? "good" : "bad"}>{item.is_done ? "+" : "-"}</td>
@@ -98,7 +98,7 @@ const Quizz = ({data}) => {
                             <div className="question-text">{data[currentQuestion].description}</div>
                         </div>
                         <div className="answer-section">
-                            {data[currentQuestion].response_options.map(option => (
+                            {data[currentQuestion].response_options?.map(option => (
                                 <button onClick={() => handleAnswerOptionClick(option.id)} key={option.id}
                                         className="answer">{option.title}</button>
                             ))}

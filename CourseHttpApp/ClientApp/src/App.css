@@ -12,8 +12,7 @@ html[data-theme='light']{
 }
 .main{
     background-color: var(--background-color);
-    color: var(--text-color);
-    transition: background-color 200ms linear,color 200ms linear;
+    transition: background-color 200ms linear;
     position: relative;
     overflow: auto;
     height: calc(100vh - 100px);

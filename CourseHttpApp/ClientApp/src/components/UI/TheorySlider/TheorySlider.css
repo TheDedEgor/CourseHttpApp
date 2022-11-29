@@ -57,6 +57,7 @@ article::-webkit-scrollbar-thumb {
     -moz-box-shadow: 4px 4px 8px 0 rgba(34, 60, 80, 0.2);
     box-shadow: 4px 4px 8px 0 rgba(34, 60, 80, 0.2);
     background-color: var(--background-color-slider);
+    transition: background-color 200ms linear;
 }
 
 .section-content {
@@ -90,6 +91,7 @@ article::-webkit-scrollbar-thumb {
 .pagination > ul > li > button {
     color: var(--color-paginataion) ;
     background-color: var(--background-color-slider) ;
+    transition: color 200ms linear;
     border: 1px solid gray;
 }
 

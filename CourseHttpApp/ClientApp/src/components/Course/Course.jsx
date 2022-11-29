@@ -19,7 +19,7 @@ const Course = ({setActive}) => {
     const dispatch = useDispatch()
     const fetchData_all = useSelector(state => state.info.info)
     const loadSLice = useSelector(state => state.info.status)
-
+    
     useEffect(() => {
         if (token !== null) {
             getDataCourse().then(res => {
@@ -65,14 +65,8 @@ const Course = ({setActive}) => {
         localStorage.setItem("theme_id", theme_id)
         localStorage.setItem("type_id", type_id)
         setTypeId(type_id)
-        dispatch(
-            fetchData({
-                theme_id,
-                type_id
-            })
-        )
+        dispatch(fetchData())
     }
-
     return (
         <div className="course">
             <div className="course-block">
