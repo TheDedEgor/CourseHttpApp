@@ -1,0 +1,22 @@
+html[data-theme='dark'] {
+    --color-table-ceil: white;
+}
+
+html[data-theme='light'] {
+    --color-table-ceil: black;
+}
+
+.table > :not(:first-child) {
+    border-top: 2px solid gray;
+}
+
+.table {
+    width: max-content;
+}
+
+.tablecell {
+    border: 1px solid gray;
+    border-collapse: collapse;
+    color: var(--color-table-ceil);
+}
+

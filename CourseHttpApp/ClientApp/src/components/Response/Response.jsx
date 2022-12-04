@@ -1,21 +1,23 @@
-import React from "react";
+import React, {useContext} from "react";
 import {Box,Typography} from "@mui/material";
 import "./Response.css"
 import ReactCodeMirror from "@uiw/react-codemirror";
 import {json} from '@codemirror/lang-json'
-import {myTheme} from "../../utils";
+import {darkTheme, lightTheme} from "../../utils";
+import {DataContext} from "../../context/DataProvider";
 
 const Response = ({data}) =>{
     let obj = JSON.stringify(data,null,'\t')
+    const {theme} = useContext(DataContext)
     return(
         <Box>
             <Typography mt={2} mb={2}>Response</Typography>
             <ReactCodeMirror
-                style={{border:'1px solid black'}}
+                className="text-area-json"
                 value={obj}
-                height="200px"
+                height="300px"
                 extensions={[json()]}
-                theme={myTheme}
+                theme={theme === 'light' ? lightTheme : darkTheme}
             />
         </Box>
     )

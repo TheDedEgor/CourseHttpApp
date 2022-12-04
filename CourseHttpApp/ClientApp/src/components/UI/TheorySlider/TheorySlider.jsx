@@ -20,7 +20,7 @@ const SliderComponent = ({data}) => {
     const paginationChange = (event, page) => {
         setCurrentIndex(page)
     }
-
+    
     return (
         <section className="section">
             <div className="section-center">
@@ -45,7 +45,7 @@ const SliderComponent = ({data}) => {
                 </div>
             </div>
             <StyledEngineProvider injectFirst>
-                <Pagination variant="outlined" shape="rounded" size="large" className="pagination" count={data.length}
+                <Pagination variant="outlined" shape="rounded" size="large" className="pagination" count={data?.length}
                             onChange={(event, page) => paginationChange(event, page - 1)}/>
             </StyledEngineProvider>
         </section>

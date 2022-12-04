@@ -5,10 +5,9 @@ import icon_close from "../../images/close.svg";
 import AuthValid from "../AuthValid/AuthValid";
 import icon_show from "../../images/show_pass.png";
 import icon_hide from "../../images/hide_pass.png";
-import {useNotification} from "use-toast-notification";
+import toast from "react-hot-toast";
 
 const NewPass = () => {
-    const notification = useNotification()
     const [searchParams] = useSearchParams()
     const [password, setPassword] = useState('')
     const [passwordError, setPasswordError] = useState("")
@@ -39,16 +38,10 @@ const NewPass = () => {
             const data = await response.json()
             if (data.statusCode === 404) {
                 close()
-                notification.show({
-                    message: 'Что-то пошло не так, попробуйте еще раз!',
-                    variant: 'error'
-                })
+                toast.error('Что-то пошло не так, попробуйте еще раз!')
             } else {
                 close()
-                notification.show({
-                    message: 'Пароль был успешно изменен!',
-                    variant: 'success'
-                })
+                toast.success('Пароль был успешно изменен!')
             }
         }
     }

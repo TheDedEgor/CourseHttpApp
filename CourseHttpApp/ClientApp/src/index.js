@@ -6,7 +6,6 @@ import App from './App';
 import './index.css'
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
-import NotificationProvider from "use-toast-notification";
 import DataProvider from "./context/DataProvider";
 import {store} from './store/store'
 import {Provider} from "react-redux";
@@ -19,17 +18,7 @@ root.render(
     <Provider store={store}>
         <DataProvider>
             <BrowserRouter>
-                <NotificationProvider
-                    config={{
-                        position: 'top-center',
-                        isCloseable: false,
-                        showTitle: false,
-                        showIcon: true,
-                        duration: 5,
-                    }}
-                >
-                    <App/>
-                </NotificationProvider>
+                <App/>
             </BrowserRouter>
         </DataProvider>
     </Provider>

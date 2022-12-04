@@ -12,14 +12,14 @@ import NewPass from "./components/NewPass/NewPass";
 import Modal from './components/UI/Modal/Modal'
 import Training from "./components/Training/Training";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
-import {useTheme} from "./context/useTheme";
+import { Toaster } from 'react-hot-toast';
 
 const App = () => {
     const [activeAuth, setActiveAuth] = useState(false)
     const [activeReg, setActiveReg] = useState(false)
     const [activeForgotPass, setActiveForgotPass] = useState(false)
     const [token, setToken] = useState(localStorage.getItem("access_token"));
-    const {theme, setTheme} = useTheme()
+    
     return (
         <div className="App">
             <div className="container">
@@ -28,8 +28,6 @@ const App = () => {
                     setActiveReg={setActiveReg}
                     setToken={setToken}
                     token={token}
-                    theme={theme}
-                    setTheme={setTheme}
                 />
                 <div className="main">
                     <Routes>
@@ -59,6 +57,7 @@ const App = () => {
                     </Modal>}
                 </div>
             </div>
+            <Toaster position="top-center" />
         </div>
     )
 }

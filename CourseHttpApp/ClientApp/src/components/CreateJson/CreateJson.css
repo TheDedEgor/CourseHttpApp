@@ -1,0 +1,11 @@
+﻿.text-area-json {
+    border: 1px solid gray;
+}
+
+.cm-gutters {
+    border-right: 1px solid gray !important;
+}
+
+.cm-focused {
+    outline: none !important;
+}

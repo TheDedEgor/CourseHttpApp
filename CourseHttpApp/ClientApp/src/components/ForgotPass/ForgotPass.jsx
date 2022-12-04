@@ -3,10 +3,9 @@ import "./ForgotPass.css"
 import "../../css/modal.css"
 import icon_close from "../../images/close.svg";
 import AuthValid from "../AuthValid/AuthValid";
-import {useNotification} from "use-toast-notification";
+import toast from 'react-hot-toast';
 
 const ForgotPass = ({setActiveForgotPass}) => {
-    const notification = useNotification()
     const [email, setEmail] = useState('')
     const [emailError, setEmailError] = useState('')
     const [formValid, setFormValid] = useState(true)
@@ -38,16 +37,10 @@ const ForgotPass = ({setActiveForgotPass}) => {
                 setValidUser("Введён неверный Email, попробуйте еще раз!")
             } else if (data.statusCode === 409) {
                 close()
-                notification.show({
-                    message: 'Вы недавно отправляли письмо, попробуйте позже!',
-                    variant: 'error'
-                })
+                toast.error('Вы недавно отправляли письмо, попробуйте позже!')
             } else {
                 close()
-                notification.show({
-                    message: 'Письмо отправлено и будет в течение нескольких минут, обязательно проверьте папку спам!',
-                    variant: 'success'
-                })
+                toast.success('Письмо отправлено и будет в течение нескольких минут, обязательно проверьте папку спам!')
             }
         }
     }
@@ -72,7 +65,7 @@ const ForgotPass = ({setActiveForgotPass}) => {
             }
         }
     }
-
+    
     return (
         <div className="modal" onClick={() => close()}>
             <div className="form_content_forgot_pass" onClick={(e) => e.stopPropagation()}>

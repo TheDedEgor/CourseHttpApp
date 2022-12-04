@@ -1,11 +1,13 @@
-﻿import React, {useEffect, useRef, useState} from "react";
+﻿import React, {useContext, useEffect, useRef, useState} from "react";
 import "./Header.css"
 import {Link, useNavigate} from "react-router-dom";
 import {resizeWindow} from "../../utils";
+import {DataContext} from "../../context/DataProvider";
 
-const Header = ({setActiveAuth, setActiveReg, setToken, token, theme, setTheme}) => {
+const Header = ({setActiveAuth, setActiveReg, setToken, token}) => {
     let navigate = useNavigate()
     const [isVisibleProfileMenu, setIsVisibleProfileMenu] = useState(false)
+    const {theme, setTheme} = useContext(DataContext)
     const toogle_switch = useRef()
     useEffect(() => {
         const links = document.querySelectorAll(".menu-item");

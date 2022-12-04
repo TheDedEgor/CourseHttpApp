@@ -9,13 +9,13 @@
 
 html[data-theme="dark"] {
     --background-color-slider: #242F3D;
-    --color-paginataion:white;
+    --color-slider:white;
     --background-color-selected: #767676;
 }
 
 html[data-theme="light"] {
     --background-color-slider: white;
-    --color-paginataion:black;
+    --color-slider:black;
     --background-color-selected: #ECECEC;
 }
 
@@ -57,6 +57,7 @@ article::-webkit-scrollbar-thumb {
     -moz-box-shadow: 4px 4px 8px 0 rgba(34, 60, 80, 0.2);
     box-shadow: 4px 4px 8px 0 rgba(34, 60, 80, 0.2);
     background-color: var(--background-color-slider);
+    color: var(--color-slider);
     transition: background-color 200ms linear;
 }
 
@@ -89,7 +90,7 @@ article::-webkit-scrollbar-thumb {
 }
 
 .pagination > ul > li > button {
-    color: var(--color-paginataion) ;
+    color: var(--color-slider) ;
     background-color: var(--background-color-slider) ;
     transition: color 200ms linear;
     border: 1px solid gray;

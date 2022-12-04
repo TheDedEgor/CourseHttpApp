@@ -1,155 +1,251 @@
-html[data-theme='dark']{
-    --color-task:white;
-    --background-input: #494949;
+html[data-theme='dark'] {
+    --color-training: white;
+    --background-color-training: #242F3D;
+    --background-color-training-selected: #5e73d0;
+    --background-color-training-hover: #A1A1A1;
+    --background-color-training-selected-tab: #242F3D;
 }
-.error_traning{
+
+html[data-theme='light'] {
+    --color-training: black;
+    --background-color-training: white;
+    --background-color-training-selected: #ECECEC;
+    --background-color-training-hover: #D7D7D7;
+    --background-color-training-selected-tab: #ECECEC;
+}
+
+.training-tasks {
+    display: flex;
+    justify-content: space-between;
+}
+
+.tasks-block {
+    max-height: 600px;
+    overflow-y: auto;
+    padding: 20px;
+    width: 350px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.tasks-block::-webkit-scrollbar {
+    width: 4px;
+    background-color: rgba(26, 24, 47, 0.1);
+    border-radius: 2px;
+    height: 20px;
+}
+
+.tasks-block::-webkit-scrollbar-thumb {
+    background: #435191;
+    border-radius: 2px;
+}
+
+.response-block {
+    width: 70vw;
+    color: var(--color-training);
+}
+
+.MuiMenuItem-root.Mui-selected {
+    background-color: var(--background-color-training-selected) !important;
+}
+
+.MuiMenuItem-root:hover {
+    background-color: var(--background-color-training-hover);
+}
+
+.MuiOutlinedInput-notchedOutline {
+    border-color: gray;
+}
+
+.MuiMenu-list {
+    background-color: var(--background-color-training);
+    color: var(--color-training);
+}
+
+.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+    border-color: var(--color-training);
+}
+
+.MuiSvgIcon-root {
+    color: var(--color-training);
+}
+
+.MuiTab-root.Mui-selected {
+    background-color: var(--background-color-training-selected-tab) !important;
+}
+
+.label-response {
+    color: var(--color-training);
+}
+
+.select-type {
+    width: 120px;
+    height: 40px;
+    color: var(--color-training);
+}
+
+.MuiInputBase-input {
+    color: var(--color-training);
+}
+
+.url-input {
+    width: 75%;
+}
+
+.send-btn {
+    width: 80px;
+    height: 40px;
+}
+
+.error_traning {
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
 }
-.traning-block{
+
+.traning-block {
     display: flex;
     flex-direction: column;
 }
-.traning-block_content{
+
+.traning-block_content {
     display: flex;
     background-color: red;
 }
-.auth_link{
+
+.auth_link {
     color: black;
 }
 
-.traning-from{
+.traning-from {
     margin-top: 50px;
 }
-.request-block{
+
+.request-block {
     display: flex;
 }
-.request-block input{
+
+.request-block input {
     margin-left: 100px;
 }
+
 .params-block {
     display: flex;
 }
-.params-block ul{
+
+.params-block ul {
     display: flex;
     width: 300px;
     margin-top: 20px;
     justify-content: space-between;
     list-style: none;
 }
-.params-block ul>li:hover{
+
+.params-block ul > li:hover {
     cursor: pointer;
 }
-.params-link{
-    color:black;
+
+.params-link {
+    color: black;
     text-decoration: none;
 }
-.params-links{
+
+.params-links {
     display: flex;
     justify-content: space-between;
 }
-.not-active-task{
+
+.not-active-task {
     display: none;
 }
-.task-title{
+
+.task-title {
     background-color: red;
 }
-.task-title:hover{
+
+.task-title:hover {
     cursor: pointer;
     background-color: brown;
 }
-.active-task{
+
+.active-task {
     display: block;
     border: 1px solid black;
     padding: 20px;
 }
-.start-task{
+
+.start-task {
     background-color: green;
     padding: 7px 20px;
 }
-.start-task:hover{
+
+.start-task:hover {
     cursor: pointer;
     background-color: olivedrab;
 }
-.bottom-block{
+
+.bottom-block {
     display: flex;
     margin-top: 30px;
 }
-.not-active-params{
+
+.not-active-params {
     display: none;
 }
-.active-params{
+
+.active-params {
     display: block;
 }
-.training-block{
-    width: 1000px;
-    margin: 20px auto;
-}
-.form-block{
+
+.training-block {
+    width: 100%;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 15px;
 }
 
-.tasks{
-    margin-top: 20px;
-    max-height: 590px;
-    overflow-y: auto;
-    padding: 10px;
-}
-.tasks::-webkit-scrollbar{
-    width: 4px;
-    background-color: rgba(26, 24, 47, 0.1);
-    border-radius: 2px;
-    height: 20px;
-}
-.tasks::-webkit-scrollbar-thumb{
-    background: #435191;
-    border-radius: 2px;
-}
-.task-item{
+.form-block {
     display: flex;
-    width: 300px;
+    align-items: center;
+    justify-content: start;
+    gap: 5px;
+}
+
+.task-item {
+    display: flex;
+    width: 100%;
+    height: 60px;
     padding: 10px;
     justify-content: space-between;
     border-radius: 10px;
     color: white;
     background-color: #5e73d0;
-    margin-bottom: 24px;
-}
-.task-item:hover{
-    cursor: pointer;
-    box-shadow: 3px 3px 3px rgba(0,0,0, .1);
-}
-.task{
-    color:var(--color-task);
-    padding: 10px;
-    margin-top: 10px;
-}
-.select{
-    width: 150px;
-}
-.url-input{
-    width: 100%;
-    background-color: var(--background-input);
-}
-.send-btn{
-    width: 100px;
-    height: 40px;
-    margin-left: 5px;
 }
 
-.select-tab-block{
-    margin-top: 20px;
+.task-item:hover {
+    cursor: pointer;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, .1);
 }
-.checkbox-block{
+
+.task {
+    padding: 10px;
+}
+
+.select-tab-block {
+    /* margin-top: 20px;*/
+}
+
+.checkbox-block {
     background-color: black;
 }
-.input_label{
+
+.input_label {
     color: white;
 }
-.select-task{
+
+.select-task {
     height: 100vh;
 }

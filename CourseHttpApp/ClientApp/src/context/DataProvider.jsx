@@ -1,4 +1,5 @@
 import React,{createContext,useState} from "react";
+import {useTheme} from "./useTheme";
 
 export const  DataContext = createContext(null)
 
@@ -9,6 +10,7 @@ const DataProvider = ({children}) =>{
     const [jsonText,setJsonText] = useState('')
     const [taskId,setTaskId] = useState(-1)
     const [progress,setProgress] = useState(0)
+    const {theme, setTheme} = useTheme()
     return(
         <DataContext.Provider value={{
             formData,
@@ -22,7 +24,9 @@ const DataProvider = ({children}) =>{
             taskId,
             setTaskId,
             progress,
-            setProgress
+            setProgress,
+            theme, 
+            setTheme
         }}>
             {children}
         </DataContext.Provider>
