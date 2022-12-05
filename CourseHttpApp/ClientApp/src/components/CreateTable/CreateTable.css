@@ -1,9 +1,11 @@
 html[data-theme='dark'] {
     --color-table-ceil: white;
+    --background-color-hover-btn-table: gray;
 }
 
 html[data-theme='light'] {
     --color-table-ceil: black;
+    --background-color-hover-btn-table: #C9C9C9;
 }
 
 .table > :not(:first-child) {
@@ -15,8 +17,19 @@ html[data-theme='light'] {
 }
 
 .tablecell {
+    text-align: center;
     border: 1px solid gray;
     border-collapse: collapse;
     color: var(--color-table-ceil);
+}
+
+.btn-table:hover {
+    border-radius: 50%;
+    background-color: var(--background-color-hover-btn-table);
+}
+
+.title-table {
+    margin: 0;
+    padding-bottom: 10px;
 }
 

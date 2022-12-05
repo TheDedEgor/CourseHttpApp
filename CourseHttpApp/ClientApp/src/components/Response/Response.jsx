@@ -11,13 +11,15 @@ const Response = ({data}) =>{
     const {theme} = useContext(DataContext)
     return(
         <Box>
-            <Typography mt={2} mb={2}>Response</Typography>
+            <Typography className="title-table" component={'div'} mt={2} mb={2}>Response</Typography>
             <ReactCodeMirror
                 className="text-area-json"
                 value={obj}
                 height="300px"
                 extensions={[json()]}
                 theme={theme === 'light' ? lightTheme : darkTheme}
+                readOnly
+                editable
             />
         </Box>
     )

@@ -8,14 +8,14 @@ import {darkTheme, lightTheme} from "../../utils";
 
 const CreateJson = () => {
     const {setJsonText, theme} = useContext(DataContext)
-    
+
     const onChange = React.useCallback((value, viewUpdate) => {
         setJsonText(value)
     }, []);
 
     return (
         <>
-            <Typography mt={2} mb={2}>JSON</Typography>
+            <Typography className="title-table" component={'div'} mt={2} mb={2}>JSON</Typography>
             <ReactCodeMirror
                 className="text-area-json"
                 extensions={[json()]}

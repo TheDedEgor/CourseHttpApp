@@ -1,0 +1,14 @@
+﻿.response-error-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.response-error-icon {
+    height: 200px;
+    width: 200px;
+}
+
+.response-error {
+    font-size: 1.5em;
+}

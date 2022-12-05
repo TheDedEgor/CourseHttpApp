@@ -4,9 +4,11 @@ html[data-theme='dark'] {
     --background-color-training-selected: #5e73d0;
     --background-color-training-hover: #A1A1A1;
     --background-color-training-selected-tab: #242F3D;
+    --border-color-hover-task-item: #ABAAAA;
 }
 
 html[data-theme='light'] {
+    --border-color-hover-task-item: #17212B;
     --color-training: black;
     --background-color-training: white;
     --background-color-training-selected: #ECECEC;
@@ -17,6 +19,7 @@ html[data-theme='light'] {
 .training-tasks {
     display: flex;
     justify-content: space-between;
+    height: 100%;
 }
 
 .tasks-block {
@@ -42,9 +45,37 @@ html[data-theme='light'] {
     border-radius: 2px;
 }
 
+.select-task {
+    width: 70vw;
+    height: 100%;
+    color: var(--color-training);
+    display: flex;
+}
+
+.arrows-select-task {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 150px;
+}
+
+.arrow-icon {
+    width: 100px;
+    height: 100px;
+}
+
+.title-select-task {
+    font-size: 2em;
+    margin: auto;
+}
+
 .response-block {
     width: 70vw;
     color: var(--color-training);
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
+    gap: 30px;
 }
 
 .MuiMenuItem-root.Mui-selected {
@@ -92,6 +123,11 @@ html[data-theme='light'] {
 
 .url-input {
     width: 75%;
+}
+
+.task-item:hover {
+    outline: 2px solid var(--border-color-hover-task-item);
+    color: #ABAAAA;
 }
 
 .send-btn {
@@ -162,15 +198,6 @@ html[data-theme='light'] {
     display: none;
 }
 
-.task-title {
-    background-color: red;
-}
-
-.task-title:hover {
-    cursor: pointer;
-    background-color: brown;
-}
-
 .active-task {
     display: block;
     border: 1px solid black;
@@ -231,7 +258,20 @@ html[data-theme='light'] {
 }
 
 .task {
-    padding: 10px;
+    padding: 20px;
+    border: 2px dashed gray;
+    font-size: 1.2em;
+}
+
+.task-title {
+    font-size: 1.8em;
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.load-block-send {
+    position: relative;
+    height: 300px;
 }
 
 .select-tab-block {
@@ -244,8 +284,4 @@ html[data-theme='light'] {
 
 .input_label {
     color: white;
-}
-
-.select-task {
-    height: 100vh;
 }

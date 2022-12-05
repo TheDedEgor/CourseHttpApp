@@ -39,6 +39,7 @@ public class TrainingController : ControllerBase
                 result.Add(new
                 {
                     id = item.Id,
+                    title = item.Title,
                     description = item.Description,
                     correct_hash = item.Correct_hash,
                     is_done = task == null ? 2 : task.Is_done == true ? 1 : 0

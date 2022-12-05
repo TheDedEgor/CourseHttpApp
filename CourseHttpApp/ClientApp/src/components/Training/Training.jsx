@@ -16,11 +16,29 @@ import LoadingSlider from "../UI/LoadingSlider/LoadingSlider";
 import axios from "axios";
 import {StyledEngineProvider} from "@mui/material/styles";
 import toast from "react-hot-toast";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+
+import styled, {keyframes} from 'styled-components';
+import {headShake} from 'react-animations';
+
+const bounceAnimation = keyframes`${headShake}`;
+
+const BouncyDiv = styled.div`
+  animation: 1s ${bounceAnimation};
+  animation-iteration-count: infinite;
+`;
 
 const Training = () => {
     const token = localStorage.getItem("access_token")
-    const {formData, setFormData} = useContext(DataContext)
-    const {paramData, jsonText, setParamData, headerData, setHeaderData} = useContext(DataContext)
+    const {
+        paramData,
+        jsonText,
+        setParamData,
+        headerData,
+        setHeaderData,
+        formData,
+        setFormData
+    } = useContext(DataContext)
     const [value, setValue] = useState(0)
     const [error, setError] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
@@ -30,6 +48,7 @@ const Training = () => {
     const [hashJson, setHashJson] = useState({})
     const [tasks, setTasks] = useState([])
     const [loading, setLoading] = useState(true)
+    const [responseLoading, setResponseLoading] = useState(false)
 
     useEffect(() => {
         if (token !== null) {
@@ -67,11 +86,11 @@ const Training = () => {
             return
         }
 
+        setResponseLoading(true)
         const apiType = formData.type.toLowerCase()
         const apiURL = formData.url
         const apiHeaders = getHeaderAndParams(headerData)
         const apiParams = getHeaderAndParams(paramData)
-        console.log(apiParams)
 
         await axios({
             method: apiType,
@@ -89,13 +108,15 @@ const Training = () => {
                 toast.success('Задание выполнено верно!')
             } else {
                 task_.is_done = 0
-                toast.error('Ошибка в запросе, попробуйте еще раз!')
+                toast.error('Задание решено неверно, попробуйте еще раз!')
             }
         }).catch((error) => {
-            console.log("error")
             setErrorResponse(true)
             setApiResponse(error)
             task_.is_done = 0
+        }).finally(() => {
+            setResponseLoading(false)
+            setFormData({...formData, url: ""})
         })
 
         await fetch("api/Training", {
@@ -114,24 +135,25 @@ const Training = () => {
         const task_ = tasks.find(task => task.id === id)
         setTask(task_)
     }
-    
+
     return (
         <StyledEngineProvider injectFirst>
             {token ?
                 <div className="training-tasks">
                     <div className="tasks-block">
-                        {loading === true ? <LoadingSlider/> :
+                        {loading ? <LoadingSlider/> :
                             <>
                                 {tasks.map((task, id) => (
                                     <div className="task-item" onClick={() => onClickTask(task.id)} key={id}>
                                         <div>
-                                            Задание {id + 1}
+                                            {task.title}
                                         </div>
                                         <div>
                                             {
                                                 task.is_done === 1
-                                                    ? <img src={success_logo} alt="success" width={20} height={20}/>
-                                                    : <img src={error_logo} alt="error" width={20} height={20}/>
+                                                    ? <img src={success_logo} alt="success" width={20} height={20}/> :
+                                                    task.is_done === 0 ?
+                                                    <img src={error_logo} alt="error" width={20} height={20}/> : <></>
                                             }
                                         </div>
                                     </div>
@@ -142,74 +164,107 @@ const Training = () => {
                     {
                         task !== ''
                             ?
-                            <div className="response-block">{task && <div className="task">{task.description}</div>}<Box
-                                className="training-block">
-                                <Box className="form-block">
-                                    <FormControl className="select-response">
-                                        <InputLabel className="label-response" id="demo-simple-select-label">
-                                            Метод
-                                        </InputLabel>
-                                        <Select id="demo-simple-select-label"
-                                                className="select-type"
-                                                value={formData.type}
-                                                label="Метод"
-                                                onChange={(e) => handleChange(e)}>
-                                            <MenuItem value={'GET'}>GET</MenuItem>
-                                            <MenuItem value={'POST'}>POST</MenuItem>
-                                            <MenuItem value={'PUT'}>PUT</MenuItem>
-                                            <MenuItem value={'PATCH'}>PATCH</MenuItem>
-                                            <MenuItem value={'DELETE'}>DELETE</MenuItem>
-                                            <MenuItem value={'HEAD'}>HEAD</MenuItem>
-                                            <MenuItem value={'OPTIONS'}>OPTIONS</MenuItem>
-                                        </Select>
-                                    </FormControl>
-                                    <TextField
-                                        size="small"
-                                        className="url-input"
-                                        onChange={(e) => onUrlChange(e)}
-                                    />
-                                    <Button
-                                        className="send-btn"
-                                        variant="contained"
-                                        onClick={() => onSendClick(task.id)}>
-                                        Send
-                                    </Button>
+                            <div className="response-block">
+                                {task &&
+                                    <div className="task">
+                                        <div className="task-title">
+                                            {task.title}
+                                        </div>
+                                        {task.description}
+                                    </div>
+                                }
+                                <Box className="training-block">
+                                    {responseLoading ?
+                                        <div className="load-block-send">
+                                            <LoadingSlider/>
+                                        </div>
+                                        : <>
+                                            <Box className="form-block">
+                                                <FormControl className="select-response">
+                                                    <InputLabel className="label-response"
+                                                                id="demo-simple-select-label">
+                                                        Метод
+                                                    </InputLabel>
+                                                    <Select id="demo-simple-select-label"
+                                                            className="select-type"
+                                                            value={formData.type}
+                                                            label="Метод"
+                                                            onChange={(e) => handleChange(e)}>
+                                                        <MenuItem value={'GET'}>GET</MenuItem>
+                                                        <MenuItem value={'POST'}>POST</MenuItem>
+                                                        <MenuItem value={'PUT'}>PUT</MenuItem>
+                                                        <MenuItem value={'PATCH'}>PATCH</MenuItem>
+                                                        <MenuItem value={'DELETE'}>DELETE</MenuItem>
+                                                        <MenuItem value={'HEAD'}>HEAD</MenuItem>
+                                                        <MenuItem value={'OPTIONS'}>OPTIONS</MenuItem>
+                                                    </Select>
+                                                </FormControl>
+                                                <TextField
+                                                    size="small"
+                                                    className="url-input"
+                                                    onChange={(e) => onUrlChange(e)}
+                                                />
+                                                <Button
+                                                    className="send-btn"
+                                                    variant="contained"
+                                                    onClick={() => onSendClick(task.id)}>
+                                                    Send
+                                                </Button>
+                                            </Box>
+                                            <Box className="select-tab-block">
+                                                <Tabs value={value} onChange={handleChangeTabs} textColor="inherit">
+                                                    <Tab label="Params" className="tab-item"/>
+                                                    <Tab label="Headers" className="tab-item"/>
+                                                    <Tab label="Body" className="tab-item"/>
+                                                </Tabs>
+                                            </Box>
+                                            <Box
+                                                role="tabpanel"
+                                                hidden={value !== 0}
+                                                id={`simple-tabpanel-${0}`}
+                                                aria-labelledby={`simple-tab-${0}`}>
+                                                <CreateTable text="Params" data={paramData} setData={setParamData}/>
+                                            </Box>
+                                            <Box
+                                                role="tabpanel"
+                                                hidden={value !== 1}
+                                                id={`simple-tabpanel-${1}`}
+                                                aria-labelledby={`simple-tab-${1}`}>
+                                                <CreateTable text="Headers" data={headerData} setData={setHeaderData}/>
+                                            </Box>
+                                        </>
+                                    }
+
+                                    <Box
+                                        role="tabpanel"
+                                        hidden={value !== 2}
+                                        id={`simple-tabpanel-${2}`}
+                                        aria-labelledby={`simple-tab-${2}`}>
+                                        <CreateJson/>
+                                    </Box>
+                                    {errorResponse ? <ErrorScreen apiResponse={apiResponse}/> :
+                                        <Response data={apiResponse}/>}
+                                    {error && <SnackBar error={error} setError={setError} errorMsg={errorMessage}/>}
+                                    <div style={{height: "20px"}}></div>
                                 </Box>
-                                <Box className="select-tab-block">
-                                    <Tabs value={value}
-                                          onChange={handleChangeTabs}
-                                          textColor="none">
-                                        <Tab label="Params" className="tab-item"/>
-                                        <Tab label="Headers" className="tab-item"/>
-                                        <Tab label="Body" className="tab-item"/>
-                                    </Tabs>
-                                </Box>
-                                <Box
-                                    role="tabpanel"
-                                    hidden={value !== 0}
-                                    id={`simple-tabpanel-${0}`}
-                                    aria-labelledby={`simple-tab-${0}`}>
-                                    <CreateTable text="Params" data={paramData} setData={setParamData}/>
-                                </Box>
-                                <Box
-                                    role="tabpanel"
-                                    hidden={value !== 1}
-                                    id={`simple-tabpanel-${1}`}
-                                    aria-labelledby={`simple-tab-${1}`}>
-                                    <CreateTable text="Headers" data={headerData} setData={setHeaderData}/>
-                                </Box>
-                                <Box
-                                    role="tabpanel"
-                                    hidden={value !== 2}
-                                    id={`simple-tabpanel-${2}`}
-                                    aria-labelledby={`simple-tab-${2}`}>
-                                    <CreateJson/>
-                                </Box>
-                                {errorResponse ? <ErrorScreen apiResponse={apiResponse}/> :
-                                    <Response data={apiResponse}/>}
-                                {error && <SnackBar error={error} setError={setError} errorMsg={errorMessage}/>}
-                            </Box></div>
-                            : <div className="select-task">adfdsf</div>
+                            </div>
+                            :
+                            <div className="select-task">
+                                <div className="arrows-select-task">
+                                    <BouncyDiv>
+                                        <ArrowBackIcon className="arrow-icon"/>
+                                    </BouncyDiv>
+                                    <BouncyDiv>
+                                        <ArrowBackIcon className="arrow-icon"/>
+                                    </BouncyDiv>
+                                    <BouncyDiv>
+                                        <ArrowBackIcon className="arrow-icon"/>
+                                    </BouncyDiv>
+                                </div>
+                                <div className="title-select-task">
+                                    Выберите задачу из списка
+                                </div>
+                            </div>
                     }
                 </div>
                 :
