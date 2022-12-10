@@ -1,18 +1,20 @@
-﻿import React, {useState} from "react";
+﻿import React, {useContext, useState} from "react";
 import "./Register.css";
 import "../../css/modal.css";
 import icon_close from "../../images/close.svg";
 import icon_show from "../../images/show_pass.png";
 import icon_hide from "../../images/hide_pass.png";
 import RegValid from "../RegValid/RegValid";
+import {DataContext} from "../../context/DataProvider";
 
-const Register = ({setActiveReg, setToken}) => {
+const Register = ({setActiveReg}) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [emailError, setEmailError] = useState("")
     const [passwordError, setPasswordError] = useState("")
     const [formValid, setFormValid] = useState(true)
     const [validUser, setValidUser] = useState('')
+    const {setUserName, setToken} = useContext(DataContext)
 
     async function handleSubmit(event) {
         event.preventDefault();
@@ -31,7 +33,7 @@ const Register = ({setActiveReg, setToken}) => {
             password.classList.add("reg_error_red")
             check = false
         }
-        if (!name.value) {
+        if (!name.value.trim()) {
             setValidUser("Заполните обязательные поля!")
             name.classList.add("reg_error_red")
             check = false
@@ -39,13 +41,9 @@ const Register = ({setActiveReg, setToken}) => {
 
         if (check) {
             const sendData = new FormData(event.target)
-            const token = sessionStorage.getItem("access_token")
             const response = await fetch("/api/Reg", {
                 method: 'POST',
                 body: sendData,
-                headers: {
-                    "Authorization": "Bearer " + token
-                }
             })
             const user = await response.json()
             if (user.statusCode === 409) {
@@ -57,6 +55,7 @@ const Register = ({setActiveReg, setToken}) => {
                 setValidUser('')
                 localStorage.setItem("access_token", user.value.access_token)
                 localStorage.setItem("user_name", user.value.user_name)
+                setUserName(user.value.user_name)
                 setToken(user.value.access_token)
                 close()
             }
@@ -89,10 +88,10 @@ const Register = ({setActiveReg, setToken}) => {
     }
     const passwordHandler = (e) => {
         e.target.classList.remove("reg_error_red")
-        setPassword(e.target.value)
+        setPassword(e.target.value.trim())
         setValidUser('')
         setFormValid(true)
-        if (!e.target.value) {
+        if (!e.target.value.trim()) {
             setPasswordError("")
         } else {
             if (e.target.value.length < 6) {

@@ -1,0 +1,12 @@
+.not-auth-training-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-slider)
+}
+
+.title-not-auth-training {
+    width:max-content;
+    font-size: 1.7em;
+}

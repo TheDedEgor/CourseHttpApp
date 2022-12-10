@@ -9,6 +9,7 @@
     "@emotion/styled": "^11.10.5",
     "@lezer/highlight": "^1.1.2",
     "@mui/icons-material": "^5.10.9",
+    "@mui/lab": "^5.0.0-alpha.111",
     "@mui/material": "^5.10.11",
     "@mui/system": "^5.10.10",
     "@reduxjs/toolkit": "^1.8.6",

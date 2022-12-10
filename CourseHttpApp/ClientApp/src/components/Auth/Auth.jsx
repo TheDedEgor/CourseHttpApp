@@ -1,18 +1,20 @@
-﻿import React, {useState} from "react";
+﻿import React, {useContext, useState} from "react";
 import "./Auth.css";
 import "../../css/modal.css";
 import icon_close from '../../images/close.svg';
 import icon_show from '../../images/show_pass.png';
 import icon_hide from '../../images/hide_pass.png'
 import AuthValid from "../AuthValid/AuthValid";
+import {DataContext} from "../../context/DataProvider";
 
-const Auth = ({setActiveAuth, setActiveReg, setActiveForgotPass, setToken}) => {
+const Auth = ({setActiveAuth, setActiveReg, setActiveForgotPass}) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [emailError, setEmailError] = useState("")
     const [passwordError, setPasswordError] = useState("")
     const [formValid, setFormValid] = useState(true)
     const [validUser, setValidUser] = useState('')
+    const {setUserName, setToken} = useContext(DataContext)
     
     async function handleFormSubmit(event) {
         event.preventDefault();
@@ -49,6 +51,7 @@ const Auth = ({setActiveAuth, setActiveReg, setActiveForgotPass, setToken}) => {
                 setValidUser('')
                 localStorage.setItem("access_token", user.value.access_token)
                 localStorage.setItem("user_name", user.value.user_name)
+                setUserName(user.value.user_name)
                 setToken(user.value.access_token)
                 close()
             }
@@ -75,10 +78,10 @@ const Auth = ({setActiveAuth, setActiveReg, setActiveForgotPass, setToken}) => {
         }
     }
     const passwordHandler = (e) => {
-        setPassword(e.target.value)
+        setPassword(e.target.value.trim())
         setValidUser('')
         setFormValid(true)
-        if (!e.target.value) {
+        if (!e.target.value.trim()) {
             setPasswordError("")
         } else {
             if (e.target.value.length < 6) {

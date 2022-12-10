@@ -1,0 +1,101 @@
+html[data-theme='dark'] {
+    --line-color: #2C3743;
+    --line-color-hover: rgba(127, 145, 164, 0.5);
+    --background-color-btn-edit-info: #7177F8;
+    --background-color-btn-edit-info-hover: #525AFF;
+    --danger-color: #FF6270;
+    --background-color-btn-loading: gray;
+}
+
+html[data-theme='light'] {
+    --line-color: #E8EBEF;
+    --line-color-hover: rgba(131, 137, 159, 0.5);
+    --background-color-btn-edit-info: #454cee;
+    --background-color-btn-edit-info-hover: #2d35ee;
+    --danger-color: #ea4335;
+    --background-color-btn-loading: #D0D0D0;
+}
+
+.profile-edit-block {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    color: var(--color-text-profile);
+}
+
+.title-input-edit-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: var(--color-text-add-profile);
+}
+
+.title-edit-block {
+    font-size: 1.5em;
+}
+
+.return-profile-btn {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--color-text-add-profile);
+}
+
+.return-profile-btn:hover {
+    color: var(--color-text-profile);
+}
+
+.input-edit-info {
+    box-sizing: border-box;
+    height: 40px;
+    width: 350px;
+    padding: 9px 16px;
+    color: var(--text-color);
+    background: none;
+    border: 1px solid var(--line-color);
+    border-radius: 8px;
+    outline: none;
+    resize: none;
+}
+
+.input-edit-info:hover {
+    border-color: var(--line-color-hover);
+}
+
+.input-edit-info:focus {
+    border: 2px solid #454cee;
+    transition: 200ms linear;
+}
+
+.error-input-edit-info {
+    border-color: var(--danger-color) !important;
+}
+
+.error-msg-edit {
+    color: var(--danger-color);
+}
+
+.btn-edit-info {
+    color: white;
+    border: none;
+    margin-top: 20px;
+    padding: 8px 20px;
+    border-radius: 6px;
+    background-color: var(--background-color-btn-edit-info);
+}
+
+.btn-edit-info:hover {
+    background-color: var(--background-color-btn-edit-info-hover);
+}
+
+.btn-edit-info:disabled {
+    color: white;
+    background-color: var(--background-color-btn-loading);
+    cursor: not-allowed;
+}
+
+.btn-edit-info.MuiLoadingButton-loading {
+    color: white;
+    background-color: var(--background-color-btn-loading);
+}

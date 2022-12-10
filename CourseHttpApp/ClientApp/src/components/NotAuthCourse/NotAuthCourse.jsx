@@ -14,7 +14,7 @@ const NotAuthCourse = ({setActive}) => {
                     <p>HTTP — протокол прикладного уровня передачи данных, изначально — в виде гипертекстовых документов в формате HTML,
                         в настоящее время используется для передачи произвольных данных.
                     </p>
-                    <p className="auth-btn" onClick={() => setActive(true)}>Записаться на курс</p>
+                    <p className="auth-btn" onClick={() => setActive(true)}>Начать курс</p>
                 </div>
                 <div className="course-photo">
                     <img src={course_photo} alt="Курс Http" width={700} height={400}/>
@@ -22,32 +22,32 @@ const NotAuthCourse = ({setActive}) => {
             </div>
             <div className="error-course-content-2 course-not-auth">
                 <div className="error-course-content-2-title">
-                    <p>Чему вы научитесь</p>
+                    <p>Что вас ожидает на курсе</p>
                 </div>
                 <div className="course-flex-items">
                     <div className="course-flex item1">
                         <AiFillCheckCircle size={40}/>
-                        <p>Создавать простые и сложные модульные программы: от консольных скриптов до чат-ботов</p>
+                        <p>Ознакомитесь с теорией по HTTP-протоколу</p>
                     </div>
                     <div className="course-flex item2">
                         <AiFillCheckCircle size={40}/>
-                        <p>Работать с базами данных</p>
+                        <p>Пройдете тесты по каждой теме курса</p>
                     </div>
                     <div className="course-flex item3">
                         <AiFillCheckCircle size={40}/>
-                        <p>Использовать промышленные средства разработки: Git, PyCharm, Postman</p>
+                        <p>Закрепите теорию на тренажере с заданиями</p>
                     </div>
                     <div className="course-flex item4">
                         <AiFillCheckCircle size={40}/>
-                        <p>Упаковывать проекты в Docker и применять DevOps-практики</p>
+                        <p>Отследите свою статистику в профиле</p>
                     </div>
                     <div className="course-flex item5">
                         <AiFillCheckCircle size={40}/>
-                        <p>Упаковывать проекты в Docker и применять DevOps-практики</p>
+                        <p>Научитесь работать с HTTP-протоколом</p>
                     </div>
                     <div className="course-flex item6">
                         <AiFillCheckCircle size={40}/>
-                        <p>Упаковывать проекты в Docker и применять DevOps-практики</p>
+                        <p>Веселое времяпрепровождение)</p>
                     </div>
                 </div>
             </div>
@@ -64,11 +64,6 @@ const NotAuthCourse = ({setActive}) => {
                         <img src={senior} alt="senior" width={250} height={250}/>
                         <p>Тем, кто уже имеет опыт в HTTP и хочет обновить свои навыки</p>
                     </div>
-                </div>
-            </div>
-            <div className="error-course-content-4 course-not-auth">
-                <div className="error-course-content-4-title">
-                    <p>Как проходит обучение на платформе</p>
                 </div>
             </div>
         </div>

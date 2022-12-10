@@ -59,11 +59,6 @@ html[data-theme='light'] {
     width: 150px;
 }
 
-.arrow-icon {
-    width: 100px;
-    height: 100px;
-}
-
 .title-select-task {
     font-size: 2em;
     margin: auto;
@@ -99,7 +94,13 @@ html[data-theme='light'] {
     border-color: var(--color-training);
 }
 
-.MuiSvgIcon-root {
+.arrow-icon.MuiSvgIcon-root {
+    color: var(--color-training);
+    width: 100px;
+    height: 100px;
+}
+
+.response-block .MuiSvgIcon-root {
     color: var(--color-training);
 }
 
@@ -133,6 +134,15 @@ html[data-theme='light'] {
 .send-btn {
     width: 80px;
     height: 40px;
+}
+
+.send-btn .MuiSvgIcon-root {
+    color: white;
+}
+
+.send-btn.MuiLoadingButton-loading {
+    color: white;
+    background-color: var(--background-color-btn-loading);
 }
 
 .error_traning {

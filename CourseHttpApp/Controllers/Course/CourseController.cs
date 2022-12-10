@@ -32,16 +32,10 @@ public class CourseController : ControllerBase
             var user_info = await db.users_info.FirstAsync(x => x.User_id == user.Id);
             foreach (var theme in await db.themes.ToListAsync())
             {
-                var allTasks = await db.practice.CountAsync(x => x.Theme_id == theme.Id);
-                var correctTasks =
-                    await db.course_tasks_users.CountAsync(x =>
-                        x.Theme_id == theme.Id && x.User_id == user.Id && x.Is_done);
-                var result = (int)Math.Round((double)correctTasks / allTasks * 100);
                 themes.Add(new
                 {
                     id = theme.Id,
-                    title = theme.Title,
-                    correct_tasks = result
+                    title = theme.Title
                 });
             }
 

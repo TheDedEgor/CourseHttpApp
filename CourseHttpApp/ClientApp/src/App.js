@@ -12,31 +12,25 @@ import NewPass from "./components/NewPass/NewPass";
 import Modal from './components/UI/Modal/Modal'
 import Training from "./components/Training/Training";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
-import { Toaster } from 'react-hot-toast';
+import {Toaster} from 'react-hot-toast';
 
 const App = () => {
     const [activeAuth, setActiveAuth] = useState(false)
     const [activeReg, setActiveReg] = useState(false)
     const [activeForgotPass, setActiveForgotPass] = useState(false)
-    const [token, setToken] = useState(localStorage.getItem("access_token"));
-    
+
     return (
         <div className="App">
             <div className="container">
-                <Header
-                    setActiveAuth={setActiveAuth}
-                    setActiveReg={setActiveReg}
-                    setToken={setToken}
-                    token={token}
-                />
+                <Header setActiveAuth={setActiveAuth} setActiveReg={setActiveReg}/>
                 <div className="main">
                     <Routes>
                         <Route path="/" element={<Course setActive={setActiveAuth}/>}/>
                         <Route path="/training" element={<Training/>}/>
                         <Route path="/contacts" element={<Contacts/>}/>
-                        <Route path="/profile" element={
+                        <Route path="/profile/*" element={
                             <PrivateRoute>
-                                <Profile setToken={setToken}/>
+                                <Profile/>
                             </PrivateRoute>
                         }/>
                         <Route path="/newPass" element={
@@ -47,17 +41,17 @@ const App = () => {
                     </Routes>
                     {activeAuth && <Modal>
                         <Auth setActiveAuth={setActiveAuth} setActiveReg={setActiveReg}
-                              setActiveForgotPass={setActiveForgotPass} setToken={setToken}/>
+                              setActiveForgotPass={setActiveForgotPass}/>
                     </Modal>}
                     {activeReg && <Modal>
-                        <Register setActiveReg={setActiveReg} setToken={setToken}/>
+                        <Register setActiveReg={setActiveReg}/>
                     </Modal>}
                     {activeForgotPass && <Modal>
                         <ForgotPass setActiveForgotPass={setActiveForgotPass}/>
                     </Modal>}
                 </div>
             </div>
-            <Toaster position="top-center" />
+            <Toaster position="top-center"/>
         </div>
     )
 }

@@ -1,8 +1,6 @@
 ﻿import React, {useState, useEffect} from "react";
 import "./TheorySlider.css"
 import {Pagination} from '@mui/material';
-import photo from '../../../images/theory-1-2.png'
-import photo2 from '../../../images/theory-1-1.png'
 import {StyledEngineProvider} from "@mui/material/styles";
 
 const SliderComponent = ({data}) => {
@@ -15,7 +13,7 @@ const SliderComponent = ({data}) => {
         if (currentIndex > lastIndex) {
             setCurrentIndex(0)
         }
-    }, [currentIndex,data])
+    }, [currentIndex, data])
 
     const paginationChange = (event, page) => {
         setCurrentIndex(page)
@@ -26,7 +24,7 @@ const SliderComponent = ({data}) => {
             <div className="section-center">
                 <div className="section-content">
                     {data?.map((e, e_index) => {
-                        const {id, description} = e
+                        const {id, description, image_url} = e
                         let position = 'nextSlide'
                         if (e_index === currentIndex) {
                             position = "activeSlide"
@@ -37,7 +35,9 @@ const SliderComponent = ({data}) => {
                         return (
                             <article className={`slider ${position}`} key={id}>
                                 <p className="slick-desc">{description}</p>
-                                <img src={e_index === 0 ? photo2 : photo} alt="photo" width={600} height={200}/>
+                                {image_url ?
+                                    <img src={image_url} alt="photo" width={600}
+                                         height={200}/> : <></>}
                             </article>
                         )
                     })

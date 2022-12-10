@@ -1,0 +1,70 @@
+﻿html[data-theme='dark'] {
+    --color-info-block-avatar: white;
+    --background-color-info-block-avatar: #4a5867;
+    --background-color-btn-profile-edit-hover: #39495E;
+}
+
+html[data-theme='light'] {
+    --color-info-block-avatar: #454cee;
+    --background-color-info-block-avatar: rgba(69, 76, 238, 0.1);
+    --background-color-btn-profile-edit-hover: rgba(69, 76, 238, 0.2);
+}
+
+.info-block {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.info-block-title {
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+.info-block-description {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border-color-item-profile);
+    border-top: 1px solid var(--border-color-item-profile);
+}
+
+.info-block-data {
+    display: flex;
+    gap: 20px;
+}
+
+.info-block-avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--background-color-info-block-avatar);
+    color: var(--color-info-block-avatar);
+}
+
+.info-title {
+    margin-bottom: 0;
+}
+
+.info-name {
+    color: var(--color-text-add-profile);
+    font-size: 0.9em;
+}
+
+.info-change-btn {
+    height: 40px;
+    border: none;
+    border-radius: 12px;
+    padding: 8px 20px;
+    background-color: var(--background-color-info-block-avatar);
+    color: var(--color-info-block-avatar);
+}
+
+.info-change-btn:hover {
+    background-color: var(--background-color-btn-profile-edit-hover);
+}
+

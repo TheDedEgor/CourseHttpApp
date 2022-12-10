@@ -4,11 +4,12 @@ import {Link, useNavigate} from "react-router-dom";
 import {resizeWindow} from "../../utils";
 import {DataContext} from "../../context/DataProvider";
 
-const Header = ({setActiveAuth, setActiveReg, setToken, token}) => {
+const Header = ({setActiveAuth, setActiveReg}) => {
     let navigate = useNavigate()
     const [isVisibleProfileMenu, setIsVisibleProfileMenu] = useState(false)
-    const {theme, setTheme} = useContext(DataContext)
+    const {theme, setTheme, userName, token, setToken} = useContext(DataContext)
     const toogle_switch = useRef()
+    
     useEffect(() => {
         const links = document.querySelectorAll(".menu-item");
         const logo = document.querySelector(".header-logo")
@@ -74,10 +75,7 @@ const Header = ({setActiveAuth, setActiveReg, setToken, token}) => {
 
     const handleLogOut = () => {
         localStorage.removeItem("access_token")
-        setToken(undefined)
-        localStorage.removeItem("theme_id")
-        localStorage.removeItem("type_id")
-        /*document.documentElement.setAttribute('data-theme', "light")*/
+        setToken("")
         navigate('/')
     }
 
@@ -124,7 +122,7 @@ const Header = ({setActiveAuth, setActiveReg, setToken, token}) => {
                 <Link className="menu-item" to="/contacts">Контакты</Link>
                 {token && <div className="menu-item-profile" id="drop-menu" onClick={(e) => showDropMenu(e)}>
                     <div className="profile_title">
-                        <div className="name-profile">{localStorage.getItem("user_name")}</div>
+                        <div className="name-profile">{userName}</div>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                              xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -148,6 +146,7 @@ const Header = ({setActiveAuth, setActiveReg, setToken, token}) => {
                                         className="switch-input"
                                         type="checkbox"
                                         checked={theme === 'dark'}
+                                        readOnly
                                     />
                                     <div className="switch" ref={toogle_switch}></div>
                                 </label>

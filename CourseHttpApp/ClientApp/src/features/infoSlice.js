@@ -5,10 +5,10 @@ const initialState = {
     status:null,
     error:null
 }
-const token = localStorage.getItem("access_token")
+
 export const fetchData = createAsyncThunk(
     'info/fetchData',
-    async ({theme_id, type_id},{rejectWithValue}) =>{
+    async ({theme_id, type_id, token},{rejectWithValue}) =>{
         try{
             const response = await  fetch(`/api/Info?theme_id=${theme_id}&type_id=${type_id}`, {
                 method: 'GET',

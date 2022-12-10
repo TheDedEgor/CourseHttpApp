@@ -23,15 +23,15 @@ public class RegController : ControllerBase
         var form = HttpContext.Request.Form;
         var login = form["login"];
         var password = form["password"];
-        var first_name = form["first_name"];
-        var last_name = form["last_name"];
+        var first_name = form["first_name"].ToString().Trim();
+        var last_name = form["last_name"].ToString().Trim();
         var hash = Crypt.GetHashPassword(password);
         await using (var db = new ApplicationContext())
         {
             var user = await db.users.FirstOrDefaultAsync(item => item.Login == login);
             if (user != null)
                 return Results.Conflict();
-            
+
             db.users.Add(new User
             {
                 Id = 0,
@@ -49,12 +49,13 @@ public class RegController : ControllerBase
             });
             await db.SaveChangesAsync();
         }
+
         var token = Token.CreateToken(login);
-        
+
         return Results.Json(new
         {
-            access_token = token
+            access_token = token,
+            user_name = first_name
         });
-        
     }
 }

@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from "react";
 import "./Quizz.css";
 
 
-const Quizz = ({data}) => {
+const Quizz = ({themeId, data}) => {
     const token = localStorage.getItem("access_token")
     const [currentQuestion, setCurrentQuestion] = useState(0)
     const [score, setScore] = useState(0)
@@ -19,10 +19,10 @@ const Quizz = ({data}) => {
 
     useEffect(() => {
         Animation()
-    }, [currentQuestion,data])
+    }, [currentQuestion, data])
 
     const handleAnswerOptionClick = (indexCorrect) => {
-        
+
 
         if (indexCorrect === data[currentQuestion].correct_id) {
             setScore(prevState => prevState + 1)
@@ -40,6 +40,8 @@ const Quizz = ({data}) => {
         if (nextQuestion < data.length) {
             setCurrentQuestion(nextQuestion)
         } else {
+            console.log(obj.current)
+            console.log(localStorage.getItem("theme_id"))
             fetch("api/Course", {
                 method: 'POST',
                 headers: {
@@ -47,11 +49,10 @@ const Quizz = ({data}) => {
                     "Authorization": "Bearer " + token
                 },
                 body: JSON.stringify({
-                    theme_id: localStorage.getItem("theme_id"),
+                    theme_id: themeId,
                     course_tasks: obj.current
                 })
             })
-            let prog = (score / data.length) * 100;
             setShowScore(true)
         }
     }

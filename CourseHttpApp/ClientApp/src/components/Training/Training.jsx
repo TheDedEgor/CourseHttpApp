@@ -20,6 +20,8 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import styled, {keyframes} from 'styled-components';
 import {headShake} from 'react-animations';
+import LoadingButton from "@mui/lab/LoadingButton";
+import SendIcon from '@mui/icons-material/Send';
 
 const bounceAnimation = keyframes`${headShake}`;
 
@@ -29,7 +31,6 @@ const BouncyDiv = styled.div`
 `;
 
 const Training = () => {
-    const token = localStorage.getItem("access_token")
     const {
         paramData,
         jsonText,
@@ -37,8 +38,10 @@ const Training = () => {
         headerData,
         setHeaderData,
         formData,
-        setFormData
+        setFormData,
+        token
     } = useContext(DataContext)
+    const [urlValue, setUrlValue] = useState("")
     const [value, setValue] = useState(0)
     const [error, setError] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
@@ -51,10 +54,10 @@ const Training = () => {
     const [responseLoading, setResponseLoading] = useState(false)
 
     useEffect(() => {
-        if (token !== null) {
+        if (token) {
             getTasks()
         }
-    }, [])
+    }, [token])
 
     async function getTasks() {
         const response = await fetch("api/Training", {
@@ -73,6 +76,7 @@ const Training = () => {
         setFormData({...formData, type: e.target.value})
     }
     const onUrlChange = (e) => {
+        setUrlValue(e.target.value)
         setFormData({...formData, url: e.target.value})
     }
     const handleChangeTabs = (event, newValue) => {
@@ -117,6 +121,7 @@ const Training = () => {
         }).finally(() => {
             setResponseLoading(false)
             setFormData({...formData, url: ""})
+            setUrlValue("")
         })
 
         await fetch("api/Training", {
@@ -153,7 +158,8 @@ const Training = () => {
                                                 task.is_done === 1
                                                     ? <img src={success_logo} alt="success" width={20} height={20}/> :
                                                     task.is_done === 0 ?
-                                                    <img src={error_logo} alt="error" width={20} height={20}/> : <></>
+                                                        <img src={error_logo} alt="error" width={20}
+                                                             height={20}/> : <></>
                                             }
                                         </div>
                                     </div>
@@ -174,67 +180,74 @@ const Training = () => {
                                     </div>
                                 }
                                 <Box className="training-block">
-                                    {responseLoading ?
-                                        <div className="load-block-send">
-                                            <LoadingSlider/>
-                                        </div>
-                                        : <>
-                                            <Box className="form-block">
-                                                <FormControl className="select-response">
-                                                    <InputLabel className="label-response"
-                                                                id="demo-simple-select-label">
-                                                        Метод
-                                                    </InputLabel>
-                                                    <Select id="demo-simple-select-label"
-                                                            className="select-type"
-                                                            value={formData.type}
-                                                            label="Метод"
-                                                            onChange={(e) => handleChange(e)}>
-                                                        <MenuItem value={'GET'}>GET</MenuItem>
-                                                        <MenuItem value={'POST'}>POST</MenuItem>
-                                                        <MenuItem value={'PUT'}>PUT</MenuItem>
-                                                        <MenuItem value={'PATCH'}>PATCH</MenuItem>
-                                                        <MenuItem value={'DELETE'}>DELETE</MenuItem>
-                                                        <MenuItem value={'HEAD'}>HEAD</MenuItem>
-                                                        <MenuItem value={'OPTIONS'}>OPTIONS</MenuItem>
-                                                    </Select>
-                                                </FormControl>
-                                                <TextField
-                                                    size="small"
-                                                    className="url-input"
-                                                    onChange={(e) => onUrlChange(e)}
-                                                />
-                                                <Button
+                                    <Box className="form-block">
+                                        <FormControl className="select-response">
+                                            <InputLabel className="label-response"
+                                                        id="demo-simple-select-label">
+                                                Метод
+                                            </InputLabel>
+                                            <Select id="demo-simple-select-label"
+                                                    className="select-type"
+                                                    value={formData.type}
+                                                    label="Метод"
+                                                    onChange={(e) => handleChange(e)}>
+                                                <MenuItem value={'GET'}>GET</MenuItem>
+                                                <MenuItem value={'POST'}>POST</MenuItem>
+                                                <MenuItem value={'PUT'}>PUT</MenuItem>
+                                                <MenuItem value={'PATCH'}>PATCH</MenuItem>
+                                                <MenuItem value={'DELETE'}>DELETE</MenuItem>
+                                                <MenuItem value={'HEAD'}>HEAD</MenuItem>
+                                                <MenuItem value={'OPTIONS'}>OPTIONS</MenuItem>
+                                            </Select>
+                                        </FormControl>
+                                        <TextField
+                                            size="small"
+                                            className="url-input"
+                                            onChange={(e) => onUrlChange(e)}
+                                            value={urlValue}
+                                        />
+                                        <StyledEngineProvider injectFirst>
+                                            <LoadingButton
+                                                size="small"
+                                                color="primary"
+                                                loading={responseLoading}
+                                                loadingPosition="start"
+                                                startIcon={<SendIcon/>}
+                                                variant="contained"
+                                                className="send-btn"
+                                                onClick={() => onSendClick(task.id)}
+                                            >
+                                                Send
+                                            </LoadingButton>
+                                        </StyledEngineProvider>
+                                        {/* <Button
                                                     className="send-btn"
                                                     variant="contained"
                                                     onClick={() => onSendClick(task.id)}>
                                                     Send
-                                                </Button>
-                                            </Box>
-                                            <Box className="select-tab-block">
-                                                <Tabs value={value} onChange={handleChangeTabs} textColor="inherit">
-                                                    <Tab label="Params" className="tab-item"/>
-                                                    <Tab label="Headers" className="tab-item"/>
-                                                    <Tab label="Body" className="tab-item"/>
-                                                </Tabs>
-                                            </Box>
-                                            <Box
-                                                role="tabpanel"
-                                                hidden={value !== 0}
-                                                id={`simple-tabpanel-${0}`}
-                                                aria-labelledby={`simple-tab-${0}`}>
-                                                <CreateTable text="Params" data={paramData} setData={setParamData}/>
-                                            </Box>
-                                            <Box
-                                                role="tabpanel"
-                                                hidden={value !== 1}
-                                                id={`simple-tabpanel-${1}`}
-                                                aria-labelledby={`simple-tab-${1}`}>
-                                                <CreateTable text="Headers" data={headerData} setData={setHeaderData}/>
-                                            </Box>
-                                        </>
-                                    }
-
+                                                </Button>*/}
+                                    </Box>
+                                    <Box className="select-tab-block">
+                                        <Tabs value={value} onChange={handleChangeTabs} textColor="inherit">
+                                            <Tab label="Params" className="tab-item"/>
+                                            <Tab label="Headers" className="tab-item"/>
+                                            <Tab label="Body" className="tab-item"/>
+                                        </Tabs>
+                                    </Box>
+                                    <Box
+                                        role="tabpanel"
+                                        hidden={value !== 0}
+                                        id={`simple-tabpanel-${0}`}
+                                        aria-labelledby={`simple-tab-${0}`}>
+                                        <CreateTable text="Params" data={paramData} setData={setParamData}/>
+                                    </Box>
+                                    <Box
+                                        role="tabpanel"
+                                        hidden={value !== 1}
+                                        id={`simple-tabpanel-${1}`}
+                                        aria-labelledby={`simple-tab-${1}`}>
+                                        <CreateTable text="Headers" data={headerData} setData={setHeaderData}/>
+                                    </Box>
                                     <Box
                                         role="tabpanel"
                                         hidden={value !== 2}

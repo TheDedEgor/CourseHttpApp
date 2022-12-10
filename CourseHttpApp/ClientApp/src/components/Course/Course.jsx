@@ -1,4 +1,4 @@
-﻿import React, {useEffect, useState} from "react";
+﻿import React, {useContext, useEffect, useState} from "react";
 import "./Course.css"
 import NotAuthCourse from "../NotAuthCourse/NotAuthCourse";
 import Loader from "../UI/Loader/Loader";
@@ -8,9 +8,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {fetchData} from "../../features/infoSlice";
 import AccordionBlock from "../Accordion/Accordion";
 import Quizz from "../Quizz/Quizz";
+import {DataContext} from "../../context/DataProvider";
 
 const Course = ({setActive}) => {
-    const token = localStorage.getItem("access_token")
+    const {token} = useContext(DataContext)
+    const [themeId, setThemeId] = useState(1)
     const [typeId, setTypeId] = useState(0)
     const [course, setCourse] = useState([])
     const [loading, setLoading] = useState(true)
@@ -21,12 +23,12 @@ const Course = ({setActive}) => {
     const loadSLice = useSelector(state => state.info.status)
 
     useEffect(() => {
-        if (token !== null) {
+        if (token) {
             getInfo()
         }
     }, [token])
 
-    if (token === null) {
+    if (!token) {
         return <NotAuthCourse setActive={setActive}/>
     }
     if (error) {
@@ -38,7 +40,8 @@ const Course = ({setActive}) => {
 
     async function getInfo() {
         const [theme_id, type_id] = await getDataCourse();
-        dispatch(fetchData({theme_id, type_id}))
+        setThemeId(theme_id)
+        dispatch(fetchData({theme_id, type_id, token}))
     }
 
     async function getDataCourse() {
@@ -64,11 +67,12 @@ const Course = ({setActive}) => {
         })
     }
 
-    const handleClickTheme = (theme_id, type_id) => {
+    const handleClickTheme = async (theme_id, type_id) => {
+        setThemeId(theme_id)
         setTypeId(type_id)
-        dispatch(fetchData({theme_id, type_id}))
+        await dispatch(fetchData({theme_id, type_id, token}))
     }
-    
+
     return (
         <div className="course">
             <div className="course-block">
@@ -82,7 +86,7 @@ const Course = ({setActive}) => {
             <div className="course-content">
                 {loadSLice === 'loading' ? <LoadingSlider/> :
                     typeId === 1 ? <TheorySlider data={fetchData_all.value}/> :
-                        <Quizz data={fetchData_all.value}/>}
+                        <Quizz themeId={themeId} data={fetchData_all.value}/>}
             </div>
         </div>
     )
