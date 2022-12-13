@@ -41,6 +41,7 @@ const Register = ({setActiveReg}) => {
 
         if (check) {
             const sendData = new FormData(event.target)
+            setFormValid(false)
             const response = await fetch("/api/Reg", {
                 method: 'POST',
                 body: sendData,
@@ -59,6 +60,7 @@ const Register = ({setActiveReg}) => {
                 setToken(user.value.access_token)
                 close()
             }
+            setFormValid(true)
         }
     }
 

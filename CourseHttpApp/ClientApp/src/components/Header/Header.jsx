@@ -9,7 +9,7 @@ const Header = ({setActiveAuth, setActiveReg}) => {
     const [isVisibleProfileMenu, setIsVisibleProfileMenu] = useState(false)
     const {theme, setTheme, userName, token, setToken} = useContext(DataContext)
     const toogle_switch = useRef()
-    
+
     useEffect(() => {
         const links = document.querySelectorAll(".menu-item");
         const logo = document.querySelector(".header-logo")
@@ -80,31 +80,34 @@ const Header = ({setActiveAuth, setActiveReg}) => {
     }
 
     const showProfile = () => {
-        const profile = document.querySelector(".menu-item-profile")
-        const target = document.querySelector(".target");
-        const links = document.querySelectorAll(".menu-item");
+        if (token) {
+            const profile = document.querySelector(".menu-item-profile")
+            const target = document.querySelector(".target");
+            const links = document.querySelectorAll(".menu-item");
 
-        for (let i = 0; i < links.length; i++) {
-            if (links[i].classList.contains("active")) {
-                links[i].classList.remove("active");
+            for (let i = 0; i < links.length; i++) {
+                if (links[i].classList.contains("active")) {
+                    links[i].classList.remove("active");
+                }
+                links[i].classList.add("no-active")
             }
-            links[i].classList.add("no-active")
+
+            profile.classList.remove("no-active");
+            profile.classList.add("active");
+
+            const width = profile.getBoundingClientRect().width;
+            const height = profile.getBoundingClientRect().height;
+            const left = profile.getBoundingClientRect().left + window.pageXOffset;
+            const top = profile.getBoundingClientRect().top + window.pageYOffset;
+            target.style.width = `${width}px`;
+            target.style.height = `${height}px`;
+            target.style.left = `${left}px`;
+            target.style.top = `${top}px`;
+
+            setIsVisibleProfileMenu(false)
+            navigate("/profile")
         }
 
-        profile.classList.remove("no-active");
-        profile.classList.add("active");
-
-        const width = profile.getBoundingClientRect().width;
-        const height = profile.getBoundingClientRect().height;
-        const left = profile.getBoundingClientRect().left + window.pageXOffset;
-        const top = profile.getBoundingClientRect().top + window.pageYOffset;
-        target.style.width = `${width}px`;
-        target.style.height = `${height}px`;
-        target.style.left = `${left}px`;
-        target.style.top = `${top}px`;
-
-        setIsVisibleProfileMenu(false)
-        navigate("/profile")
     }
     const handleClick = () => {
         if (document.documentElement.getAttribute("data-theme") === 'light') {

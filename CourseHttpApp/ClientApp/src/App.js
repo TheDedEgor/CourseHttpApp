@@ -11,8 +11,9 @@ import ForgotPass from "./components/ForgotPass/ForgotPass";
 import NewPass from "./components/NewPass/NewPass";
 import Modal from './components/UI/Modal/Modal'
 import Training from "./components/Training/Training";
-import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import {Toaster} from 'react-hot-toast';
+import PrivateRouteProfile from "./components/PrivateRouteProfile/PrivateRouteProfile";
+import PrivateRoutePass from "./components/PrivateRoutePass/PrivateRoutePass";
 
 const App = () => {
     const [activeAuth, setActiveAuth] = useState(false)
@@ -29,14 +30,14 @@ const App = () => {
                         <Route path="/training" element={<Training/>}/>
                         <Route path="/contacts" element={<Contacts/>}/>
                         <Route path="/profile/*" element={
-                            <PrivateRoute>
+                            <PrivateRouteProfile>
                                 <Profile/>
-                            </PrivateRoute>
+                            </PrivateRouteProfile>
                         }/>
                         <Route path="/newPass" element={
-                            <PrivateRoute>
+                            <PrivateRoutePass>
                                 <NewPass/>
-                            </PrivateRoute>
+                            </PrivateRoutePass>
                         }/>
                     </Routes>
                     {activeAuth && <Modal>

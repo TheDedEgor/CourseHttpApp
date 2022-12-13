@@ -34,6 +34,7 @@ const Auth = ({setActiveAuth, setActiveReg, setActiveForgotPass}) => {
         if (check) {
             const data = new FormData(event.target)
             const token = sessionStorage.getItem("access_token")
+            setFormValid(false)
             const response = await fetch("/api/Auth", {
                 method: 'POST',
                 body: data,
@@ -55,6 +56,7 @@ const Auth = ({setActiveAuth, setActiveReg, setActiveForgotPass}) => {
                 setToken(user.value.access_token)
                 close()
             }
+            setFormValid(true)
         }
     }
 
