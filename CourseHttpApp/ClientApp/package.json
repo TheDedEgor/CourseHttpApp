@@ -21,6 +21,7 @@
     "http-proxy-middleware": "^2.0.6",
     "jquery": "^3.6.0",
     "merge": "^2.1.1",
+    "normalize.css": "^8.0.1",
     "object-hash": "^3.0.0",
     "oidc-client": "^1.11.5",
     "react": "^18.1.0",
@@ -51,6 +52,10 @@
     "workbox-streams": "^6.5.3"
   },
   "devDependencies": {
+    "@types/jest": "^29.5.0",
+    "@types/node": "^18.15.11",
+    "@types/react": "^18.0.31",
+    "@types/react-dom": "^18.0.11",
     "ajv": "^8.11.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.14.0",
@@ -60,7 +65,7 @@
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.29.4",
     "nan": "^2.15.0",
-    "typescript": "^4.6.3"
+    "typescript": "^4.9.5"
   },
   "overrides": {
     "autoprefixer": "10.4.5"

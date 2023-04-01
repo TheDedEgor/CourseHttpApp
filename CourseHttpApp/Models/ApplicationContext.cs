@@ -18,7 +18,7 @@ public class ApplicationContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-        var connectionString = config.GetConnectionString("ServerDb");
+        var connectionString = config.GetConnectionString("SyncDb");
         optionsBuilder.UseMySQL(connectionString);
     }
 }
